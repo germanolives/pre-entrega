@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { ImgWithSkeleton } from "./common/ImgWithSkeleton";
 
 export const Item = ({ id, title, image, price, description }) => {
   return (
@@ -8,10 +9,10 @@ export const Item = ({ id, title, image, price, description }) => {
       </h3>
       <Link to={`/products/item:${id}`}>
         <div className="w-full aspect-square overflow-hidden bg-white border border-gray-100 rounded-sm">
-          <img
-            src={image}
-            className="w-full h-full object-contain p-2 transform transition-transform duration-500 ease-in-out hover:scale-105"
-            alt={title}
+          <ImgWithSkeleton
+            image={image}
+            className="object-contain p-2 transform transition-transform duration-500 ease-in-out hover:scale-105"
+            size={"w-full h-full"}
           />
         </div>
       </Link>

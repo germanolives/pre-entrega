@@ -28,7 +28,7 @@ export const Products = () => {
   }, []);
 
   return (
-    <section className="grid grid-cols-1 gap-4 md:grid-cols-6">
+    <section className={`grid grid-cols-1 gap-4 md:grid-cols-6`}>
       <RenderContent loading={loading} error={error} data={data}>
         <ItemList data={data} />
       </RenderContent>

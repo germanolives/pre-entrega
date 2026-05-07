@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { MainLayout } from "./layouts/MainLayout";
 import { Home } from "./pages/Home";
 import { Products } from "./pages/Products";
@@ -12,7 +12,6 @@ import { Contact } from "./pages/Contact";
 
 export const App = () => {
   return (
-    <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index="/" element={<Home />} />
@@ -26,6 +25,5 @@ export const App = () => {
           <Route path="/contact" element={<Contact />} />
         </Route>
       </Routes>
-    </BrowserRouter>
   );
 };
