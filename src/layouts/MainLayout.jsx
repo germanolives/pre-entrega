@@ -1,11 +1,14 @@
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { Outlet } from "react-router-dom";
 
-export const MainLayout = ({ children }) => {
+export const MainLayout = () => {
   return (
     <>
       <Header />
-      <main className="grow">{children}</main>
+      <main className="grow">
+        <Outlet />
+      </main>
       <Footer />
     </>
   );

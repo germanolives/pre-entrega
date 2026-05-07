@@ -13,9 +13,9 @@ import { Contact } from "./pages/Contact";
 export const App = () => {
   return (
     <BrowserRouter>
-      <MainLayout>
-        <Routes>
-          <Route path="/" element={<Home />} />
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/item/:id" element={<ProductDetail />} />
           <Route path="/services" element={<Services />} />
@@ -24,8 +24,8 @@ export const App = () => {
           <Route path="/aboutUs" element={<AboutUs />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </MainLayout>
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 };
