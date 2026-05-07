@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { ItemList } from "../components/ItemList";
-import { Loading } from "../components/common/Loading";
-import { ErrorMessage } from "../components/common/ErrorMessage";
 import { RenderContent } from "../components/common/RenderContent";
 
 export const Products = () => {

@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ItemDetail } from "../components/ItemDetail";
-import { Loading } from "../components/common/Loading";
-import { ErrorMessage } from "../components/common/ErrorMessage";
 import { RenderContent } from "../components/common/RenderContent";
 
 export const ProductDetail = () => {
