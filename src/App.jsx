@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { MainLayout } from "./layouts/MainLayout";
 import { Home } from "./pages/Home";
 import { Products } from "./pages/Products";
+import { ProductDetail } from "./pages/ProductDetail";
 import { Services } from "./pages/Services";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
@@ -16,13 +17,13 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
-          {/* <Route path="/products/item/:id" element={<ProductDetail />} /> */}
-          {/* <Route path="/services" element={<Services />} />
+          <Route path="/products/item/:id" element={<ProductDetail />} />
+          <Route path="/services" element={<Services />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/aboutUs" element={<AboutUs />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/contact" element={<Contact />} /> */}
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </MainLayout>
     </BrowserRouter>

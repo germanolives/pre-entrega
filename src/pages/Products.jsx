@@ -1,3 +1,34 @@
+import { useState, useEffect } from "react";
+import { ItemList } from "../components/ItemList";
+
 export const Products = () => {
-  return <div>Productos</div>;
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+    const getData = async () => {
+      try {
+        const response = await fetch("/data/products.json");
+        if (!response.ok) {
+          throw new Error("No se pudieron cargar los productos");
+        }
+        const data = await response.json();
+        setData(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getData();
+  }, []);
+
+  return (
+  <section className="grid grid-cols-1 gap-4 md:grid-cols-6">
+    <ItemList data={data} />
+
+  </section>);
 };

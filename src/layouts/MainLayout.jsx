@@ -5,7 +5,7 @@ export const MainLayout = ({ children }) => {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main className="grow">{children}</main>
       <Footer />
     </>
   );
