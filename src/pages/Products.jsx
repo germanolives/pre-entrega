@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { ItemList } from "../components/ItemList";
+import { Loading } from "../components/common/Loading";
+import { ErrorMessage } from "../components/common/ErrorMessage";
+import { RenderContent } from "../components/common/RenderContent";
 
 export const Products = () => {
   const [data, setData] = useState([]);
@@ -27,8 +30,10 @@ export const Products = () => {
   }, []);
 
   return (
-  <section className="grid grid-cols-1 gap-4 md:grid-cols-6">
-    <ItemList data={data} />
-
-  </section>);
+    <section className="grid grid-cols-1 gap-4 md:grid-cols-6">
+      <RenderContent loading={loading} error={error} data={data}>
+        <ItemList data={data} />
+      </RenderContent>
+    </section>
+  );
 };

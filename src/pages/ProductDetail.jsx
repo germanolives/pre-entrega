@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { ItemDetail} from "../components/ItemDetail";
+import { ItemDetail } from "../components/ItemDetail";
+import { Loading } from "../components/common/Loading";
+import { ErrorMessage } from "../components/common/ErrorMessage";
+import { RenderContent } from "../components/common/RenderContent";
 
 export const ProductDetail = () => {
   const { id } = useParams();
@@ -31,18 +34,11 @@ export const ProductDetail = () => {
     getData();
   }, [id]);
 
-  const renderContent = () => {
-    if (error) {
-      return (
-        div
-      )
-    }
-  }
-
-
   return (
     <div>
-      <ItemDetail data={data} />
+      <RenderContent loading={loading} error={error} data={data}>
+        <ItemDetail data={data} />
+      </RenderContent>
     </div>
   );
 };
