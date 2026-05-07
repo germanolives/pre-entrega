@@ -2,7 +2,7 @@
   {
     "id": 1,
     "title": "Fjallraven - Mochila Foldsack No. 1, Apta para Portátiles de 15\"",
-    "price": 109.95,
+    "price": "153.930",
     "description": "Tu mochila perfecta para el uso diario y paseos por el bosque. Guarda tu portátil (hasta 15 pulgadas) en la funda acolchada, ideal para tu día a día.",
     "category": "ropa de hombre",
     "image": "/images/products/81fPKd-2AYL._AC_SL1500_t.webp",
@@ -11,8 +11,8 @@
   {
     "id": 2,
     "title": "Camisetas Casuales Premium de Corte Entallado para Hombre",
-    "price": 22.3,
-    "description": "Estilo ajustado, manga larga raglán en contraste, tapeta de tres botones tipo Henley, tejido ligero y suave para un uso transpirable y cómodo. Camisetas con costuras sólidas y cuello redondo fabricadas para ofrecer durabilidad y un ajuste excelente tanto para moda casual como para fanáticos del béisbol. El cuello redondo estilo Henley incluye una tapeta de tres botones.",
+    "price": "31.220",
+    "description": "Estilo ajustado, manga larga raglán en contraste, tapeta de tres botones tipo Henley, tejido ligero y suave para un uso transpirable y cómodo.",
     "category": "ropa de hombre",
     "image": "/images/products/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_t.webp",
     "rating": { "rate": 4.1, "count": 259 }
@@ -20,8 +20,8 @@
   {
     "id": 3,
     "title": "Chaqueta de Algodón para Hombre",
-    "price": 55.99,
-    "description": "Excelentes chaquetas de abrigo para Primavera/Otoño/Invierno, adecuadas para muchas ocasiones como trabajo, senderismo, camping, escalada en montaña o roca, ciclismo, viajes u otras actividades al aire libre. Buena opción de regalo para ti o un familiar. Un detalle cálido para padre, esposo o hijo en este día de Acción de Gracias o Navidad.",
+    "price": "78.386",
+    "description": "Excelentes chaquetas de abrigo para Primavera/Otoño/Invierno, adecuadas para muchas ocasiones como trabajo, senderismo, camping.",
     "category": "ropa de hombre",
     "image": "/images/products/71li-ujtlUL._AC_UX679_t.webp",
     "rating": { "rate": 4.7, "count": 500 }
@@ -29,8 +29,8 @@
   {
     "id": 4,
     "title": "Corte Entallado Casual para Hombre",
-    "price": 15.99,
-    "description": "El color puede variar ligeramente entre la pantalla y la realidad. / Ten en cuenta que la constitución física varía según la persona, por lo tanto, se debe revisar la información detallada de tallas a continuación en la descripción del producto.",
+    "price": "22.386",
+    "description": "El color puede variar ligeramente entre la pantalla y la realidad.",
     "category": "ropa de hombre",
     "image": "/images/products/71YXzeOuslL._AC_UY879_t.webp",
     "rating": { "rate": 2.1, "count": 430 }
@@ -38,8 +38,8 @@
   {
     "id": 5,
     "title": "Pulsera John Hardy Legends Naga de Cadena en Oro y Plata",
-    "price": 695,
-    "description": "De nuestra Colección Legends, el Naga fue inspirado por el mítico dragón de agua que protege la perla del océano. Úselo mirando hacia adentro para recibir amor y abundancia, o hacia afuera para protección.",
+    "price": "973.000",
+    "description": "De nuestra Colección Legends, el Naga fue inspirado por el mítico dragón de agua que protege la perla del océano.",
     "category": "joyería",
     "image": "/images/products/71pWzhdJNwL._AC_UL640_QL65_ML3_t.webp",
     "rating": { "rate": 4.6, "count": 400 }
@@ -47,8 +47,8 @@
   {
     "id": 6,
     "title": "Micropavé Pequeño de Oro Sólido",
-    "price": 168,
-    "description": "Satisfacción Garantizada. Devuelva o cambie cualquier pedido dentro de los 30 días. Diseñado y vendido por Hafeez Center en los Estados Unidos.",
+    "price": "235.200",
+    "description": "Satisfacción Garantizada. Devuelva o cambie cualquier pedido dentro de los 30 días.",
     "category": "joyería",
     "image": "/images/products/61sbMiUnoGL._AC_UL640_QL65_ML3_t.webp",
     "rating": { "rate": 3.9, "count": 70 }
@@ -56,8 +56,8 @@
   {
     "id": 7,
     "title": "Anillo de Princesa Bañado en Oro Blanco",
-    "price": 9.99,
-    "description": "Anillo de compromiso clásico de diamante solitario creado para ella. Regalos para consentir más a tu amor en compromisos, bodas, aniversarios o el día de San Valentín.",
+    "price": "13.986",
+    "description": "Anillo de compromiso clásico de diamante solitario creado para ella.",
     "category": "joyería",
     "image": "/images/products/71YAIFU48IL._AC_UL640_QL65_ML3_t.webp",
     "rating": { "rate": 3, "count": 400 }
@@ -65,8 +65,8 @@
   {
     "id": 8,
     "title": "Pendientes Pierced Owl de Acero Inoxidable Dobles Bañados en Oro Rosa",
-    "price": 10.99,
-    "description": "Pendientes de túnel con doble ensanchamiento bañados en oro rosa. Fabricados en acero inoxidable 316L.",
+    "price": "15.386",
+    "description": "Pendientes de túnel con doble ensanchamiento bañados en oro rosa.",
     "category": "joyería",
     "image": "/images/products/51UDEzMJVpL._AC_UL640_QL65_ML3_t.webp",
     "rating": { "rate": 1.9, "count": 100 }
@@ -74,8 +74,8 @@
   {
     "id": 9,
     "title": "Disco Duro Externo Portátil WD Elements de 2TB - USB 3.0",
-    "price": 64,
-    "description": "Compatibilidad con USB 3.0 y USB 2.0. Transferencias rápidas de datos. Mejora el rendimiento del PC. Alta capacidad. Formateado en NTFS para Windows 10, 8.1 y 7. Puede requerir reformateo para otros sistemas operativos. La compatibilidad puede variar según la configuración del hardware y el sistema operativo del usuario.",
+    "price": "89.600",
+    "description": "Compatibilidad con USB 3.0 y USB 2.0. Transferencias rápidas de datos.",
     "category": "electrónica",
     "image": "/images/products/61IBBVJvSDL._AC_SY879_t.webp",
     "rating": { "rate": 3.3, "count": 203 }
@@ -83,8 +83,8 @@
   {
     "id": 10,
     "title": "SSD Interno SanDisk PLUS de 1TB - SATA III 6 Gb/s",
-    "price": 109,
-    "description": "Actualización sencilla para un arranque, apagado y respuesta de aplicaciones más rápidos (En comparación con discos duros SATA de 2.5” y 5400 RPM). Aumenta el rendimiento de escritura en ráfaga, lo que lo hace ideal para cargas de trabajo típicas de PC. El equilibrio perfecto entre rendimiento y fiabilidad con velocidades de lectura/escritura de hasta 535MB/s y 450MB/s.",
+    "price": "152.600",
+    "description": "Actualización sencilla para un arranque, apagado y respuesta de aplicaciones más rápidos.",
     "category": "electrónica",
     "image": "/images/products/61U7T1koQqL._AC_SX679_t.webp",
     "rating": { "rate": 2.9, "count": 470 }
@@ -92,8 +92,8 @@
   {
     "id": 11,
     "title": "SSD Silicon Power 256GB 3D NAND A55 SLC Cache SATA III 2.5",
-    "price": 109,
-    "description": "La memoria flash 3D NAND se aplica para ofrecer altas velocidades de transferencia. Velocidades notables que permiten un arranque más rápido y un mejor rendimiento general del sistema. La tecnología avanzada SLC Cache permite un aumento del rendimiento y una vida útil más larga. Diseño delgado de 7 mm adecuado para Ultrabooks y portátiles ultradelgados. Soporta comandos TRIM, tecnología de recolección de basura, RAID y ECC.",
+    "price": "152.600",
+    "description": "La memoria flash 3D NAND se aplica para ofrecer altas velocidades de transferencia.",
     "category": "electrónica",
     "image": "/images/products/71kWymZ+c+L._AC_SX679_t.webp",
     "rating": { "rate": 4.8, "count": 319 }
@@ -101,8 +101,8 @@
   {
     "id": 12,
     "title": "Disco Duro Externo Portátil WD Gaming Drive de 4TB para Playstation 4",
-    "price": 114,
-    "description": "Amplía tu experiencia de juego en PS4, juega en cualquier lugar de forma rápida y sencilla. Configuración fácil, diseño elegante de alta capacidad, garantía limitada del fabricante de 3 años.",
+    "price": "159.600",
+    "description": "Amplía tu experiencia de juego en PS4, juega en cualquier lugar de forma rápida y sencilla.",
     "category": "electrónica",
     "image": "/images/products/61mtL65D4cL._AC_SX679_t.webp",
     "rating": { "rate": 4.8, "count": 400 }
@@ -110,8 +110,8 @@
   {
     "id": 13,
     "title": "Monitor Acer SB220Q bi de 21.5 pulgadas Full HD (1920 x 1080) IPS",
-    "price": 599,
-    "description": "Pantalla IPS panorámica de 21.5 pulgadas Full HD (1920 x 1080) y tecnología Radeon FreeSync. No compatible con montura VESA. Frecuencia de actualización: 75 Hz mediante puerto HDMI. Diseño de marco cero, ultradelgado, tiempo de respuesta de 4 ms, panel IPS. Soporta 16.7 millones de colores.",
+    "price": "838.600",
+    "description": "Pantalla IPS panorámica de 21.5 pulgadas Full HD (1920 x 1080) y tecnología Radeon FreeSync.",
     "category": "electrónica",
     "image": "/images/products/81QpkIctqPL._AC_SX679_t.webp",
     "rating": { "rate": 2.9, "count": 250 }
@@ -119,8 +119,8 @@
   {
     "id": 14,
     "title": "Monitor Gaming Curvo Samsung CHG90 de 49 pulgadas 144Hz - Super Ultrawide QLED",
-    "price": 999.99,
-    "description": "Monitor gaming curvo de 49 pulgadas Super Ultrawide 32:9 equivalente a dos pantallas de 27 pulgadas una al lado de la otra. Tecnología Quantum Dot (QLED), soporte HDR y calibración de fábrica que proporciona colores y contrastes increíblemente realistas y precisos. Frecuencia de actualización de 144Hz y tiempo de respuesta ultrarrápido de 1ms para eliminar el desenfoque de movimiento.",
+    "price": "1.399.986",
+    "description": "Monitor gaming curvo de 49 pulgadas Super Ultrawide 32:9 equivalente a dos pantallas de 27 pulgadas.",
     "category": "electrónica",
     "image": "/images/products/81Zt42ioCgL._AC_SX679_t.webp",
     "rating": { "rate": 2.2, "count": 140 }
@@ -128,8 +128,8 @@
   {
     "id": 15,
     "title": "Chaqueta de Snowboard 3 en 1 BIYLACLESEN para Mujer",
-    "price": 56.99,
-    "description": "Nota: Las chaquetas son de tamaño estándar de EE. UU. Material: 100% poliéster; forro desmontable de vellón cálido. Forro funcional ligero y cálido, agradable para la piel. Chaqueta con forro de cuello alto para mantener el calor en climas fríos. Incluye 2 bolsillos laterales con cremallera, 2 en el pecho y 1 bolsillo interior oculto. Capucha ajustable y desmontable. Diseño 3 en 1 que permite usar las piezas por separado o juntas según el clima.",
+    "price": "79.786",
+    "description": "Nota: Las chaquetas son de tamaño estándar de EE. UU. Material: 100% poliéster.",
     "category": "ropa de mujer",
     "image": "/images/products/51Y5NI-I5jL._AC_UX679_t.webp",
     "rating": { "rate": 2.6, "count": 235 }
@@ -137,8 +137,8 @@
   {
     "id": 16,
     "title": "Chaqueta de Motociclista Lock and Love de Cuero Sintético con Capucha Removible",
-    "price": 29.95,
-    "description": "Exterior 100% poliuretano, forro 100% poliéster. Material de cuero sintético para estilo y comodidad. 2 bolsillos frontales, diseño estilo denim con capucha, detalle de botones en la cintura y costuras detalladas en los laterales. Solo lavado a mano.",
+    "price": "41.930",
+    "description": "Exterior 100% poliuretano, forro 100% poliéster. Material de cuero sintético.",
     "category": "ropa de mujer",
     "image": "/images/products/81XH0e8fefL._AC_UY879_t.webp",
     "rating": { "rate": 2.9, "count": 340 }
@@ -146,8 +146,8 @@
   {
     "id": 17,
     "title": "Chaqueta Impermeable Cortavientos para Mujer con Forro de Rayas",
-    "price": 39.99,
-    "description": "Ligera y perfecta para viajes o uso casual. Manga larga con capucha y cordón ajustable en la cintura. Cierre frontal con botones y cremallera, totalmente forrada con rayas. Tiene 2 bolsillos laterales de buen tamaño. Cubre las caderas y la capucha es amplia pero equilibrada con cordones ajustables.",
+    "price": "55.986",
+    "description": "Ligera y perfecta para viajes o uso casual. Manga larga con capucha.",
     "category": "ropa de mujer",
     "image": "/images/products/71HblAHs5xL._AC_UY879_-2t.webp",
     "rating": { "rate": 3.8, "count": 679 }
@@ -155,8 +155,8 @@
   {
     "id": 18,
     "title": "Camiseta de Manga Corta de Color Sólido MBJ para Mujer",
-    "price": 9.85,
-    "description": "95% rayón, 5% spandex. Fabricada en EE. UU. o importada. Tejido ligero con gran elasticidad para mayor comodidad. Detalles acanalados en mangas y cuello con doble costura en el dobladillo inferior.",
+    "price": "13.790",
+    "description": "95% rayón, 5% spandex. Fabricada en EE. UU. o importada.",
     "category": "ropa de mujer",
     "image": "/images/products/71z3kpMAYsL._AC_UY879_t.webp",
     "rating": { "rate": 4.7, "count": 130 }
@@ -164,8 +164,8 @@
   {
     "id": 19,
     "title": "Camiseta de Manga Corta Opna para Mujer con Control de Humedad",
-    "price": 7.95,
-    "description": "100% poliéster. Lavado a máquina. Tejido entrelazado de poliéster catiónico, ligero, amplio y altamente transpirable con tela que absorbe la humedad. Cuello en V cómodo y un ajuste más delgado que ofrece una silueta femenina, elegante y cómoda.",
+    "price": "11.130",
+    "description": "100% poliéster. Lavado a máquina. Tejido entrelazado de poliéster catiónico.",
     "category": "ropa de mujer",
     "image": "/images/products/51eg55uWmdL._AC_UX679_t.webp",
     "rating": { "rate": 4.5, "count": 146 }
@@ -173,8 +173,8 @@
   {
     "id": 20,
     "title": "Camiseta Casual de Algodón DANVOUY para Mujer",
-    "price": 12.99,
-    "description": "95% algodón, 5% spandex. Características: Casual, manga corta, estampado de letras, cuello en V. La tela es suave y tiene algo de elasticidad. Ocasión: Casual/Oficina/Playa/Escuela/Hogar/Calle. Apta para todas las estaciones.",
+    "price": "18.186",
+    "description": "95% algodón, 5% spandex. Características: Casual, manga corta, estampado de letras.",
     "category": "ropa de mujer",
     "image": "/images/products/61pHAEJ4NML._AC_UX679_t.webp",
     "rating": { "rate": 3.6, "count": 145 }
