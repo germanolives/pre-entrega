@@ -7,7 +7,7 @@ export const Item = ({ id, title, image, price, description }) => {
       <h3 className="text-sm text-black text-left capitalize line-clamp-2 leading-tight px-2 min-h-9 overflow-hidden">
         {title}
       </h3>
-      <Link to={`/products/item:${id}`}>
+      <Link to={`/products/${id}`}>
         <div className="w-full aspect-square overflow-hidden bg-white border border-gray-100 rounded-sm">
           <ImgWithSkeleton
             image={image}
