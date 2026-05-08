@@ -4,14 +4,14 @@ import { ItemDetail } from "../components/ItemDetail";
 import { RenderContent } from "../components/common/RenderContent";
 
 export const ProductDetail = () => {
-  const { id } = useParams();
+  const { category, slug, id } = useParams();
   const [data, setData] = useState(null);
-  const [error, SetError] = useState(null);
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    SetError(null);
+    setError(null);
 
     const getData = async () => {
       try {
@@ -20,17 +20,27 @@ export const ProductDetail = () => {
           throw new Error("Productos no disponibles");
         }
         const resData = await response.json();
-        const data = resData.find((item) => item.id === parseInt(id));
-        if (!data) throw new Error("El producto no existe");
-        setData(data);
+        const productFound = resData.find((item) => item.id === parseInt(id));
+        if (!productFound) throw new Error("El producto no existe");
+
+        const categoryInUrl = category.toLowerCase().replace(/\s+|%20/g, "-");
+        const categoryInJson = productFound.category
+          .toLowerCase()
+          .replace(/\s+/g, "-");
+
+        if (categoryInUrl !== categoryInJson) {
+          throw new Error("Categoría incorrecta para este producto");
+        }
+
+        setData(productFound);
       } catch (error) {
-        SetError(error.message);
+        setError(error.message);
       } finally {
         setLoading(false);
       }
     };
     getData();
-  }, [id]);
+  }, [category, slug, id]);
 
   return (
     <div>
