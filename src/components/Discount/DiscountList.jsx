@@ -8,7 +8,7 @@ export const DiscountList = ({ offer, price, formattedPrice, message }) => {
 
   return (
     <>
-      <Button variant="ghost" className="md:hidden" onClick={hideShow}>
+      <Button variant="ghost" className="px-2 border border-gray-300 rounded-xl hover:px-2.5 md:hidden" onClick={hideShow}>
         {message}
       </Button>
       <p className="hidden md:block font-bold text-gray-600">{message}</p>
