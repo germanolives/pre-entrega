@@ -5,7 +5,7 @@ export const Button = ({
   ...props
 }) => {
   const baseStyles =
-    "px-6 py-2 rounded-full font-bold transition-all duration-300 active:scale-95 disabled:opacity-50";
+    "font-bold transition-all duration-300 active:scale-95 disabled:opacity-50";
   const variants = {
     primary: "bg-blue-900 text-white hover:bg-blue-800 shadow-md",
     secondary: "bg-amber-500 text-white hover:bg-amber-600 shadow-md",

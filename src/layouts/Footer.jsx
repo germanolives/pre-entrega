@@ -6,15 +6,15 @@ export const Footer = () => {
     <footer className="bg-lime-50 grid-rows-2 mx-4 rounded-xl border-2 border-gray-400 p-4 mt-8">
       <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto_auto_auto] mx-8 gap-16 ">
         <div>
-          <h5>TIENDA S.A.U.</h5>
+          <h5 className="mb-2">TIENDA S.A.U.</h5>
           <p className="text-xs italic">
             Tienda es una empresa internacional con sede central en la provincia
             de Córdoba
           </p>
         </div>
         <div>
-          <h5>Menu</h5>
-          <ul className="text-xs italic">
+          <h5 className="mb-2">Menu</h5>
+          <ul className="flex flex-col gap-1 text-xs italic">
             <li>
               <Link className="hover:text-blue-600" to={"/"}>
                 Inicio
@@ -53,10 +53,13 @@ export const Footer = () => {
           </ul>
         </div>
         <div>
-          <h5>Contacto</h5>
-          <ul className="text-xs italic">
+          <h5 className="mb-2">Contacto</h5>
+          <ul className="flex flex-col gap-1 text-xs italic">
             <li>
-              <a href="#" className="flex items-center gap-2 group">
+              <a
+                href="tel:+541112345678"
+                className="flex items-center gap-2 group"
+              >
                 <Icons.PhoneIcon className="w-4 h-4 text-orange-600" />
                 <span className="text-xs group-hover:text-blue-600">
                   +54 11 8765-4321
@@ -64,7 +67,12 @@ export const Footer = () => {
               </a>
             </li>
             <li className="flex items-center">
-              <a href="#" className="flex items-center gap-2 group">
+              <a
+                href="https://wa.me/5491112345678?text=Hola,%20vengo%20desde%20la%20web"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 group"
+              >
                 <Icons.WhatsAppIcon className="w-4 h-4 text-green-600" />
                 <span className="text-xs group-hover:text-blue-600">
                   +54 911 1234-5678
@@ -72,7 +80,12 @@ export const Footer = () => {
               </a>
             </li>
             <li className="flex items-center">
-              <a href="#" className="flex items-center gap-2 group">
+              <a
+                href="https://t.me/tienda_sau"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 group"
+              >
                 <Icons.TelegramIcon className="w-4 h-4 text-sky-500" />
                 <span className="text-xs group-hover:text-blue-600">
                   +54 911 1234-5678
@@ -80,18 +93,18 @@ export const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="#" className="flex items-center gap-2 group">
+              <a href="mailto:info@tienda.com" className="flex items-center gap-2 group">
                 <Icons.MailIcon className="w-4 h-4 text-blue-600" />
                 <span className="text-xs group-hover:text-blue-600">
-                  info@tusitio.com
+                  info@tienda.com
                 </span>
               </a>
             </li>
           </ul>
         </div>
         <div>
-          <h5>Redes Sociales</h5>
-          <ul className="text-xs italic">
+          <h5 className="mb-2">Redes Sociales</h5>
+          <ul className="flex flex-col gap-1 text-xs italic">
             <li>
               <a href="#" className="flex items-center gap-2 group">
                 <Icons.FacebookIcon className="w-4 h-4 text-blue-700" />
@@ -120,11 +133,11 @@ export const Footer = () => {
         </div>
 
         <div>
-          <h5>Ubicación</h5>
+          <h5 className="mb-2">Ubicación</h5>
           <ul className="text-xs italic">
             <li>
               Dirección:{" "}
-              <a href="">Av. de la Transición 44, Obispo Trejo, Córdoba</a>
+              <a href="https://maps.app.goo.gl/wUr5A3khp46bD28d7" target="_blank">Av. de la Transición 44, Obispo Trejo, Córdoba</a>
             </li>
             <li>
               <iframe

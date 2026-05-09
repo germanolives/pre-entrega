@@ -9,14 +9,22 @@ import { Register } from "./pages/Register";
 import { AboutUs } from "./pages/AboutUs";
 import { Cart } from "./pages/Cart";
 import { Contact } from "./pages/Contact";
+import { ScrollToTop } from "./components/common/ScrollTo";
+import { ScrollControlls } from "./components/common/ScrollControlls";
 
 export const App = () => {
   return (
+    <>
+      <ScrollToTop />
+      <ScrollControlls />
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
           <Route path="products" element={<Products />} />
-          <Route path="products/:categorySlug/:titleSlug/:id" element={<ProductDetail />} />
+          <Route
+            path="products/:categorySlug/:titleSlug/:id"
+            element={<ProductDetail />}
+          />
           <Route path="services" element={<Services />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
@@ -25,5 +33,6 @@ export const App = () => {
           <Route path="contact" element={<Contact />} />
         </Route>
       </Routes>
+    </>
   );
 };

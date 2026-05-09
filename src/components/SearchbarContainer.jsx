@@ -14,7 +14,7 @@ export const SearchbarContainer = () => {
             placeholder="Ingrese el producto..."
           />
         </label>
-        <Button variant="ghost" className="border rounded-sm">
+        <Button variant="ghost" className="border rounded-sm px-6 py-2">
           Ir
         </Button>
       </form>
