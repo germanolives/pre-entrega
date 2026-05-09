@@ -26,7 +26,7 @@ export const ProductDetail = () => {
         // const productFound = resData;
         if (!productFound) throw new Error("El producto no existe");
 
-        const categoryInJson = formatSlug(productFound.category)
+        const categoryInJson = formatSlug(productFound.category);
 
         if (categorySlug !== categoryInJson) {
           throw new Error("Categoría incorrecta para este producto");
@@ -43,10 +43,12 @@ export const ProductDetail = () => {
   }, [categorySlug, titleSlug, id]);
 
   return (
-    <div>
+    <section
+      className={`mx-4 border-2 border-gray-400 rounded-xl p-8 flex justify-center items-center`}
+    >
       <RenderContent loading={loading} error={error} data={data}>
         <ItemDetail data={data} />
       </RenderContent>
-    </div>
+    </section>
   );
 };

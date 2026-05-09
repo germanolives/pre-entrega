@@ -13,7 +13,7 @@ export const TeamContainer = () => {
 
     const getData = async () => {
       try {
-        const response = await fetch("data/team.json");
+        const response = await fetch("/data/team.json");
         if (!response.ok) {
           throw new Error("Información no disponible");
         }
@@ -29,7 +29,7 @@ export const TeamContainer = () => {
   }, []);
 
   return (
-    <div className="flex flex-col md:flex-row">
+    <div className="flex flex-row gap-3">
       <RenderContent loading={loading} error={error} data={data}>
         <TeamList data={data}/>
       </RenderContent>

@@ -6,6 +6,12 @@ export const Item = ({ id, title, price, description, category, image }) => {
   const titleSlug = formatSlug(title);
   const categorySlug = formatSlug(category);
   const productPath = `/products/${categorySlug}/${titleSlug}/${id}`;
+  const countryPrice = new Intl.NumberFormat("es-AR", {
+    style: "currency",
+    currency: "ARS",
+  });
+
+  const formattedPrice = countryPrice.format(price);
 
   return (
     <article className="grid grid-rows-[auto_auto_1fr_auto] bg-gray-200 p-4 shadow-2xl border border-gray-300 h-full rounded-sm">
@@ -22,7 +28,7 @@ export const Item = ({ id, title, price, description, category, image }) => {
         </div>
       </Link>
       <p className="text-xs text-gray-600 line-clamp-3">{description}</p>
-      <p className="text-xl font-bold text-blue-800 mt-auto">${price}</p>
+      <p className="text-xl font-bold text-blue-800 mt-auto">{formattedPrice}</p>
     </article>
   );
 };

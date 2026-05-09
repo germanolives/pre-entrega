@@ -2,181 +2,321 @@
   {
     "id": 1,
     "title": "Fjallraven - Mochila Foldsack No. 1, Apta para Portátiles de 15\"",
-    "price": "153.930",
+    "price": "153930",
     "description": "Tu mochila perfecta para el uso diario y paseos por el bosque. Guarda tu portátil (hasta 15 pulgadas) en la funda acolchada, ideal para tu día a día.",
     "category": "ropa de hombre",
     "image": "/images/products/81fPKd-2AYL._AC_SL1500_t.webp",
+    "offer": [
+      { "id": 1, "title": "Oferta 10+", "qty": 10, "discount": 5 },
+      { "id": 2, "title": "Oferta 20+", "qty": 20, "discount": 6.25 },
+      { "id": 3, "title": "Oferta 50+", "qty": 50, "discount": 7.5 },
+      { "id": 4, "title": "Oferta 100+", "qty": 100, "discount": 8.75 },
+      { "id": 5, "title": "Oferta 150+", "qty": 150, "discount": 10 }
+    ],
     "rating": { "rate": 3.9, "count": 120 }
   },
   {
     "id": 2,
     "title": "Camisetas Casuales Premium de Corte Entallado para Hombre",
-    "price": "31.220",
+    "price": "31220",
     "description": "Estilo ajustado, manga larga raglán en contraste, tapeta de tres botones tipo Henley, tejido ligero y suave para un uso transpirable y cómodo.",
     "category": "ropa de hombre",
     "image": "/images/products/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_t.webp",
+    "offer": [
+      { "id": 1, "title": "Oferta 10+", "qty": 10, "discount": 5 },
+      { "id": 2, "title": "Oferta 20+", "qty": 20, "discount": 6.25 },
+      { "id": 3, "title": "Oferta 50+", "qty": 50, "discount": 7.5 },
+      { "id": 4, "title": "Oferta 100+", "qty": 100, "discount": 8.75 },
+      { "id": 5, "title": "Oferta 150+", "qty": 150, "discount": 10 }
+    ],
     "rating": { "rate": 4.1, "count": 259 }
   },
   {
     "id": 3,
     "title": "Chaqueta de Algodón para Hombre",
-    "price": "78.386",
+    "price": "78386",
     "description": "Excelentes chaquetas de abrigo para Primavera/Otoño/Invierno, adecuadas para muchas ocasiones como trabajo, senderismo, camping.",
     "category": "ropa de hombre",
     "image": "/images/products/71li-ujtlUL._AC_UX679_t.webp",
+    "offer": [
+      { "id": 1, "title": "Oferta 10+", "qty": 10, "discount": 5 },
+      { "id": 2, "title": "Oferta 20+", "qty": 20, "discount": 6.25 },
+      { "id": 3, "title": "Oferta 50+", "qty": 50, "discount": 7.5 },
+      { "id": 4, "title": "Oferta 100+", "qty": 100, "discount": 8.75 },
+      { "id": 5, "title": "Oferta 150+", "qty": 150, "discount": 10 }
+    ],
     "rating": { "rate": 4.7, "count": 500 }
   },
   {
     "id": 4,
     "title": "Corte Entallado Casual para Hombre",
-    "price": "22.386",
+    "price": "22386",
     "description": "El color puede variar ligeramente entre la pantalla y la realidad.",
     "category": "ropa de hombre",
     "image": "/images/products/71YXzeOuslL._AC_UY879_t.webp",
+    "offer": [
+      { "id": 1, "title": "Oferta 10+", "qty": 10, "discount": 5 },
+      { "id": 2, "title": "Oferta 20+", "qty": 20, "discount": 6.25 },
+      { "id": 3, "title": "Oferta 50+", "qty": 50, "discount": 7.5 },
+      { "id": 4, "title": "Oferta 100+", "qty": 100, "discount": 8.75 },
+      { "id": 5, "title": "Oferta 150+", "qty": 150, "discount": 10 }
+    ],
     "rating": { "rate": 2.1, "count": 430 }
   },
   {
     "id": 5,
     "title": "Pulsera John Hardy Legends Naga de Cadena en Oro y Plata",
-    "price": "973.000",
+    "price": "973000",
     "description": "De nuestra Colección Legends, el Naga fue inspirado por el mítico dragón de agua que protege la perla del océano.",
     "category": "joyería",
     "image": "/images/products/71pWzhdJNwL._AC_UL640_QL65_ML3_t.webp",
+    "offer": [
+      { "id": 1, "title": "Oferta 10+", "qty": 10, "discount": 5 },
+      { "id": 2, "title": "Oferta 20+", "qty": 20, "discount": 6.25 },
+      { "id": 3, "title": "Oferta 50+", "qty": 50, "discount": 7.5 },
+      { "id": 4, "title": "Oferta 100+", "qty": 100, "discount": 8.75 },
+      { "id": 5, "title": "Oferta 150+", "qty": 150, "discount": 10 }
+    ],
     "rating": { "rate": 4.6, "count": 400 }
   },
   {
     "id": 6,
     "title": "Micropavé Pequeño de Oro Sólido",
-    "price": "235.200",
+    "price": "235200",
     "description": "Satisfacción Garantizada. Devuelva o cambie cualquier pedido dentro de los 30 días.",
     "category": "joyería",
     "image": "/images/products/61sbMiUnoGL._AC_UL640_QL65_ML3_t.webp",
+    "offer": [
+      { "id": 1, "title": "Oferta 10+", "qty": 10, "discount": 5 },
+      { "id": 2, "title": "Oferta 20+", "qty": 20, "discount": 6.25 },
+      { "id": 3, "title": "Oferta 50+", "qty": 50, "discount": 7.5 },
+      { "id": 4, "title": "Oferta 100+", "qty": 100, "discount": 8.75 },
+      { "id": 5, "title": "Oferta 150+", "qty": 150, "discount": 10 }
+    ],
     "rating": { "rate": 3.9, "count": 70 }
   },
   {
     "id": 7,
     "title": "Anillo de Princesa Bañado en Oro Blanco",
-    "price": "13.986",
+    "price": "13986",
     "description": "Anillo de compromiso clásico de diamante solitario creado para ella.",
     "category": "joyería",
     "image": "/images/products/71YAIFU48IL._AC_UL640_QL65_ML3_t.webp",
+    "offer": [
+      { "id": 1, "title": "Oferta 10+", "qty": 10, "discount": 5 },
+      { "id": 2, "title": "Oferta 20+", "qty": 20, "discount": 6.25 },
+      { "id": 3, "title": "Oferta 50+", "qty": 50, "discount": 7.5 },
+      { "id": 4, "title": "Oferta 100+", "qty": 100, "discount": 8.75 },
+      { "id": 5, "title": "Oferta 150+", "qty": 150, "discount": 10 }
+    ],
     "rating": { "rate": 3, "count": 400 }
   },
   {
     "id": 8,
     "title": "Pendientes Pierced Owl de Acero Inoxidable Dobles Bañados en Oro Rosa",
-    "price": "15.386",
+    "price": "15386",
     "description": "Pendientes de túnel con doble ensanchamiento bañados en oro rosa.",
     "category": "joyería",
     "image": "/images/products/51UDEzMJVpL._AC_UL640_QL65_ML3_t.webp",
+    "offer": [
+      { "id": 1, "title": "Oferta 10+", "qty": 10, "discount": 5 },
+      { "id": 2, "title": "Oferta 20+", "qty": 20, "discount": 6.25 },
+      { "id": 3, "title": "Oferta 50+", "qty": 50, "discount": 7.5 },
+      { "id": 4, "title": "Oferta 100+", "qty": 100, "discount": 8.75 },
+      { "id": 5, "title": "Oferta 150+", "qty": 150, "discount": 10 }
+    ],
     "rating": { "rate": 1.9, "count": 100 }
   },
   {
     "id": 9,
     "title": "Disco Duro Externo Portátil WD Elements de 2TB - USB 3.0",
-    "price": "89.600",
+    "price": "89600",
     "description": "Compatibilidad con USB 3.0 y USB 2.0. Transferencias rápidas de datos.",
     "category": "electrónica",
     "image": "/images/products/61IBBVJvSDL._AC_SY879_t.webp",
+    "offer": [
+      { "id": 1, "title": "Oferta 10+", "qty": 10, "discount": 5 },
+      { "id": 2, "title": "Oferta 20+", "qty": 20, "discount": 6.25 },
+      { "id": 3, "title": "Oferta 50+", "qty": 50, "discount": 7.5 },
+      { "id": 4, "title": "Oferta 100+", "qty": 100, "discount": 8.75 },
+      { "id": 5, "title": "Oferta 150+", "qty": 150, "discount": 10 }
+    ],
     "rating": { "rate": 3.3, "count": 203 }
   },
   {
     "id": 10,
     "title": "SSD Interno SanDisk PLUS de 1TB - SATA III 6 Gb/s",
-    "price": "152.600",
+    "price": "152600",
     "description": "Actualización sencilla para un arranque, apagado y respuesta de aplicaciones más rápidos.",
     "category": "electrónica",
     "image": "/images/products/61U7T1koQqL._AC_SX679_t.webp",
+    "offer": [
+      { "id": 1, "title": "Oferta 10+", "qty": 10, "discount": 5 },
+      { "id": 2, "title": "Oferta 20+", "qty": 20, "discount": 6.25 },
+      { "id": 3, "title": "Oferta 50+", "qty": 50, "discount": 7.5 },
+      { "id": 4, "title": "Oferta 100+", "qty": 100, "discount": 8.75 },
+      { "id": 5, "title": "Oferta 150+", "qty": 150, "discount": 10 }
+    ],
     "rating": { "rate": 2.9, "count": 470 }
   },
   {
     "id": 11,
     "title": "SSD Silicon Power 256GB 3D NAND A55 SLC Cache SATA III 2.5",
-    "price": "152.600",
+    "price": "152600",
     "description": "La memoria flash 3D NAND se aplica para ofrecer altas velocidades de transferencia.",
     "category": "electrónica",
     "image": "/images/products/71kWymZ+c+L._AC_SX679_t.webp",
+    "offer": [
+      { "id": 1, "title": "Oferta 10+", "qty": 10, "discount": 5 },
+      { "id": 2, "title": "Oferta 20+", "qty": 20, "discount": 6.25 },
+      { "id": 3, "title": "Oferta 50+", "qty": 50, "discount": 7.5 },
+      { "id": 4, "title": "Oferta 100+", "qty": 100, "discount": 8.75 },
+      { "id": 5, "title": "Oferta 150+", "qty": 150, "discount": 10 }
+    ],
     "rating": { "rate": 4.8, "count": 319 }
   },
   {
     "id": 12,
     "title": "Disco Duro Externo Portátil WD Gaming Drive de 4TB para Playstation 4",
-    "price": "159.600",
+    "price": "159600",
     "description": "Amplía tu experiencia de juego en PS4, juega en cualquier lugar de forma rápida y sencilla.",
     "category": "electrónica",
     "image": "/images/products/61mtL65D4cL._AC_SX679_t.webp",
+    "offer": [
+      { "id": 1, "title": "Oferta 10+", "qty": 10, "discount": 5 },
+      { "id": 2, "title": "Oferta 20+", "qty": 20, "discount": 6.25 },
+      { "id": 3, "title": "Oferta 50+", "qty": 50, "discount": 7.5 },
+      { "id": 4, "title": "Oferta 100+", "qty": 100, "discount": 8.75 },
+      { "id": 5, "title": "Oferta 150+", "qty": 150, "discount": 10 }
+    ],
     "rating": { "rate": 4.8, "count": 400 }
   },
   {
     "id": 13,
     "title": "Monitor Acer SB220Q bi de 21.5 pulgadas Full HD (1920 x 1080) IPS",
-    "price": "838.600",
+    "price": "838600",
     "description": "Pantalla IPS panorámica de 21.5 pulgadas Full HD (1920 x 1080) y tecnología Radeon FreeSync.",
     "category": "electrónica",
     "image": "/images/products/81QpkIctqPL._AC_SX679_t.webp",
+    "offer": [
+      { "id": 1, "title": "Oferta 10+", "qty": 10, "discount": 5 },
+      { "id": 2, "title": "Oferta 20+", "qty": 20, "discount": 6.25 },
+      { "id": 3, "title": "Oferta 50+", "qty": 50, "discount": 7.5 },
+      { "id": 4, "title": "Oferta 100+", "qty": 100, "discount": 8.75 },
+      { "id": 5, "title": "Oferta 150+", "qty": 150, "discount": 10 }
+    ],
     "rating": { "rate": 2.9, "count": 250 }
   },
   {
     "id": 14,
     "title": "Monitor Gaming Curvo Samsung CHG90 de 49 pulgadas 144Hz - Super Ultrawide QLED",
-    "price": "1.399.986",
+    "price": "1399986",
     "description": "Monitor gaming curvo de 49 pulgadas Super Ultrawide 32:9 equivalente a dos pantallas de 27 pulgadas.",
     "category": "electrónica",
     "image": "/images/products/81Zt42ioCgL._AC_SX679_t.webp",
+    "offer": [
+      { "id": 1, "title": "Oferta 10+", "qty": 10, "discount": 5 },
+      { "id": 2, "title": "Oferta 20+", "qty": 20, "discount": 6.25 },
+      { "id": 3, "title": "Oferta 50+", "qty": 50, "discount": 7.5 },
+      { "id": 4, "title": "Oferta 100+", "qty": 100, "discount": 8.75 },
+      { "id": 5, "title": "Oferta 150+", "qty": 150, "discount": 10 }
+    ],
     "rating": { "rate": 2.2, "count": 140 }
   },
   {
     "id": 15,
     "title": "Chaqueta de Snowboard 3 en 1 BIYLACLESEN para Mujer",
-    "price": "79.786",
+    "price": "79786",
     "description": "Nota: Las chaquetas son de tamaño estándar de EE. UU. Material: 100% poliéster.",
     "category": "ropa de mujer",
     "image": "/images/products/51Y5NI-I5jL._AC_UX679_t.webp",
+    "offer": [
+      { "id": 1, "title": "Oferta 10+", "qty": 10, "discount": 5 },
+      { "id": 2, "title": "Oferta 20+", "qty": 20, "discount": 6.25 },
+      { "id": 3, "title": "Oferta 50+", "qty": 50, "discount": 7.5 },
+      { "id": 4, "title": "Oferta 100+", "qty": 100, "discount": 8.75 },
+      { "id": 5, "title": "Oferta 150+", "qty": 150, "discount": 10 }
+    ],
     "rating": { "rate": 2.6, "count": 235 }
   },
   {
     "id": 16,
     "title": "Chaqueta de Motociclista Lock and Love de Cuero Sintético con Capucha Removible",
-    "price": "41.930",
+    "price": "41930",
     "description": "Exterior 100% poliuretano, forro 100% poliéster. Material de cuero sintético.",
     "category": "ropa de mujer",
     "image": "/images/products/81XH0e8fefL._AC_UY879_t.webp",
+    "offer": [
+      { "id": 1, "title": "Oferta 10+", "qty": 10, "discount": 5 },
+      { "id": 2, "title": "Oferta 20+", "qty": 20, "discount": 6.25 },
+      { "id": 3, "title": "Oferta 50+", "qty": 50, "discount": 7.5 },
+      { "id": 4, "title": "Oferta 100+", "qty": 100, "discount": 8.75 },
+      { "id": 5, "title": "Oferta 150+", "qty": 150, "discount": 10 }
+    ],
     "rating": { "rate": 2.9, "count": 340 }
   },
   {
     "id": 17,
     "title": "Chaqueta Impermeable Cortavientos para Mujer con Forro de Rayas",
-    "price": "55.986",
+    "price": "55986",
     "description": "Ligera y perfecta para viajes o uso casual. Manga larga con capucha.",
     "category": "ropa de mujer",
     "image": "/images/products/71HblAHs5xL._AC_UY879_-2t.webp",
+    "offer": [
+      { "id": 1, "title": "Oferta 10+", "qty": 10, "discount": 5 },
+      { "id": 2, "title": "Oferta 20+", "qty": 20, "discount": 6.25 },
+      { "id": 3, "title": "Oferta 50+", "qty": 50, "discount": 7.5 },
+      { "id": 4, "title": "Oferta 100+", "qty": 100, "discount": 8.75 },
+      { "id": 5, "title": "Oferta 150+", "qty": 150, "discount": 10 }
+    ],
     "rating": { "rate": 3.8, "count": 679 }
   },
   {
     "id": 18,
     "title": "Camiseta de Manga Corta de Color Sólido MBJ para Mujer",
-    "price": "13.790",
+    "price": "13790",
     "description": "95% rayón, 5% spandex. Fabricada en EE. UU. o importada.",
     "category": "ropa de mujer",
     "image": "/images/products/71z3kpMAYsL._AC_UY879_t.webp",
+    "offer": [
+      { "id": 1, "title": "Oferta 10+", "qty": 10, "discount": 5 },
+      { "id": 2, "title": "Oferta 20+", "qty": 20, "discount": 6.25 },
+      { "id": 3, "title": "Oferta 50+", "qty": 50, "discount": 7.5 },
+      { "id": 4, "title": "Oferta 100+", "qty": 100, "discount": 8.75 },
+      { "id": 5, "title": "Oferta 150+", "qty": 150, "discount": 10 }
+    ],
     "rating": { "rate": 4.7, "count": 130 }
   },
   {
     "id": 19,
     "title": "Camiseta de Manga Corta Opna para Mujer con Control de Humedad",
-    "price": "11.130",
+    "price": "11130",
     "description": "100% poliéster. Lavado a máquina. Tejido entrelazado de poliéster catiónico.",
     "category": "ropa de mujer",
     "image": "/images/products/51eg55uWmdL._AC_UX679_t.webp",
+    "offer": [
+      { "id": 1, "title": "Oferta 10+", "qty": 10, "discount": 5 },
+      { "id": 2, "title": "Oferta 20+", "qty": 20, "discount": 6.25 },
+      { "id": 3, "title": "Oferta 50+", "qty": 50, "discount": 7.5 },
+      { "id": 4, "title": "Oferta 100+", "qty": 100, "discount": 8.75 },
+      { "id": 5, "title": "Oferta 150+", "qty": 150, "discount": 10 }
+    ],
     "rating": { "rate": 4.5, "count": 146 }
   },
   {
     "id": 20,
     "title": "Camiseta Casual de Algodón DANVOUY para Mujer",
-    "price": "18.186",
+    "price": "18186",
     "description": "95% algodón, 5% spandex. Características: Casual, manga corta, estampado de letras.",
     "category": "ropa de mujer",
     "image": "/images/products/61pHAEJ4NML._AC_UX679_t.webp",
+    "offer": [
+      { "id": 1, "title": "Oferta 10+", "qty": 10, "discount": 5 },
+      { "id": 2, "title": "Oferta 20+", "qty": 20, "discount": 6.25 },
+      { "id": 3, "title": "Oferta 50+", "qty": 50, "discount": 7.5 },
+      { "id": 4, "title": "Oferta 100+", "qty": 100, "discount": 8.75 },
+      { "id": 5, "title": "Oferta 150+", "qty": 150, "discount": 10 }
+    ],
     "rating": { "rate": 3.6, "count": 145 }
   }
 ]

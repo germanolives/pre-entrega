@@ -3,21 +3,21 @@
     "id": 1,
     "name": "Samuel",
     "lastname": "Horwitz",
-    "role": "Director General",
+    "role": "Dir. Gral.",
     "image": "/images/team/Samuel Horwitz.webp"
   },
   {
     "id": 2,
     "name": "Louis",
     "lastname": "Feinberg",
-    "role": "Gerente General",
+    "role": "Gte. Gral.",
     "image": "/images/team/Louis Feinberg.webp"
   },
   {
     "id": 3,
     "name": "Jerome",
     "lastname": "Horwitz",
-    "role": "Director RR.HH.",
+    "role": "Dir. RR.HH.",
     "image": "/images/team/Jerome Horwitz.webp"
   }
 ]
