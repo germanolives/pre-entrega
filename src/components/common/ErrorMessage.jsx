@@ -3,7 +3,6 @@ export const ErrorMessage = ({ message }) => {
     <div className="container mx-auto p-10 max-w-2xl text-center">
       <div className="bg-red-50 border-l-4 border-red-500 p-8 shadow-md rounded-r-lg">
         <div className="flex flex-col items-center gap-4">
-          {/* Icono de advertencia simple */}
           <span className="text-5xl">⚠️</span>
           
           <h2 className="text-2xl font-bold text-red-800">

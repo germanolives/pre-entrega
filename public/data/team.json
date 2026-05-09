@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Samuel",
+    "lastname": "Horwitz",
+    "role": "Director General",
+    "image": "/images/team/Samuel Horwitz.webp"
+  },
+  {
+    "id": 2,
+    "name": "Louis",
+    "lastname": "Feinberg",
+    "role": "Gerente General",
+    "image": "/images/team/Louis Feinberg.webp"
+  },
+  {
+    "id": 3,
+    "name": "Jerome",
+    "lastname": "Horwitz",
+    "role": "Director RR.HH.",
+    "image": "/images/team/Jerome Horwitz.webp"
+  }
+]

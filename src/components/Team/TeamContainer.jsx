@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { ItemList } from "../components/ItemList";
-import { RenderContent } from "../components/common/RenderContent";
+import { RenderContent } from "../common/RenderContent";
+import { TeamList } from "./TeamList";
 
-export const Products = () => {
+export const TeamContainer = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,13 +10,12 @@ export const Products = () => {
   useEffect(() => {
     setLoading(true);
     setError(null);
-   
+
     const getData = async () => {
       try {
-        const response = await fetch("/data/products.json");
-        // const response = await fetch("https://fakestoreapi.com/products");
+        const response = await fetch("data/team.json");
         if (!response.ok) {
-          throw new Error("No se pudieron cargar los productos");
+          throw new Error("Información no disponible");
         }
         const data = await response.json();
         setData(data);
@@ -30,10 +29,10 @@ export const Products = () => {
   }, []);
 
   return (
-    <section className={`mx-4 border-2 border-gray-400 rounded-xl p-8 ${loading ? "flex justify-center items-center" : "grid grid-cols-1 gap-4 md:grid-cols-6"}`}>
+    <div className="flex flex-col md:flex-row">
       <RenderContent loading={loading} error={error} data={data}>
-        <ItemList data={data} />
+        <TeamList data={data}/>
       </RenderContent>
-    </section>
+    </div>
   );
 };

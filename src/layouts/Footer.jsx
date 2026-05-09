@@ -1,16 +1,18 @@
 import { Link } from "react-router-dom";
 import * as Icons from "../components/Icons/index";
+import { TeamContainer } from "../components/Team/TeamContainer";
 
 export const Footer = () => {
   return (
     <footer className="bg-lime-50 grid-rows-2 mx-4 rounded-xl border-2 border-gray-400 p-4 mt-8">
-      <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto_auto_auto] mx-8 gap-16 ">
+      <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_2fr_2fr_2fr] mx-8 gap-8 ">
         <div>
           <h5 className="mb-2">TIENDA S.A.U.</h5>
-          <p className="text-xs italic">
+          <p className="text-xs italic mb-2">
             Tienda es una empresa internacional con sede central en la provincia
             de Córdoba
           </p>
+          <TeamContainer />
         </div>
         <div>
           <h5 className="mb-2">Menu</h5>
@@ -93,7 +95,10 @@ export const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="mailto:info@tienda.com" className="flex items-center gap-2 group">
+              <a
+                href="mailto:info@tienda.com"
+                className="flex items-center gap-2 group"
+              >
                 <Icons.MailIcon className="w-4 h-4 text-blue-600" />
                 <span className="text-xs group-hover:text-blue-600">
                   info@tienda.com
@@ -135,9 +140,14 @@ export const Footer = () => {
         <div>
           <h5 className="mb-2">Ubicación</h5>
           <ul className="text-xs italic">
-            <li>
+            <li className="mb-2">
               Dirección:{" "}
-              <a href="https://maps.app.goo.gl/wUr5A3khp46bD28d7" target="_blank">Av. de la Transición 44, Obispo Trejo, Córdoba</a>
+              <a
+                href="https://maps.app.goo.gl/wUr5A3khp46bD28d7"
+                target="_blank"
+              >
+                Av. de la Transición 44, Obispo Trejo, Córdoba
+              </a>
             </li>
             <li>
               <iframe
