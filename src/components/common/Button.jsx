@@ -10,7 +10,7 @@ export const Button = ({
     primary: "bg-blue-900 text-white hover:bg-blue-800 shadow-md",
     secondary: "bg-amber-500 text-white hover:bg-amber-600 shadow-md",
     tertiary: "bg-red-500 text-white hover:bg-red-600 shadow-md",
-    outline: "border-2 border-blue-900 text-blue-900 hover:bg-blue-50",
+    outline: "border-1 rounded-xl border-blue-900 text-blue-900 hover:bg-blue-50",
     ghost: "text-slate-600 hover:bg-slate-100 hover:text-blue-900",
   };
 

@@ -51,18 +51,20 @@ export const ItemDetail = ({ data }) => {
   };
 
   return (
-    <div className="flex flex-col md:grid grid-cols-2 w-2/3">
+    <div className="grid grid-cols-1 md:grid-cols-2 w-full md:w-2/3 mx-auto">
       <article className="grid grid-rows-[auto_1fr_auto_auto] bg-gray-200 p-4 shadow-2xl border border-gray-300 h-full rounded-sm">
         <h1 className="text-xl font-bold text-blue-800 mt-auto capitalize line-clamp-3 leading-tight px-2 min-h-15 overflow-hidden">
           {title}
         </h1>
-        <div className="w-full aspect-square overflow-hidden bg-white border border-gray-100 rounded-sm">
-          <ImgWithSkeleton
-            image={image}
-            className="object-contain p-2 transform transition-transform duration-500 ease-in-out hover:scale-105"
-            size={"w-full h-full"}
-          />
-        </div>
+        <Link to={"/products"}>
+          <div className="w-full aspect-square overflow-hidden bg-white border border-gray-100 rounded-sm">
+            <ImgWithSkeleton
+              image={image}
+              className="object-contain p-2 transform transition-transform duration-500 ease-in-out hover:scale-105"
+              size={"w-full h-full"}
+            />
+          </div>
+        </Link>
         <p className="text-base capitalize  text-gray-800 mt-auto">
           {category}
         </p>
@@ -70,15 +72,14 @@ export const ItemDetail = ({ data }) => {
       </article>
 
       <aside className="p-6 shadow-2xl border border-gray-300 flex flex-col justify-between items-center">
-        <p className="">Ofertas del día disponibles</p>
-        <DiscountList offer={offer} price={price} />
+        <DiscountList message={"Ofertas del día disponibles"} offer={offer} price={price} />
         <div className="flex flex-col justify-center items-center">
-          <p className="text-xl font-bold text-blue-800">{formattedPrice}</p>
+          <p className="text-4xl font-bold text-blue-800">{formattedPrice}</p>
           <span className="p-2">
             <Button
               onClick={delProduct}
               variant="outline"
-              className="px-3 py-1 mx-1"
+              className="px-3 py-1 mx-1 border-0"
             >
               ➖
             </Button>
@@ -86,7 +87,7 @@ export const ItemDetail = ({ data }) => {
               onClick={resetProduct}
               variant={isAdded ? "tertiary" : "primary"}
               disabled={count === 0}
-              className={`px-4 py-2 min-w-14 transition-all ${count >= 150 ? "ring-4 ring-cyan-400" : count >= 100 ? "ring-4 ring-fuchsia-400" : count >= 50 ? "ring-4 ring-yellow-300" : count >= 20 ? "ring-4 ring-emerald-400" : count >= 10 ? "ring-4 ring-amber-400" : count === 0 ? "opacity-50" : ""}`}
+              className={`px-4 py-2 rounded-xl min-w-14 transition-all ${count >= 150 ? "ring-4 ring-cyan-400" : count >= 100 ? "ring-4 ring-fuchsia-400" : count >= 50 ? "ring-4 ring-yellow-300" : count >= 20 ? "ring-4 ring-emerald-400" : count >= 10 ? "ring-4 ring-amber-400" : count === 0 ? "opacity-50" : ""}`}
             >
               {count}
             </Button>
@@ -102,7 +103,7 @@ export const ItemDetail = ({ data }) => {
             onClick={changeColor}
             variant={isAdded ? "tertiary" : "primary"}
             disabled={count === 0}
-            className={`${count === 0 ? "opacity-50" : ""} ${isAdded ? "px-4" : ""}`}
+            className={`rounded-xl w-48 py-2 ${count === 0 ? "opacity-50" : ""}}`}
           >
             {isAdded ? "Agregado" : "Agregar"}
           </Button>
