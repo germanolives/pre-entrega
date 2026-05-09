@@ -1,5 +1,23 @@
 @import "tailwindcss";
 
-/* * {
+@theme {
+  /* Aquí definís tu nueva variable de tamaño */
+  --text-xxs: 0.625rem; /* Esto son 10px */
+  
+  /* Si querés ser más específico con la altura de línea (leading) */
+  --font-size-tiny: calc(var(--spacing) * 2); 
+}
+
+
+
+
+
+
+
+
+
+
+/* 
+* {
     outline: 1px solid black;
 } */

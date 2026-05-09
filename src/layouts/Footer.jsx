@@ -1,7 +1,10 @@
+import { Link } from "react-router-dom";
+import * as Icons from "../components/Icons/index";
+
 export const Footer = () => {
   return (
     <footer className="bg-lime-50 grid-rows-2 mx-4 rounded-xl border-2 border-gray-400 p-4 mt-8">
-      <div className="grid grid-cols-1 md:grid-cols-4 ">
+      <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto_auto_auto] mx-8 gap-16 ">
         <div>
           <h5>TIENDA S.A.U.</h5>
           <p className="text-xs italic">
@@ -11,37 +14,114 @@ export const Footer = () => {
         </div>
         <div>
           <h5>Menu</h5>
-          <ul>
-            <li>INICIO</li>
-            <li>PRODUCTOS</li>
-            <li>SERVICIOS</li>
-            <li>CONTACTO</li>
-            <li>CARRITO</li>
+          <ul className="text-xs italic">
+            <li>
+              <Link className="hover:text-blue-600" to={"/"}>
+                Inicio
+              </Link>
+            </li>
+            <li>
+              <Link className="hover:text-blue-600" to={"/products"}>
+                Productos
+              </Link>
+            </li>
+            <li>
+              <Link className="hover:text-blue-600" to={"/services"}>
+                Servicios
+              </Link>
+            </li>
+            <li>
+              <Link className="hover:text-blue-600" to={"/aboutUs"}>
+                Nosotros
+              </Link>
+            </li>
+            <li>
+              <Link className="hover:text-blue-600" to={"/login"}>
+                MiCuenta
+              </Link>
+            </li>
+            <li>
+              <Link className="hover:text-blue-600" to={"/cart"}>
+                Carrito
+              </Link>
+            </li>
+            <li>
+              <Link className="hover:text-blue-600" to={"/contact"}>
+                Contacto
+              </Link>
+            </li>
           </ul>
         </div>
         <div>
-          <h5>CONTACTO Y REDES</h5>
-          <ul>
+          <h5>Contacto</h5>
+          <ul className="text-xs italic">
             <li>
-              Teléfono: <a href="">+54 11 1234-5678</a>
+              <a href="#" className="flex items-center gap-2 group">
+                <Icons.PhoneIcon className="w-4 h-4 text-orange-600" />
+                <span className="text-xs group-hover:text-blue-600">
+                  +54 11 8765-4321
+                </span>
+              </a>
+            </li>
+            <li className="flex items-center">
+              <a href="#" className="flex items-center gap-2 group">
+                <Icons.WhatsAppIcon className="w-4 h-4 text-green-600" />
+                <span className="text-xs group-hover:text-blue-600">
+                  +54 911 1234-5678
+                </span>
+              </a>
+            </li>
+            <li className="flex items-center">
+              <a href="#" className="flex items-center gap-2 group">
+                <Icons.TelegramIcon className="w-4 h-4 text-sky-500" />
+                <span className="text-xs group-hover:text-blue-600">
+                  +54 911 1234-5678
+                </span>
+              </a>
             </li>
             <li>
-              Whatsapp: <a href="">+54 911 8765-4321</a>
-            </li>
-            <li>
-              Correo: <a href="">tienda@mail.com</a>
-            </li>
-            <li>
-              Facebook: <a href="">tienda@mail.com</a>
-            </li>
-            <li>
-              Instagram: <a href="">tienda@mail.com</a>
+              <a href="#" className="flex items-center gap-2 group">
+                <Icons.MailIcon className="w-4 h-4 text-blue-600" />
+                <span className="text-xs group-hover:text-blue-600">
+                  info@tusitio.com
+                </span>
+              </a>
             </li>
           </ul>
         </div>
         <div>
-          <h5>UBICACIÓN</h5>
-          <ul>
+          <h5>Redes Sociales</h5>
+          <ul className="text-xs italic">
+            <li>
+              <a href="#" className="flex items-center gap-2 group">
+                <Icons.FacebookIcon className="w-4 h-4 text-blue-700" />
+                <span className="text-xs group-hover:text-blue-600">
+                  Facebook
+                </span>
+              </a>
+            </li>
+            <li className="flex items-center">
+              <a href="#" className="flex items-center gap-2 group">
+                <Icons.InstagramIcon className="w-4 h-4 text-pink-600" />
+                <span className="text-xs group-hover:text-blue-600">
+                  Instagram
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="#" className="flex items-center gap-2 group">
+                <Icons.YoutubeIcon className="w-4 h-4 text-red-600" />
+                <span className="text-xs group-hover:text-blue-600">
+                  Youtube
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h5>Ubicación</h5>
+          <ul className="text-xs italic">
             <li>
               Dirección:{" "}
               <a href="">Av. de la Transición 44, Obispo Trejo, Córdoba</a>

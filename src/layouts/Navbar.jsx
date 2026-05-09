@@ -19,7 +19,7 @@ export const Navbar = () => {
           <Link to={"/aboutUs"}>NOSOTROS</Link>
         </li>
         <li className="flex items-center flex-col group relative">
-          <Link to={"/"}>MI CUENTA</Link>
+          <Link to={"/login"}>MI CUENTA</Link>
           <ul className="hidden group-hover:block absolute top-full bg-slate-200 shadow-md border border-gray-400 p-2 min-w-30 z-50 rounded-xl">
             <li className="p-0.5">
               <Link to={"/login"}>INGRESO</Link>
