@@ -5,7 +5,7 @@ export const SearchbarContainer = () => {
   useEffect(() => {}, []);
 
   return (
-    <div className="w-3">
+    <div className="hidden md:block w-full">
       <form className="flex p-2 gap-2 justify-evenly">
         <label htmlFor="" className="flex grow">
           <input
