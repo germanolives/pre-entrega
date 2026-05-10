@@ -74,7 +74,7 @@ export const ItemDetail = ({ data }) => {
       <aside className="p-6 shadow-2xl border border-gray-300 flex flex-col justify-between items-center">
         <DiscountList message={"Ofertas del día disponibles"} offer={offer} price={price} />
         <div className="flex flex-col justify-center items-center">
-          <p className="text-4xl font-bold text-blue-800">{formattedPrice}</p>
+          <p className={`text-4xl font-bold ${isAdded ? "text-red-500" : " text-blue-900"}`}>{formattedPrice}</p>
           <span className="p-2">
             <Button
               onClick={delProduct}
@@ -87,7 +87,7 @@ export const ItemDetail = ({ data }) => {
               onClick={resetProduct}
               variant={isAdded ? "tertiary" : "primary"}
               disabled={count === 0}
-              className={`px-4 py-2 rounded-xl min-w-14 transition-all ${count >= 150 ? "ring-4 ring-cyan-400" : count >= 100 ? "ring-4 ring-fuchsia-400" : count >= 50 ? "ring-4 ring-yellow-300" : count >= 20 ? "ring-4 ring-emerald-400" : count >= 10 ? "ring-4 ring-amber-400" : count === 0 ? "opacity-50" : ""}`}
+              className={`px-4 py-2 rounded-xl min-w-14 transition-all ${count >= 150 ? "ring-4 ring-cyan-400" : count >= 100 ? "ring-4 ring-fuchsia-400" : count >= 50 ? "ring-4 ring-yellow-300" : count >= 20 ? "ring-4 ring-emerald-400" : count >= 10 ? "ring-4 ring-amber-400" : ""}`}
             >
               {count}
             </Button>
@@ -103,7 +103,7 @@ export const ItemDetail = ({ data }) => {
             onClick={changeColor}
             variant={isAdded ? "tertiary" : "primary"}
             disabled={count === 0}
-            className={`rounded-xl w-48 py-2 ${count === 0 ? "opacity-50" : ""}}`}
+            className={`rounded-xl w-48 py-2`}
           >
             {isAdded ? "Agregado" : "Agregar"}
           </Button>
