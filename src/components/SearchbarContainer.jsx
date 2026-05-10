@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Button } from "./common/Button";
+import { SearchbarList } from "./SearchbarList";
 
 export const SearchbarContainer = () => {
   const [dataIn, setDataIn] = useState({
     name: "",
   });
   const [data, setData] = useState([]);
-  const [dataRes, setDataRes] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const manageChange = (event) => {
@@ -40,6 +40,9 @@ export const SearchbarContainer = () => {
     getData();
   }, []);
 
+const query = dataIn.name.trim().toLocaleLowerCase();
+const matches = query ? data.filter(item=>item.title.toLowerCase().includes(query)) : [];
+
   return (
     <div className="hidden md:block w-full">
       <form className="flex p-2 gap-2 justify-evenly" onSubmit={manageShipment}>
@@ -52,8 +55,8 @@ export const SearchbarContainer = () => {
             type="text"
             placeholder="Ingrese el producto..."
           />
-          <p className="z-50 absolute block w-full top-full bg-slate-300 rounded-sm border px-4">
-            {dataIn.name}
+          <p className="z-50 absolute block w-full top-full bg-slate-300 rounded-sm border border-t-0 px-4">
+            <SearchbarList data={matches} />
           </p>
         </label>
         <Button variant="ghost" className="border rounded-sm px-6 py-2">
