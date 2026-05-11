@@ -5,10 +5,12 @@ import { Button } from "./common/Button";
 import { DiscountList } from "./Discount/DiscountList";
 
 export const ItemDetail = ({ data }) => {
-  const { title, price, description, category, image, offer, rating } = data;
+  const { id, title, price, description, category, image, offer, rating } =
+    data;
   const [offer10, offer20, offer50, offer100, offer150] = offer;
   const [count, setCount] = useState(0);
   const [isAdded, setIsAdded] = useState(false);
+  const [cart, setCart] = useState([]);
   const discount =
     count >= offer150.qty
       ? offer150.discount
@@ -27,7 +29,9 @@ export const ItemDetail = ({ data }) => {
     currency: "ARS",
   });
 
-  const formattedPrice = countryPrice.format(price - (discount / 100) * price);
+  const finalPrice = price - (discount / 100) * price;
+
+  const formattedPrice = countryPrice.format(finalPrice);
 
   const increase = () => setCount((prev) => prev + 1);
   const decrease = () => setCount((prev) => prev - 1);
@@ -49,6 +53,30 @@ export const ItemDetail = ({ data }) => {
       setIsAdded(true);
     }
   };
+
+  const addToCart = () => {
+    changeColor();
+    const operId = (userId=1) => {
+      const timestamp = Date.now();
+      const random = Math.floor(Math.random() * 1000);
+
+      return `TRX-${userId}-${id}-${timestamp}-${random}-${count}`;
+    };
+
+    setCart([
+      ...cart,
+      {
+        cartId: operId(),
+        prodId: id,
+        prodTitle: title,
+        prodImg: image,
+        prodQty: count,
+        prodPrice: finalPrice,
+      },
+    ]);
+  };
+
+  console.log(cart);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 w-full md:w-2/3 mx-auto">
@@ -72,9 +100,17 @@ export const ItemDetail = ({ data }) => {
       </article>
 
       <aside className="p-6 shadow-2xl border border-gray-300 flex flex-col justify-between items-center">
-        <DiscountList message={"Ofertas del día disponibles"} offer={offer} price={price} />
+        <DiscountList
+          message={"Ofertas del día disponibles"}
+          offer={offer}
+          price={price}
+        />
         <div className="flex flex-col justify-center items-center">
-          <p className={`text-4xl font-bold ${isAdded ? "text-red-500" : " text-blue-900"}`}>{formattedPrice}</p>
+          <p
+            className={`text-4xl font-bold ${isAdded ? "text-red-500" : " text-blue-900"}`}
+          >
+            {formattedPrice}
+          </p>
           <span className="p-2">
             <Button
               onClick={delProduct}
@@ -100,7 +136,7 @@ export const ItemDetail = ({ data }) => {
             </Button>
           </span>
           <Button
-            onClick={changeColor}
+            onClick={addToCart}
             variant={isAdded ? "tertiary" : "primary"}
             disabled={count === 0}
             className={`rounded-xl w-48 py-2`}
