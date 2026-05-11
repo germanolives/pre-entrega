@@ -8,7 +8,9 @@ export const SearchbarList = ({ data }) => {
         <Link
           to={`/products/${formatSlug(item.category)}/${formatSlug(item.title)}/${item.id}`}
         >
-          <li key={item.id}>{item.title}</li>
+          <li key={item.id}>
+            {item.title} - ({item.category.toUpperCase()})
+          </li>
         </Link>
       ))}
     </ul>
