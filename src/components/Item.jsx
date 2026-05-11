@@ -8,7 +8,7 @@ export const Item = ({ id, title, price, description, category, image }) => {
   const [favorite, setFavorite] = useState(false);
   const titleSlug = formatSlug(title);
   const categorySlug = formatSlug(category);
-  const favoriteSlug = favorite ? "favorite" : "search";
+  const favoriteSlug = favorite ? "favorite" : "tienda";
   const productPath = `/products/${categorySlug}/${titleSlug}/${favoriteSlug}/${id}`;
   const countryPrice = new Intl.NumberFormat("es-AR", {
     style: "currency",

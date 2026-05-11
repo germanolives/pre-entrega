@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { formatSlug } from "../utils/formatSlug";
 
 export const SearchbarList = ({ data }) => {
-  const favorite = "search";
+  const favorite = "tienda";
   return (
     <ul>
       {data.map((item) => (
