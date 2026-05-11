@@ -1,17 +1,23 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ImgWithSkeleton } from "./common/ImgWithSkeleton";
 import { formatSlug } from "../utils/formatSlug";
+import { Button } from "./common/Button";
 
 export const Item = ({ id, title, price, description, category, image }) => {
+  const [favorite, setFavorite] = useState(false);
   const titleSlug = formatSlug(title);
   const categorySlug = formatSlug(category);
-  const productPath = `/products/${categorySlug}/${titleSlug}/${id}`;
+  const favoriteSlug = favorite ? "alfa" : "beta";
+  const productPath = `/products/${categorySlug}/${titleSlug}/${favoriteSlug}/${id}`;
   const countryPrice = new Intl.NumberFormat("es-AR", {
     style: "currency",
     currency: "ARS",
   });
 
   const formattedPrice = countryPrice.format(price);
+
+  const favUndofav = () => setFavorite(!favorite);
 
   return (
     <article className="grid grid-rows-[auto_auto_1fr_auto] bg-gray-200 p-4 shadow-2xl border border-gray-300 h-full rounded-sm">
@@ -28,7 +34,12 @@ export const Item = ({ id, title, price, description, category, image }) => {
         </div>
       </Link>
       <p className="text-xs text-gray-600 line-clamp-3">{description}</p>
-      <p className="text-xl font-bold text-blue-800 mt-auto">{formattedPrice}</p>
+      <div className="flex flex-row justify-between">
+        <span className="text-xl font-bold text-blue-800 mt-auto">
+          {formattedPrice}
+        </span>
+        <Button onClick={favUndofav} className={`rounded-sm ${favorite ? "opacity-100" : "opacity-25"}`}>⭐</Button>
+      </div>
     </article>
   );
 };

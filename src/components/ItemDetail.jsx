@@ -4,9 +4,10 @@ import { ImgWithSkeleton } from "./common/ImgWithSkeleton";
 import { Button } from "./common/Button";
 import { DiscountList } from "./Discount/DiscountList";
 
-export const ItemDetail = ({ data }) => {
+export const ItemDetail = ({ data, favorite }) => {
   const { id, title, price, description, category, image, offer, rating } =
     data;
+  const flagFav = (favorite === "alfa") ? true : false;
   const [offer10, offer20, offer50, offer100, offer150] = offer;
   const [count, setCount] = useState(0);
   const [isAdded, setIsAdded] = useState(false);
@@ -56,7 +57,7 @@ export const ItemDetail = ({ data }) => {
 
   const addToCart = () => {
     changeColor();
-    const operId = (userId=1) => {
+    const operId = (userId = 1) => {
       const timestamp = Date.now();
       const random = Math.floor(Math.random() * 1000);
 
@@ -72,6 +73,7 @@ export const ItemDetail = ({ data }) => {
         prodImg: image,
         prodQty: count,
         prodPrice: finalPrice,
+        userId: 1,
       },
     ]);
   };
@@ -81,9 +83,12 @@ export const ItemDetail = ({ data }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 w-full md:w-2/3 mx-auto">
       <article className="grid grid-rows-[auto_1fr_auto_auto] bg-gray-200 p-4 shadow-2xl border border-gray-300 h-full rounded-sm">
-        <h1 className="text-xl font-bold text-blue-800 mt-auto capitalize line-clamp-3 leading-tight px-2 min-h-15 overflow-hidden">
-          {title}
-        </h1>
+        <div className="flex flax-row justify-between">
+          <h1 className="text-xl font-bold text-blue-800 mt-auto capitalize line-clamp-3 leading-tight px-2 min-h-15 overflow-hidden">
+            {title}
+          </h1>
+          <span className={`${flagFav ? "bg-blue-800 h-7 rounded-sm" : "hidden"}`}>⭐</span>
+        </div>
         <Link to={"/products"}>
           <div className="w-full aspect-square overflow-hidden bg-white border border-gray-100 rounded-sm">
             <ImgWithSkeleton

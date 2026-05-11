@@ -5,7 +5,7 @@ import { RenderContent } from "../components/common/RenderContent";
 import { formatSlug } from "../utils/formatSlug";
 
 export const ProductDetail = () => {
-  const { categorySlug, titleSlug, id } = useParams();
+  const { categorySlug, titleSlug, favoriteSlug, id } = useParams();
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -47,7 +47,7 @@ export const ProductDetail = () => {
       className={`mx-4 border-2 border-gray-400 rounded-xl p-8 flex justify-center items-center`}
     >
       <RenderContent loading={loading} error={error} data={data}>
-        <ItemDetail data={data} />
+        <ItemDetail data={data} favorite={favoriteSlug}/>
       </RenderContent>
     </section>
   );
