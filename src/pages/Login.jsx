@@ -1,3 +1,3 @@
 export const Login = () => {
-  return <div>Acceder a la cuenta</div>;
+  return <h2 className="text-center">Acceder a la cuenta</h2>;
 };

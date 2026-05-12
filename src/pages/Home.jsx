@@ -1,3 +1,3 @@
 export const Home = () => {
-  return <div>Inicio</div>;
+  return <h2 className="text-center">Inicio</h2>;
 };
