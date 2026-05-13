@@ -30,7 +30,6 @@ export const SearchbarContainer = () => {
         }
         const data = await response.json();
         setData(data);
-        
       } catch (error) {
         setError(error.message);
       } finally {
@@ -40,8 +39,10 @@ export const SearchbarContainer = () => {
     getData();
   }, []);
 
-const query = dataIn.name.trim().toLocaleLowerCase();
-const matches = query ? data.filter(item=>item.title.toLowerCase().includes(query)) : [];
+  const query = dataIn.name.trim().toLocaleLowerCase();
+  const matches = query
+    ? data.filter((item) => item.title.toLowerCase().includes(query))
+    : [];
 
   return (
     <div className="hidden md:block w-full">
@@ -51,15 +52,32 @@ const matches = query ? data.filter(item=>item.title.toLowerCase().includes(quer
             name="name"
             value={dataIn.name}
             onChange={manageChange}
+            disabled={loading}
             className="flex grow border px-4 rounded-sm"
             type="text"
-            placeholder="Ingrese el producto..."
+            placeholder={`${loading ? "Cargando productos..." : "Ingrese el producto..."}`}
           />
-          { query && matches.length>0 && <div className="z-50 absolute block w-full top-full bg-slate-300 rounded-b-sm border border-t-0 px-4 shadow-xl">
-            <SearchbarList data={matches} reset={setDataIn} />
-          </div>}
+          {error && query && (
+            <div className="z-50 absolute block w-full top-full bg-red-100 text-red-700 p-2 text-xs border border-red-300 rounded-b-sm shadow-md">
+              ⚠️ Error al cargar productos: {error}
+            </div>
+          )}
+          {!loading && !error && query && matches.length === 0 && (
+            <div className="z-50 absolute block w-full top-full bg-slate-300 rounded-b-sm border border-t-0 px-4 shadow-xl text-sm italic">
+              No se encontraron productos con "{query}"
+            </div>
+          )}
+          {!error && query && matches.length > 0 && (
+            <div className="z-50 absolute block w-full top-full bg-slate-300 rounded-b-sm border border-t-0 px-4 shadow-xl text-sm">
+              <SearchbarList data={matches} reset={setDataIn} />
+            </div>
+          )}
         </label>
-        <Button variant="ghost" className="border rounded-sm px-6 py-2" type="submit">
+        <Button
+          variant="ghost"
+          className="border rounded-sm px-6 py-2"
+          type="submit"
+        >
           Ir
         </Button>
       </form>
