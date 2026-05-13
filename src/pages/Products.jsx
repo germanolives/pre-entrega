@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { ItemList } from "../components/ItemList";
 import { RenderContent } from "../components/common/RenderContent";
+import { addProperties } from "../utils/addProperties";
 
 export const Products = () => {
   const [data, setData] = useState([]);
@@ -10,15 +11,23 @@ export const Products = () => {
   useEffect(() => {
     setLoading(true);
     setError(null);
-   
+
     const getData = async () => {
       try {
-        const response = await fetch("/data/products.json");
-        // const response = await fetch("https://fakestoreapi.com/products");
-        if (!response.ok) {
+        const [resProds, resOffers] = await Promise.all([
+          fetch("/data/products.json"),
+          // fetch("https://fakestoreapi.com/products"),
+          fetch("/data/offers.json"),
+        ]);
+        if (!resProds.ok) {
           throw new Error("No se pudieron cargar los productos");
         }
-        const data = await response.json();
+        if (!resOffers.ok) {
+          throw new Error("No se pudieron cargar las ofertas");
+        }
+        const realProds = await resProds.json();
+        const realOffers = await resOffers.json();
+        const data = addProperties(realProds, realOffers);
         setData(data);
       } catch (error) {
         setError(error.message);

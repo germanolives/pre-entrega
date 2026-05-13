@@ -16,21 +16,33 @@ export const ProductDetail = () => {
 
     const getData = async () => {
       try {
-        const response = await fetch("/data/products.json");
-        // const response = await fetch(`https://fakestoreapi.com/products/${id}`);
-        if (!response.ok) {
-          throw new Error("Productos no disponibles");
+        const [resProd, resOffer] = await Promise.all([
+          fetch("/data/products.json"),
+          // fetch(`https://fakestoreapi.com/products/${id}`),
+          fetch("/data/offers.json"),
+        ]);
+        
+        if (!resProd.ok) {
+          throw new Error("Producto no disponible");
         }
-        const resData = await response.json();
-        const productFound = resData.find((item) => item.id === parseInt(id));
-        // const productFound = resData;
-        if (!productFound) throw new Error("El producto no existe");
+        if (!resOffer.ok) {
+          throw new Error("Ofertas no disponibles");
+        }
 
-        const categoryInJson = formatSlug(productFound.category);
+        const realProd = await resProd.json();
+        const realOffer = await resOffer.json();
+
+        const realProductFound = realProd.find((item) => item.id === parseInt(id));
+        // const realProductFound = realProd;
+        if (!realProductFound) throw new Error("El producto no existe");
+
+        const categoryInJson = formatSlug(realProductFound.category);
 
         if (categorySlug !== categoryInJson) {
           throw new Error("Categoría incorrecta para este producto");
         }
+        const productFound = {...realProductFound, offer: realOffer};
+
 
         setData(productFound);
       } catch (error) {

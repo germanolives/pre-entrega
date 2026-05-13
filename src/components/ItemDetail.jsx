@@ -5,9 +5,19 @@ import { Button } from "./common/Button";
 import { DiscountList } from "./Discount/DiscountList";
 
 export const ItemDetail = ({ data, favorite }) => {
-  const { id, title, price, description, category, image, offer, rating } =
-    data;
-  const flagFav = (favorite === "favorite") ? true : false;
+  const {
+    id,
+    title,
+    price: priceRaw,
+    description,
+    category,
+    image,
+    offer: offerRaw,
+    rating,
+  } = data;
+  const price = Number(priceRaw) || 0;
+  const offer = offerRaw.map((item)=>({...item, id: Number(item.id)}));
+  const flagFav = favorite === "favorite" ? true : false;
   const [offer10, offer20, offer50, offer100, offer150] = offer;
   const [count, setCount] = useState(0);
   const [isAdded, setIsAdded] = useState(false);
@@ -87,7 +97,11 @@ export const ItemDetail = ({ data, favorite }) => {
           <h1 className="text-xl font-bold text-blue-800 mt-auto capitalize line-clamp-3 leading-tight px-2 min-h-15 overflow-hidden">
             {title}
           </h1>
-          <span className={`${flagFav ? "bg-blue-800 h-7 rounded-sm" : "hidden"}`}>⭐</span>
+          <span
+            className={`${flagFav ? "bg-blue-800 h-7 rounded-sm" : "hidden"}`}
+          >
+            ⭐
+          </span>
         </div>
         <Link to={"/products"}>
           <div className="w-full aspect-square overflow-hidden bg-white border border-gray-100 rounded-sm">
