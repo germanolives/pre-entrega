@@ -152,7 +152,7 @@ export const Footer = () => {
             <li>
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d637073.6337665524!2d-63.96224316479179!3d-31.02126938581348!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9433af72fb90a365%3A0x11fe01035b49075f!2sObispo%20Trejo%2C%20C%C3%B3rdoba!5e0!3m2!1ses-419!2sar!4v1777902101568!5m2!1ses-419!2sar"
-                className="h-24 md:h-30 rounded-lg"
+                className="w-full aspect-video rounded-lg shadow-sm"
                 style={{ border: 0 }}
                 allowFullScreen=""
                 loading="lazy"

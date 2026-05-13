@@ -15,7 +15,7 @@ export const SearchbarContainer = () => {
   };
   const manageShipment = (event) => {
     event.preventDefault();
-    console.log("Enviando los siguientes datos a la API:", dataIn);
+    console.log("Enviando...", dataIn);
   };
 
   useEffect(() => {
@@ -55,11 +55,11 @@ const matches = query ? data.filter(item=>item.title.toLowerCase().includes(quer
             type="text"
             placeholder="Ingrese el producto..."
           />
-          <div className="z-50 absolute block w-full top-full bg-slate-300 rounded-sm border border-t-0 px-4">
+          { query && matches.length>0 && <div className="z-50 absolute block w-full top-full bg-slate-300 rounded-b-sm border border-t-0 px-4 shadow-xl">
             <SearchbarList data={matches} reset={setDataIn} />
-          </div>
+          </div>}
         </label>
-        <Button variant="ghost" className="border rounded-sm px-6 py-2">
+        <Button variant="ghost" className="border rounded-sm px-6 py-2" type="submit">
           Ir
         </Button>
       </form>
