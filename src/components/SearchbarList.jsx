@@ -1,18 +1,20 @@
-import { Link } from "react-router-dom";
+import { LinkCustom } from "./common/LinkCustom";
 import { formatSlug } from "../utils/formatSlug";
 
-export const SearchbarList = ({ data }) => {
+export const SearchbarList = ({ data, reset }) => {
   const favorite = "tienda";
   return (
     <ul>
       {data.map((item) => (
-        <Link
+        <LinkCustom
+          key={item.id}
           to={`/products/${formatSlug(item.category)}/${formatSlug(item.title)}/${formatSlug(favorite)}/${item.id}`}
+          reset={reset}
         >
-          <li key={item.id}>
+          <li>
             {item.title} - ({item.category.toUpperCase()})
           </li>
-        </Link>
+        </LinkCustom>
       ))}
     </ul>
   );
