@@ -63,11 +63,11 @@ export const SearchbarContainer = () => {
             </div>
           )}
           {!loading && !error && query && matches.length === 0 && (
-            <div className="z-50 absolute block w-full top-full bg-slate-300 rounded-b-sm border border-t-0 px-4 shadow-xl text-sm italic">
+            <div className="z-50 absolute block w-full top-full bg-slate-200 rounded-b-sm border border-t-0 px-4 shadow-xl text-sm italic">
               No se encontraron productos con "{query}"
             </div>
           )}
-          {!error && query && matches.length > 0 && (
+          {!error && !loading && query && matches.length > 0 && (
             <div className="z-50 absolute block w-full top-full bg-slate-300 rounded-b-sm border border-t-0 px-4 shadow-xl text-sm">
               <SearchbarList data={matches} reset={setDataIn} />
             </div>
