@@ -16,7 +16,7 @@ export const ItemDetail = ({ data, favorite }) => {
     rating,
   } = data;
   const price = Number(priceRaw) || 0;
-  const offer = offerRaw.map((item)=>({...item, id: Number(item.id)}));
+  const offer = offerRaw.map((item)=>({...item, id: Number(item.id) || 0}));
   const flagFav = favorite === "favorite" ? true : false;
   const [offer10, offer20, offer50, offer100, offer150] = offer;
   const [count, setCount] = useState(0);
