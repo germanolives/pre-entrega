@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import { Button } from "./common/Button";
 import { SearchbarList } from "./SearchbarList";
+import { useQuery } from "../hooks/useQuery";
 
 export const SearchbarContainer = () => {
   const [dataIn, setDataIn] = useState({
     name: "",
   });
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const {data, loading, error } = useQuery();
+  // const [data, setData] = useState([]);
+  // const [error, setError] = useState(null);
+  // const [loading, setLoading] = useState(true);
   const manageChange = (event) => {
     const { name, value } = event.target;
     setDataIn({ ...dataIn, [name]: value });
@@ -18,26 +20,26 @@ export const SearchbarContainer = () => {
     console.log("Enviando...", dataIn);
   };
 
-  useEffect(() => {
-    setError(null);
-    setLoading(true);
+  // useEffect(() => {
+  //   setError(null);
+  //   setLoading(true);
 
-    const getData = async () => {
-      try {
-        const response = await fetch("/data/products.json");
-        if (!response.ok) {
-          throw new Error("No hay productos");
-        }
-        const data = await response.json();
-        setData(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getData();
-  }, []);
+  //   const getData = async () => {
+  //     try {
+  //       const response = await fetch("/data/products.json");
+  //       if (!response.ok) {
+  //         throw new Error("No hay productos");
+  //       }
+  //       const data = await response.json();
+  //       setData(data);
+  //     } catch (error) {
+  //       setError(error.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   getData();
+  // }, []);
 
   const query = dataIn.name.trim().toLocaleLowerCase();
   const matches = query
