@@ -1,17 +1,18 @@
 import { Navbar } from "./Navbar";
-import { ImgWithSkeleton } from "../components/common/ImgWithSkeleton";
+// import { ImgWithSkeleton } from "../components/common/ImgWithSkeleton";
 import { Link } from "react-router-dom";
+import { logo } from "../assets/brand";
 
 export const Header = () => {
   return (
     <header className="sticky top-0 left-0 mx-4 z-50 flex rounded-xl border-2 border-gray-400 bg-slate-300 mb-4">
       <Link to={"/"}>
-        <ImgWithSkeleton
-          className={"rounded-2xl border-r-2"}
-          size={"w-30 h-auto md:w-40 "}
-          image={"/images/logo.webp"}
-          title={"logo"}
-          isPriority={true}
+        <img
+          className={"rounded-2xl border-r-2 w-30 h-auto md:w-40"}
+          src={logo.image}
+          alt={logo.title}
+          fetchPriority="high"
+          loading="eager"
         />
       </Link>
       <Navbar />
