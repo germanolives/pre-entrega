@@ -1,0 +1,17 @@
+import { ItemList } from "../components/ItemList";
+import { RenderContent } from "../components/common/RenderContent";
+import {}
+
+export const Hero = () => {
+  const { data, loading, error } = useQuery();
+
+  return (
+    <section
+      className={`mx-4 border-2 border-gray-400 rounded-xl p-8 ${loading ? "flex justify-center items-center" : "grid grid-cols-1"}`}
+    >
+      <RenderContent loading={loading} error={error} data={data}>
+        <ItemList data={data} />
+      </RenderContent>
+    </section>
+  );
+};

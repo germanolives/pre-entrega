@@ -1,38 +1,11 @@
-import { useState, useEffect } from "react";
-import { RenderContent } from "../common/RenderContent";
 import { TeamList } from "./TeamList";
+import { tiendaTeam } from "../../assets/images/team";
+
 
 export const TeamContainer = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-
-    const getData = async () => {
-      try {
-        const response = await fetch("/data/team.json");
-        if (!response.ok) {
-          throw new Error("Información no disponible");
-        }
-        const data = await response.json();
-        setData(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getData();
-  }, []);
-
   return (
     <div className="flex flex-row gap-3">
-      <RenderContent loading={loading} error={error} data={data}>
-        <TeamList data={data}/>
-      </RenderContent>
+       <TeamList data={tiendaTeam}/>
     </div>
   );
 };
