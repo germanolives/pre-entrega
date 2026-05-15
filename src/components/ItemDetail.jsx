@@ -16,24 +16,15 @@ export const ItemDetail = ({ data, favorite }) => {
     rating,
   } = data;
   const price = Number(priceRaw) || 0;
-  const offer = offerRaw.map((item)=>({...item, id: Number(item.id) || 0}));
+  const offer = offerRaw.map((item) => ({ ...item, id: Number(item.id) || 0 }));
   const flagFav = favorite === "favorite" ? true : false;
-  const [offer10, offer20, offer50, offer100, offer150] = offer;
   const [count, setCount] = useState(0);
   const [isAdded, setIsAdded] = useState(false);
   const [cart, setCart] = useState([]);
-  const discount =
-    count >= offer150.qty
-      ? offer150.discount
-      : count >= offer100.qty
-        ? offer100.discount
-        : count >= offer50.qty
-          ? offer50.discount
-          : count >= offer20.qty
-            ? offer20.discount
-            : count >= offer10.qty
-              ? offer10.discount
-              : 0;
+
+  const sortedOffers = [...offer].sort((a, b) => b.qty - a.qty);
+  const appliedOffer = sortedOffers.find((o) => count >= o.qty);
+  const discount = appliedOffer ? appliedOffer.discount : 0;
 
   const countryPrice = new Intl.NumberFormat("es-AR", {
     style: "currency",
@@ -64,31 +55,6 @@ export const ItemDetail = ({ data, favorite }) => {
       setIsAdded(true);
     }
   };
-
-  const addToCart = () => {
-    changeColor();
-    const operId = (userId = 1) => {
-      const timestamp = Date.now();
-      const random = Math.floor(Math.random() * 1000);
-
-      return `TRX-${userId}-${id}-${timestamp}-${random}-${count}`;
-    };
-
-    setCart([
-      ...cart,
-      {
-        cartId: operId(),
-        prodId: id,
-        prodTitle: title,
-        prodImg: image,
-        prodQty: count,
-        prodPrice: finalPrice,
-        userId: 1,
-      },
-    ]);
-  };
-
-  console.log(cart);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 w-full md:w-2/3 mx-auto">
@@ -155,7 +121,7 @@ export const ItemDetail = ({ data, favorite }) => {
             </Button>
           </span>
           <Button
-            onClick={addToCart}
+            onClick={changeColor}
             variant={isAdded ? "tertiary" : "primary"}
             disabled={count === 0}
             className={`rounded-xl w-48 py-2`}
@@ -167,3 +133,53 @@ export const ItemDetail = ({ data, favorite }) => {
     </div>
   );
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const addToCart = () => {
+//   changeColor();
+//   const operId = (userId = 1) => {
+//     const timestamp = Date.now();
+//     const random = Math.floor(Math.random() * 1000);
+
+//     return `TRX-${userId}-${id}-${timestamp}-${random}-${count}`;
+//   };
+
+//   setCart([
+//     ...cart,
+//     {
+//       cartId: operId(),
+//       prodId: id,
+//       prodTitle: title,
+//       prodImg: image,
+//       prodQty: count,
+//       prodPrice: finalPrice,
+//       userId: 1,
+//     },
+//   ]);
+// };
+
+// console.log(cart);
