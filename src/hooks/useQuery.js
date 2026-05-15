@@ -40,10 +40,9 @@ export const useQuery = (
         const realOffer = await resOffer.json();
 
         if (categorySlug && titleSlug && id) {
-          const realProductFound = realProd.find(
-            (item) => item.id === parseInt(id),
-          );
-          // const realProductFound = realProd;
+
+          const realProductFound = !api ? realProd.find((item) => item.id === parseInt(id)) : realProd; 
+
           if (!realProductFound) throw new Error("El producto no existe");
           const categoryInJson = formatSlug(realProductFound.category);
           if (categorySlug !== categoryInJson) {
