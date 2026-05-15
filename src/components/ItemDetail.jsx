@@ -6,21 +6,19 @@ import { DiscountList } from "./Discount/DiscountList";
 
 export const ItemDetail = ({ data, favorite }) => {
   const {
-    id,
     title,
     price: priceRaw,
     description,
     category,
     image,
     offer: offerRaw,
-    rating,
   } = data;
   const price = Number(priceRaw) || 0;
   const offer = offerRaw.map((item) => ({ ...item, id: Number(item.id) || 0 }));
   const flagFav = favorite === "favorite" ? true : false;
   const [count, setCount] = useState(0);
   const [isAdded, setIsAdded] = useState(false);
-  const [cart, setCart] = useState([]);
+  
 
   const sortedOffers = [...offer].sort((a, b) => b.qty - a.qty);
   const appliedOffer = sortedOffers.find((o) => count >= o.qty);
@@ -158,6 +156,8 @@ export const ItemDetail = ({ data, favorite }) => {
 
 
 
+
+// const [cart, setCart] = useState([]);
 
 // const addToCart = () => {
 //   changeColor();
