@@ -1,6 +1,6 @@
 import logoImage from "./logo.webp";
 
 export const logo = {
-  title: "Logo de Tienda",
+  title: "Store Logo",
   image: logoImage,
 };

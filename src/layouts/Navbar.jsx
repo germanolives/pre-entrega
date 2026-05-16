@@ -7,33 +7,33 @@ export const Navbar = () => {
       <SearchbarContainer />
       <ul className="hidden md:flex justify-evenly items-center border-t border-gray-400 text-xs">
         <li className="flex items-center">
-          <Link to={"/"}>INICIO</Link>
+          <Link to={"/"}>HOME</Link>
         </li>
         <li className="flex items-center">
-          <Link to={"/products"}>PRODUCTOS</Link>
+          <Link to={"/products"}>PRODUCTS</Link>
         </li>
         <li className="flex items-center">
-          <Link to={"/services"}>SERVICIOS</Link>
+          <Link to={"/services"}>SERVICES</Link>
         </li>
         <li className="flex items-center">
-          <Link to={"/aboutUs"}>NOSOTROS</Link>
+          <Link to={"/aboutUs"}>ABOUT US</Link>
         </li>
         <li className="flex items-center flex-col group relative">
-          <Link to={"/login"}>MI CUENTA</Link>
+          <Link to={"/login"}>MY ACCOUNT</Link>
           <ul className="hidden group-hover:block absolute top-full bg-slate-200 shadow-md border border-gray-400 p-2 min-w-30 z-50 rounded-xl">
             <li className="p-0.5">
-              <Link to={"/login"}>INGRESO</Link>
+              <Link to={"/login"}>LOGIN</Link>
             </li>
             <li className="p-0.5">
-              <Link to={"/register"}>REGISTRO</Link>
+              <Link to={"/register"}>REGISTER</Link>
             </li>
           </ul>
         </li>
         <li className="flex items-center">
-          <Link to={"/cart"}>CARRITO</Link>
+          <Link to={"/cart"}>CART</Link>
         </li>
         <li className="flex items-center">
-          <Link to={"/contact"}>CONTACTO</Link>
+          <Link to={"/contact"}>CONTACT</Link>
         </li>
       </ul>
     </nav>

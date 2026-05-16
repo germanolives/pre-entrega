@@ -10,9 +10,9 @@ export const Item = ({ id, title, price, description, category, image }) => {
   const categorySlug = formatSlug(category);
   const favoriteSlug = favorite ? "favorite" : "tienda";
   const productPath = `/products/${categorySlug}/${titleSlug}/${favoriteSlug}/${id}`;
-  const countryPrice = new Intl.NumberFormat("es-AR", {
+  const countryPrice = new Intl.NumberFormat("en-GB", {
     style: "currency",
-    currency: "ARS",
+    currency: "EUR",
   });
 
   const formattedPrice = countryPrice.format(price);

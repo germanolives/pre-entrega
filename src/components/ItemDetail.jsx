@@ -24,9 +24,9 @@ export const ItemDetail = ({ data, favorite }) => {
   const appliedOffer = sortedOffers.find((o) => count >= o.qty);
   const discount = appliedOffer ? appliedOffer.discount : 0;
 
-  const countryPrice = new Intl.NumberFormat("es-AR", {
+  const countryPrice = new Intl.NumberFormat("en-GB", {
     style: "currency",
-    currency: "ARS",
+    currency: "EUR",
   });
 
   const finalPrice = price - (discount / 100) * price;
@@ -84,7 +84,7 @@ export const ItemDetail = ({ data, favorite }) => {
 
       <aside className="p-6 shadow-2xl border border-gray-300 flex flex-col justify-between items-center">
         <DiscountList
-          message={"Ofertas del día disponibles"}
+          message={"Today's deals available"}
           offer={offer}
           price={price}
         />
@@ -124,7 +124,7 @@ export const ItemDetail = ({ data, favorite }) => {
             disabled={count === 0}
             className={`rounded-xl w-48 py-2`}
           >
-            {isAdded ? "Agregado" : "Agregar"}
+            {isAdded ? "Added to cart" : "Add to cart"}
           </Button>
         </div>
       </aside>

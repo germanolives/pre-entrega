@@ -15,7 +15,7 @@ export const SearchbarContainer = () => {
   };
   const manageShipment = (event) => {
     event.preventDefault();
-    console.log("Enviando...", dataIn);
+    console.log("Sending...", dataIn);
   };
 
   const query = dataIn.name.trim().toLocaleLowerCase();
@@ -34,16 +34,16 @@ export const SearchbarContainer = () => {
             disabled={loading}
             className="flex grow border px-4 rounded-sm"
             type="text"
-            placeholder={`${loading ? "Cargando productos..." : "Ingrese el producto..."}`}
+            placeholder={`${loading ? "Loading products..." : "Enter the product..."}`}
           />
           {error && query && (
             <div className="z-50 absolute block w-full top-full bg-red-100 text-red-700 p-2 text-xs border border-red-300 rounded-b-sm shadow-md">
-              ⚠️ Error al cargar productos: {error}
+              ⚠️ Error loading products: {error}
             </div>
           )}
           {!loading && !error && query && matches.length === 0 && (
             <div className="z-50 absolute block w-full top-full bg-slate-200 rounded-b-sm border border-t-0 px-4 shadow-xl text-sm italic">
-              No se encontraron productos con "{query}"
+              No products were found with "{query}"
             </div>
           )}
           {!error && !loading && query && matches.length > 0 && (
@@ -57,7 +57,7 @@ export const SearchbarContainer = () => {
           className="border rounded-sm px-6 py-2"
           type="submit"
         >
-          Ir
+          Go
         </Button>
       </form>
     </div>

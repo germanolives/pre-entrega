@@ -10,7 +10,7 @@ export const ErrorMessage = ({ message }) => {
           </h2>
           
           <p className="text-red-600 font-medium">
-            {message || "No pudimos cargar la información en este momento."}
+            {message || "We were unable to load the information at this time."}
           </p>
 
           <button 

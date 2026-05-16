@@ -9,8 +9,8 @@ export const Footer = () => {
         <div>
           <h5 className="mb-2">TIENDA S.A.U.</h5>
           <p className="text-xs italic mb-2">
-            Tienda es una empresa internacional con sede central en la provincia
-            de Córdoba
+            Tienda is an international company headquartered in the province of
+            Córdoba.
           </p>
           <TeamContainer />
         </div>
@@ -19,43 +19,43 @@ export const Footer = () => {
           <ul className="flex flex-col gap-1 text-xs italic">
             <li>
               <Link className="hover:text-blue-600" to={"/"}>
-                Inicio
+                Home
               </Link>
             </li>
             <li>
               <Link className="hover:text-blue-600" to={"/products"}>
-                Productos
+                Products
               </Link>
             </li>
             <li>
               <Link className="hover:text-blue-600" to={"/services"}>
-                Servicios
+                Services
               </Link>
             </li>
             <li>
               <Link className="hover:text-blue-600" to={"/aboutUs"}>
-                Nosotros
+                About Us
               </Link>
             </li>
             <li>
               <Link className="hover:text-blue-600" to={"/login"}>
-                MiCuenta
+                My Account
               </Link>
             </li>
             <li>
               <Link className="hover:text-blue-600" to={"/cart"}>
-                Carrito
+                Cart
               </Link>
             </li>
             <li>
               <Link className="hover:text-blue-600" to={"/contact"}>
-                Contacto
+                Contact
               </Link>
             </li>
           </ul>
         </div>
         <div>
-          <h5 className="mb-2">Contacto</h5>
+          <h5 className="mb-2">Contact</h5>
           <ul className="flex flex-col gap-1 text-xs italic">
             <li>
               <a
@@ -108,7 +108,7 @@ export const Footer = () => {
           </ul>
         </div>
         <div>
-          <h5 className="mb-2">Redes Sociales</h5>
+          <h5 className="mb-2">Social networks</h5>
           <ul className="flex flex-col gap-1 text-xs italic">
             <li>
               <a href="#" className="flex items-center gap-2 group">
@@ -138,15 +138,15 @@ export const Footer = () => {
         </div>
 
         <div>
-          <h5 className="mb-2">Ubicación</h5>
+          <h5 className="mb-2">Location</h5>
           <ul className="text-xs italic">
             <li className="mb-2">
-              Dirección:{" "}
+              Address:{" "}
               <a
                 href="https://maps.app.goo.gl/wUr5A3khp46bD28d7"
                 target="_blank"
               >
-                Av. de la Transición 44, Obispo Trejo, Córdoba
+                44, Transición's Avenue, Trejo Bishop, Córdoba
               </a>
             </li>
             <li>
@@ -165,10 +165,11 @@ export const Footer = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 pt-8">
         <p className="text-center text-xs">
-          @ 2026 - Todos los derechos reservados
+          @ 2026 - All rights reserved
         </p>
         <p className="text-center text-xs">
-          webSite desarrollado por: <a href="maito">ax@mail.com</a>
+          Website developed by:{" "}
+          <a href="maito">siempreytodoslosdias@gmail.com</a>
         </p>
       </div>
     </footer>
