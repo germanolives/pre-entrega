@@ -17,7 +17,7 @@ export const HeroItem = ({ image, title, description, priority = false }) => {
             <span className="text-3xl md:hidden">{`Black Friday ${title}`}</span>
             <span className="hidden md:block text-5xl">{title}</span>
           </h2>
-          <p className="text-lg md:text-xl opacity-90 text-right">
+          <p className="text-lg md:text-xl opacity-90 text-right md:hidden">
             {description}
           </p>
         </div>

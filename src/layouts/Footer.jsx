@@ -70,7 +70,7 @@ export const Footer = () => {
             </li>
             <li className="flex items-center">
               <a
-                href="https://wa.me/5493575123456?text=Hola,%20vengo%20desde%20la%20web"
+                href="https://wa.me/5493575123456?text=Hello,%20I'm%20comming%20from%20the%20web"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 group"
