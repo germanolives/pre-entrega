@@ -7,25 +7,25 @@ export const blackFridayPromos = [
   {
     id: 1,
     title: "Promo 01",
-    description: "45% de descuento y 18 cuotas en productos seleccionados",
+    description: "45% discount and 18 installments on selected products",
     image: promo01,
   },
   {
     id: 2,
     title: "Promo 02",
-    description: "35% de descuento y 18 cuotas en electrónica",
+    description: "35% discount and 18 installments on electronics",
     image: promo02,
   },
   {
     id: 3,
     title: "Promo 03",
-    description: "40% de descuento y 18 cuotas en monitores full-hd",
+    description: "40% discount and 18 installments on full-HD monitors",
     image: promo03,
   },
   {
     id: 4,
     title: "Promo 04",
-    description: "40% de descuento y 18 cuotas en ropa de mujer y hombre",
+    description: "40% discount and 18 installments on women's and men's clothing",
     image: promo04,
   },
 ];

@@ -7,14 +7,14 @@ export const tiendaTeam = [
     id: 1,
     name: "Samuel",
     lastname: "Horwitz",
-    role: "General Director",
+    role: "CEO",
     image: shemp,
   },
   {
     id: 2,
     name: "Louis",
     lastname: "Feinberg",
-    role: "General Manager",
+    role: "Manager",
     image: larry,
   },
   {
