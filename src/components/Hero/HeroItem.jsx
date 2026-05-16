@@ -26,7 +26,7 @@ export const HeroItem = ({ image, title, description, priority = false }) => {
           variant="tertiary"
           className="text-white font-bold py-3 px-8 rounded-full w-fit"
         >
-          VER OFERTA
+          VIEW OFFER
         </Button>
       </div>
     </div>
