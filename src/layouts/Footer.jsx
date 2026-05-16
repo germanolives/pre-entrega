@@ -59,25 +59,25 @@ export const Footer = () => {
           <ul className="flex flex-col gap-1 text-xs italic">
             <li>
               <a
-                href="tel:+541112345678"
+                href="tel:+543575654321"
                 className="flex items-center gap-2 group"
               >
                 <Icons.PhoneIcon className="w-4 h-4 text-orange-600" />
                 <span className="text-xs group-hover:text-blue-600">
-                  +54 11 8765-4321
+                  +54 3575 654321
                 </span>
               </a>
             </li>
             <li className="flex items-center">
               <a
-                href="https://wa.me/5491112345678?text=Hola,%20vengo%20desde%20la%20web"
+                href="https://wa.me/5493575123456?text=Hola,%20vengo%20desde%20la%20web"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 group"
               >
                 <Icons.WhatsAppIcon className="w-4 h-4 text-green-600" />
                 <span className="text-xs group-hover:text-blue-600">
-                  +54 911 1234-5678
+                  +54 9 3575 123456
                 </span>
               </a>
             </li>
@@ -90,7 +90,7 @@ export const Footer = () => {
               >
                 <Icons.TelegramIcon className="w-4 h-4 text-sky-500" />
                 <span className="text-xs group-hover:text-blue-600">
-                  +54 911 1234-5678
+                  +54 9 3575 123456
                 </span>
               </a>
             </li>
