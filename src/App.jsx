@@ -12,6 +12,7 @@ import { Contact } from "./pages/Contact";
 import { ScrollToTop } from "./components/common/ScrollTo";
 import { ScrollControlls } from "./components/common/ScrollControlls";
 import { Categories } from "./pages/Categories";
+import { FiltredProducts } from "./pages/FiltredProducts";
 
 export const App = () => {
   return (
@@ -22,17 +23,21 @@ export const App = () => {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
           <Route path="products" element={<Products />} />
-          <Route
-            path="products/:categorySlug/:titleSlug/:favoriteSlug/:id"
-            element={<ProductDetail />}
-          />
-          <Route path="products/:categorySlug/" element={<Categories />} />
           <Route path="services" element={<Services />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="aboutUs" element={<AboutUs />} />
           <Route path="cart" element={<Cart />} />
           <Route path="contact" element={<Contact />} />
+          <Route
+            path="products/search/:filterSlug"
+            element={<FiltredProducts />}
+          />
+          <Route path="products/:categorySlug/" element={<Categories />} />
+          <Route
+            path="products/:categorySlug/:titleSlug/:favoriteSlug/:id"
+            element={<ProductDetail />}
+          />
         </Route>
       </Routes>
     </>
