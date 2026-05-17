@@ -1,5 +1,6 @@
 import { HeroList } from "./HeroList";
-import { blackFridayPromos } from "../../assets/images/hero";
+// import { blackFridayPromos } from "../../assets/images/hero";
+import { blackFridayPromos } from "../../data/offers/blackFridayPromos";
 
 export const HeroContainer = () => {
   return (
