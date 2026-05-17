@@ -15,7 +15,7 @@ export const FiltredProducts = () => {
 
   return (
     <section
-      className={`mx-4 border-2 border-gray-400 rounded-xl p-8 ${loading ? "flex justify-center items-center" : "grid grid-cols-1 gap-4 md:grid-cols-6"}`}
+      className={`mx-4 border-2 border-gray-400 rounded-xl p-8 ${loading ? "flex justify-center items-center" : "grid grid-cols-1 gap-4 md:grid-cols-5"}`}
     >
       <RenderContent loading={loading} error={error} data={searchedProds}>
         <ItemList data={searchedProds} />
