@@ -10,7 +10,7 @@ import { AboutUs } from "./pages/AboutUs";
 import { Cart } from "./pages/Cart";
 import { Contact } from "./pages/Contact";
 import { ScrollToTop } from "./components/common/ScrollTo";
-import { ScrollControlls } from "./components/common/ScrollControlls";
+import { ScrollControllsWithWhatsapp } from "./components/common/ScrollControllsWithWhatsapp";
 import { Categories } from "./pages/Categories";
 import { FiltredProducts } from "./pages/FiltredProducts";
 
@@ -18,7 +18,7 @@ export const App = () => {
   return (
     <>
       <ScrollToTop />
-      <ScrollControlls />
+      <ScrollControllsWithWhatsapp />
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
