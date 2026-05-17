@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ImgWithSkeleton } from "./common/ImgWithSkeleton";
-import { Button } from "./common/Button";
-import { DiscountList } from "./Discount/DiscountList";
+import { ImgWithSkeleton } from "../common/ImgWithSkeleton";
+import { Button } from "../common/Button";
+import { DiscountList } from "../Discount/DiscountList";
+import { formatSlug } from "../../utils/formatSlug"; 
 
 export const ItemDetail = ({ data, favorite }) => {
   const {
@@ -67,7 +68,7 @@ export const ItemDetail = ({ data, favorite }) => {
             ⭐
           </span>
         </div>
-        <Link to={"/products"}>
+        <Link to={`/products/${formatSlug(category)}`}>
           <div className="w-full aspect-square overflow-hidden bg-white border border-gray-100 rounded-sm">
             <ImgWithSkeleton
               image={image}

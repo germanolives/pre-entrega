@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { ItemDetail } from "../components/ItemDetail";
+import { ItemDetail } from "../components/Item/ItemDetail";
 import { RenderContent } from "../components/common/RenderContent";
 import { useQuery } from "../hooks/useQuery";
 

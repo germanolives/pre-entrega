@@ -1,9 +1,10 @@
-import { ItemList } from "../components/ItemList";
+import { ItemList } from "../components/Item/ItemList";
 import { RenderContent } from "../components/common/RenderContent";
 import { useQuery } from "../hooks/useQuery";
 
 export const Products = () => {
   const { data, loading, error } = useQuery();
+
 
   return (
     <section

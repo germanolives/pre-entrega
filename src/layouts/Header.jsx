@@ -1,5 +1,4 @@
-import { Navbar } from "./Navbar";
-// import { ImgWithSkeleton } from "../components/common/ImgWithSkeleton";
+import { Navbar } from "../components/Navbar/Navbar";
 import { Link } from "react-router-dom";
 import { logo } from "../assets/brand";
 

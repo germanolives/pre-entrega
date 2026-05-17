@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Button } from "./common/Button";
+import { Button } from "../common/Button";
 import { SearchbarList } from "./SearchbarList";
-import { useQuery } from "../hooks/useQuery";
+import { useQuery } from "../../hooks/useQuery";
 
 export const SearchbarContainer = () => {
   const [dataIn, setDataIn] = useState({

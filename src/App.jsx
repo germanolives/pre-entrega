@@ -11,6 +11,7 @@ import { Cart } from "./pages/Cart";
 import { Contact } from "./pages/Contact";
 import { ScrollToTop } from "./components/common/ScrollTo";
 import { ScrollControlls } from "./components/common/ScrollControlls";
+import { Categories } from "./pages/Categories";
 
 export const App = () => {
   return (
@@ -25,6 +26,7 @@ export const App = () => {
             path="products/:categorySlug/:titleSlug/:favoriteSlug/:id"
             element={<ProductDetail />}
           />
+          <Route path="products/:categorySlug/" element={<Categories />} />
           <Route path="services" element={<Services />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />

@@ -1,6 +1,6 @@
 import { Item } from "./Item";
 
-export const ItemList = ({data}) => {
+export const ItemList = ({ data }) => {
   return (
     <>
       {data.map((item) => (

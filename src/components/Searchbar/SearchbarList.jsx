@@ -1,5 +1,5 @@
-import { LinkCustom } from "./common/LinkCustom";
-import { formatSlug } from "../utils/formatSlug";
+import { LinkCustom } from "../common/LinkCustom";
+import { formatSlug } from "../../utils/formatSlug";
 
 export const SearchbarList = ({ data, reset }) => {
   const favorite = "tienda";

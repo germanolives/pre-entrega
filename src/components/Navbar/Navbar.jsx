@@ -1,5 +1,6 @@
-import { SearchbarContainer } from "../components/SearchbarContainer";
+import { SearchbarContainer } from "../Searchbar/SearchbarContainer";
 import { Link } from "react-router-dom";
+import { NavbarProdCategContent } from "./NavbarProdCategContent";
 
 export const Navbar = () => {
   return (
@@ -9,8 +10,9 @@ export const Navbar = () => {
         <li className="flex items-center">
           <Link to={"/"}>HOME</Link>
         </li>
-        <li className="flex items-center">
+        <li className="flex items-center flex-col group relative">
           <Link to={"/products"}>PRODUCTS</Link>
+          <NavbarProdCategContent />
         </li>
         <li className="flex items-center">
           <Link to={"/services"}>SERVICES</Link>

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ImgWithSkeleton } from "./common/ImgWithSkeleton";
-import { formatSlug } from "../utils/formatSlug";
-import { Button } from "./common/Button";
+import { ImgWithSkeleton } from "../common/ImgWithSkeleton";
+import { formatSlug } from "../../utils/formatSlug";
+import { Button } from "../common/Button";
 
 export const Item = ({ id, title, price, description, category, image }) => {
   const [favorite, setFavorite] = useState(false);
