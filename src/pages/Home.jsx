@@ -1,11 +1,11 @@
 import { HeroContainer } from "../components/Hero/HeroContainer";
-import { Offers } from "../components/Offers/Offers";
+import { Products } from "./Products";
 
 export const Home = () => {
   return (
     <div className="flex flex-col gap-4">
       <HeroContainer />
-      <Offers />
+      <Products />
     </div>
   );
 };

@@ -1,6 +1,10 @@
 import { Button } from "../common/Button";
+import { useNavigate } from "react-router-dom";
 
-export const HeroItem = ({ image, title, description, priority = false }) => {
+export const HeroItem = ({ id, image, title, description, priority = false }) => {
+  const navigate = useNavigate();
+
+
   return (
     <div className="relative w-full h-72 md:h-80 overflow-hidden bg-black">
       <img
@@ -25,6 +29,8 @@ export const HeroItem = ({ image, title, description, priority = false }) => {
         <Button
           variant="tertiary"
           className="text-white font-bold py-3 px-8 rounded-full w-fit"
+          onClick={()=>navigate(`/promos/black-friday/${id}`)}
+
         >
           VIEW OFFER
         </Button>

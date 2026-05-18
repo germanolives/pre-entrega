@@ -13,6 +13,7 @@ import { ScrollToTop } from "./components/common/ScrollTo";
 import { ScrollControllsWithWhatsapp } from "./components/common/ScrollControllsWithWhatsapp";
 import { Categories } from "./pages/Categories";
 import { FiltredProducts } from "./pages/FiltredProducts";
+import { Promos } from "./pages/Promos";
 
 export const App = () => {
   return (
@@ -33,6 +34,7 @@ export const App = () => {
             path="products/search/:filterSlug"
             element={<FiltredProducts />}
           />
+          <Route path="promos/black-friday/:id" element={<Promos />} />
           <Route path="products/:categorySlug/" element={<Categories />} />
           <Route
             path="products/:categorySlug/:titleSlug/:favoriteSlug/:id"
