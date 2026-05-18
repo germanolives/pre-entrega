@@ -1,6 +1,6 @@
-import larry from "./louis-feinberg.webp";
-import shemp from "./samuel-horwitz.webp";
-import curly from "./jerome-horwitz.webp";
+import larry from "../../assets/images/team/louis-feinberg.webp";
+import shemp from "../../assets/images/team/samuel-horwitz.webp";
+import curly from "../../assets/images/team/jerome-horwitz.webp";
 
 export const tiendaTeam = [
   {

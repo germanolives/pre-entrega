@@ -1,4 +1,4 @@
-import logoImage from "./logo.webp";
+import logoImage from "../../assets/images/brand/logo.webp";
 
 export const logo = {
   title: "Store Logo",

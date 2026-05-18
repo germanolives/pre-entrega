@@ -1,5 +1,5 @@
 import { TeamList } from "./TeamList";
-import { tiendaTeam } from "../../assets/images/team";
+import { tiendaTeam } from "../../data/team/team";
 
 
 export const TeamContainer = () => {

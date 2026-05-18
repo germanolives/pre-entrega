@@ -1,6 +1,6 @@
 import { Navbar } from "../components/Navbar/Navbar";
 import { Link } from "react-router-dom";
-import { logo } from "../assets/brand";
+import { logo } from "../data/brand/logo";
 
 export const Header = () => {
   return (
