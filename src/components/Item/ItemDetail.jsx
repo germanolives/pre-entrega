@@ -9,20 +9,17 @@ import { useCart } from "../../context/CartContext";
 export const ItemDetail = ({ data, favorite }) => {
   const {
     title,
-    price: priceRaw,
+    price,
     description,
     category,
     image,
-    offer: offerRaw,
+    offer,
   } = data;
 
-  const price = Number(priceRaw) || 0;
-  const offer = offerRaw.map((item) => ({ ...item, id: Number(item.id) || 0 }));
   const flagFav = favorite === "favorite" ? true : false;
   const [count, setCount] = useState(0);
   const [isAdded, setIsAdded] = useState(false);
-  const sortedOffers = [...offer].sort((a, b) => b.qty - a.qty);
-  const appliedOffer = sortedOffers.find((o) => count >= o.qty);
+  const appliedOffer = offer.find((o) => count >= o.qty);
   const discount = appliedOffer ? appliedOffer.discount : 0;
   const countryPrice = new Intl.NumberFormat("en-GB", {
     style: "currency",

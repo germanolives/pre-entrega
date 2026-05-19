@@ -65,3 +65,24 @@ export const CartProvider = ({ children }) => {
     </CartContext.Provider>
   );
 };
+
+
+
+
+
+
+
+// const getCartTotal = (product = null) => {
+//     if (product) {
+//       const searchProd = cart.find((item) => item.id === product.id);
+//       return searchProd ? searchProd.quantity * searchProd.price : 0;
+//     } else {
+//       return cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+//     }
+//   };
+
+
+
+//   const sortedOffers = [...offer].sort((a, b) => b.qty - a.qty);
+//   const appliedOffer = sortedOffers.find((o) => count >= o.qty);
+//   const discount = appliedOffer ? appliedOffer.discount : 0;

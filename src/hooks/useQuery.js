@@ -39,12 +39,20 @@ export const useQuery = (categorySlug = null, titleSlug = null, id = null) => {
         //   throw new Error("Ofertas no disponibles");
         // }
 
-        const realProd = await resProd.json();
-        // const realOffer = await resOffer.json();
-        const realOffer = offers;
+        const prods = await resProd.json();
+        const realProd = Array.isArray(prods)
+          ? prods.map((item) => ({ ...item, id: Number(item.id) || 0 }))
+          : { ...prods, id: Number(prods.id) || 0 };
+        // const offer = await resOffer.json();
+        const offer = offers.map((item) => ({
+          ...item,
+          id: Number(item.id) || 0,
+        }));
+        const sortedOffers = [...offer].sort((a, b) => b.qty - a.qty);
+        const realOffer = sortedOffers;
 
         if (categorySlug && titleSlug && id) {
-          const realProductFound = !api
+          const realProductFound = Array.isArray(realProd)
             ? realProd.find((item) => item.id === parseInt(id))
             : realProd;
 
