@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ImgWithSkeleton } from "../common/ImgWithSkeleton";
 import { formatSlug } from "../../utils/formatSlug";
-import { offerLogo } from "../../data/offers/offer";
+import { offerLogo } from "../../data/offers/offerLogo";
 
 export const PromoItem = ({ id, title, price, description, category, image, promo }) => {
   const titleSlug = formatSlug(title);

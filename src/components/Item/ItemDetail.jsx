@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { ImgWithSkeleton } from "../common/ImgWithSkeleton";
 import { Button } from "../common/Button";
 import { DiscountList } from "../Discount/DiscountList";
-import { formatSlug } from "../../utils/formatSlug"; 
+import { formatSlug } from "../../utils/formatSlug";
+// import { useState } from "../../context/CartContext";
 
 export const ItemDetail = ({ data, favorite }) => {
   const {
@@ -14,29 +15,23 @@ export const ItemDetail = ({ data, favorite }) => {
     image,
     offer: offerRaw,
   } = data;
+
   const price = Number(priceRaw) || 0;
   const offer = offerRaw.map((item) => ({ ...item, id: Number(item.id) || 0 }));
   const flagFav = favorite === "favorite" ? true : false;
   const [count, setCount] = useState(0);
   const [isAdded, setIsAdded] = useState(false);
-  
-
   const sortedOffers = [...offer].sort((a, b) => b.qty - a.qty);
   const appliedOffer = sortedOffers.find((o) => count >= o.qty);
   const discount = appliedOffer ? appliedOffer.discount : 0;
-
   const countryPrice = new Intl.NumberFormat("en-GB", {
     style: "currency",
     currency: "EUR",
   });
-
   const finalPrice = price - (discount / 100) * price;
-
   const formattedPrice = countryPrice.format(finalPrice);
-
   const increase = () => setCount((prev) => prev + 1);
   const decrease = () => setCount((prev) => prev - 1);
-
   const addProduct = () => {
     setIsAdded(false);
     increase();
