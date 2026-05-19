@@ -40,6 +40,7 @@ export const useQuery = (categorySlug = null, titleSlug = null, id = null) => {
         // }
 
         const realProd = await resProd.json();
+        // const realOffer = await resOffer.json();
         const realOffer = offers;
 
         if (categorySlug && titleSlug && id) {
