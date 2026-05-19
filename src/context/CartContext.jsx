@@ -51,9 +51,24 @@ export const CartProvider = ({ children }) => {
   const getCartTotal = (product = null) => {
     if (product) {
       const searchProd = cart.find((item) => item.id === product.id);
-      return searchProd ? searchProd.quantity * searchProd.price : 0;
+      if (searchProd) {
+        const appliedOffer = searchProd.offer.find(
+          (o) => searchProd.quantity >= o.qty,
+        );
+        const discount = appliedOffer ? appliedOffer.discount : 0;
+        const finalPrice =
+          searchProd.price - (discount / 100) * searchProd.price;
+        return searchProd.quantity * finalPrice;
+      } else {
+        return 0;
+      }
     } else {
-      return cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+      return cart.reduce((acc, item) => {
+        const appliedOffer = item.offer.find((o) => item.quantity >= o.qty);
+        const discount = appliedOffer ? appliedOffer.discount : 0;
+        const finalPrice = item.price - (discount / 100) * item.price;
+        return acc + item.quantity * finalPrice;
+      }, 0);
     }
   };
 
@@ -65,24 +80,3 @@ export const CartProvider = ({ children }) => {
     </CartContext.Provider>
   );
 };
-
-
-
-
-
-
-
-// const getCartTotal = (product = null) => {
-//     if (product) {
-//       const searchProd = cart.find((item) => item.id === product.id);
-//       return searchProd ? searchProd.quantity * searchProd.price : 0;
-//     } else {
-//       return cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-//     }
-//   };
-
-
-
-//   const sortedOffers = [...offer].sort((a, b) => b.qty - a.qty);
-//   const appliedOffer = sortedOffers.find((o) => count >= o.qty);
-//   const discount = appliedOffer ? appliedOffer.discount : 0;
