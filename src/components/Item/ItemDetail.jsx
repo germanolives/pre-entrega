@@ -4,7 +4,7 @@ import { ImgWithSkeleton } from "../common/ImgWithSkeleton";
 import { Button } from "../common/Button";
 import { DiscountList } from "../Discount/DiscountList";
 import { formatSlug } from "../../utils/formatSlug";
-// import { useState } from "../../context/CartContext";
+import { useCart } from "../../context/CartContext";
 
 export const ItemDetail = ({ data, favorite }) => {
   const {
@@ -49,6 +49,14 @@ export const ItemDetail = ({ data, favorite }) => {
       setIsAdded(true);
     }
   };
+  const { cart, addToCart } = useCart();
+  const handleAdd = () => {
+    changeColor();
+    addToCart(data, count);
+  };
+
+  console.log("Contenido del carrito global:", cart);
+
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 w-full md:w-2/3 mx-auto">
@@ -115,7 +123,7 @@ export const ItemDetail = ({ data, favorite }) => {
             </Button>
           </span>
           <Button
-            onClick={changeColor}
+            onClick={handleAdd}
             variant={isAdded ? "tertiary" : "primary"}
             disabled={count === 0}
             className={`rounded-xl w-48 py-2`}
@@ -127,9 +135,6 @@ export const ItemDetail = ({ data, favorite }) => {
     </div>
   );
 };
-
-
-
 
 
 
