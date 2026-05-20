@@ -15,7 +15,7 @@ export const CartItem = ({ item }) => {
   );
 
   return (
-    <article className="flex flex-col border border-gray-400 rounded-xl p-8">
+    <article className="flex flex-col border border-gray-400 rounded-xl p-2">
       <div className="flex flex-row justify-between">
         <h2>{item.title}</h2>
         <Button
