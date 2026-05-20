@@ -12,6 +12,7 @@ export const Button = ({
     tertiary: "bg-red-500 text-white hover:bg-red-600 shadow-md",
     outline: "border-1 rounded-xl border-blue-900 text-blue-900 hover:bg-blue-50",
     ghost: "text-slate-600 hover:bg-slate-100 hover:text-blue-900",
+    cristal: "",
   };
 
   return (
