@@ -38,7 +38,12 @@ export const Item = ({ id, title, price, description, category, image }) => {
         <span className="text-xl font-bold text-blue-800 mt-auto">
           {formattedPrice}
         </span>
-        <Button onClick={favUndofav} className={`rounded-sm ${favorite ? "opacity-100 hover:opacity-80" : "opacity-20 hover:opacity-40"}`}>⭐</Button>
+        <Button
+          onClick={favUndofav}
+          className={`rounded-sm ${favorite ? "opacity-100 hover:opacity-80" : "opacity-20 hover:opacity-40"}`}
+        >
+          ⭐
+        </Button>
       </div>
     </article>
   );
