@@ -14,6 +14,7 @@ export const ItemDetail = ({ data, favorite }) => {
     category,
     image,
     offer,
+    stock,
   } = data;
 
   const flagFav = favorite === "favorite" ? true : false;
@@ -89,6 +90,7 @@ export const ItemDetail = ({ data, favorite }) => {
           offer={offer}
           price={price}
         />
+        <p className="text-xxs">Available Stock: {stock} units</p>
         <div className="flex flex-col justify-center items-center">
           <p
             className={`text-4xl font-bold ${isAdded ? "text-red-500" : " text-blue-900"}`}

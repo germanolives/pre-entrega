@@ -26,7 +26,7 @@ export const CartItem = ({ item }) => {
           <TrashIcon className="w-4 h-4 text-gray-600 hover:text-blue-600" />
         </Button>
       </div>
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row justify-between gap-12">
         <ImgWithSkeleton
           title={item.title}
           image={item.image}
@@ -35,7 +35,7 @@ export const CartItem = ({ item }) => {
         />
 
         <div>
-          <p>Cantidad</p>
+          <p>Quantity</p>
           <Button variant="ghost" onClick={() => addToCart(item, -1)}>
             -
           </Button>
@@ -45,12 +45,17 @@ export const CartItem = ({ item }) => {
           </Button>
         </div>
         <div>
-          <p>Precio unitario</p>
+          <p>Unit Price</p>
 
           <span className="px-5">{formattedUnitPrice}</span>
         </div>
+        <div>
+          <p>Available Stock</p>
+
+          <span className="px-5">{item.stock-item.quantity}</span>
+        </div>
         <div className="flex flex-col">
-          <p>Precio</p>
+          <p>Price</p>
           <p>{formattedTotalPrice}</p>
         </div>
       </div>

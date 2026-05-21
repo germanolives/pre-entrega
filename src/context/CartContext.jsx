@@ -84,17 +84,6 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  const checkCart = (data) => {
-    if (cart) {
-      const newCart = cart.map((cartItem) => {
-        data.find((dataItem) => {
-          dataItem.id === cartItem.id
-            ? { ...cartItem, price: data.price }
-            : cartItem;
-        });
-      });
-    }
-  };
 
   return (
     <CartContext.Provider
