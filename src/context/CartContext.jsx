@@ -1,4 +1,5 @@
 import { useState, useContext, createContext, useEffect } from "react";
+import { CartItem } from "../components/Cart/CartItem";
 
 export const CartContext = createContext();
 
@@ -80,6 +81,18 @@ export const CartProvider = ({ children }) => {
         const finalPrice = item.price - (discount / 100) * item.price;
         return acc + item.quantity * finalPrice;
       }, 0);
+    }
+  };
+
+  const checkCart = (data) => {
+    if (cart) {
+      const newCart = cart.map((cartItem) => {
+        data.find((dataItem) => {
+          dataItem.id === cartItem.id
+            ? { ...cartItem, price: data.price }
+            : cartItem;
+        });
+      });
     }
   };
 

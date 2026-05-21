@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { formatSlug } from "../utils/formatSlug";
 import { addProperties } from "../utils/addProperties";
 import { offers } from "../data/offers/offers";
+import { stock } from "../data/stock/stock";
 
 export const useQuery = (categorySlug = null, titleSlug = null, id = null) => {
   const [data, setData] = useState(categorySlug && titleSlug && id ? null : []);
@@ -61,10 +62,19 @@ export const useQuery = (categorySlug = null, titleSlug = null, id = null) => {
           if (categorySlug !== categoryInJson) {
             throw new Error("Categoría incorrecta para este producto");
           }
-          const productFound = { ...realProductFound, offer: realOffer };
+          const productFound = {
+            ...realProductFound,
+            offer: realOffer,
+            stock: stock
+              ? Number(
+                  stock.find((item) => item.id === realProductFound.id)?.qty ??
+                    0,
+                )
+              : 0,
+          };
           setData(productFound);
         } else {
-          const data = addProperties(realProd, realOffer);
+          const data = addProperties(realProd, realOffer, stock);
           setData(data);
         }
       } catch (error) {
