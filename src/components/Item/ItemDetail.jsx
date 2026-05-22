@@ -124,7 +124,7 @@ export const ItemDetail = ({ data, favorite }) => {
           <Button
             onClick={handleAdd}
             variant={isAdded ? "tertiary" : "primary"}
-            disabled={count === 0}
+            disabled={count > stock || count === 0}
             className={`rounded-xl w-48 py-2`}
           >
             {isAdded ? "Added to cart" : "Add to cart"}

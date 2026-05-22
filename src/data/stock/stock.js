@@ -1,5 +1,5 @@
 export const stock = [
-  { id: 1, qty: 500 },
+  { id: 1, qty: 5 },
   { id: 2, qty: 1000 },
   { id: 3, qty: 450 },
   { id: 4, qty: 2600 },

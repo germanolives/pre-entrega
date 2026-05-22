@@ -1,5 +1,6 @@
 import { useState, useContext, createContext, useEffect } from "react";
 import { CartItem } from "../components/Cart/CartItem";
+import { idGenerator } from "../utils/idGenerator";
 
 export const CartContext = createContext();
 
@@ -84,6 +85,32 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const checkCart = (data) => {
+    const cartId = idGenerator();
+    const newCart = cart.filter(
+      (cartItem) =>
+        cartItem.id ===
+        data.find(
+          (dataItem) => dataItem.id === cartItem.id && dataItem.stock > 0,
+        )?.id,
+    );
+    const updatedNewCart = newCart.map((item) => {
+      const findedItem = data.find((dataItem) => dataItem.id === item.id);
+      if (findedItem) {
+        return {
+          ...item,
+          cartId,
+          price: findedItem.price,
+          quantity:
+            item.quantity > findedItem.stock ? findedItem.stock : item.quantity,
+          offer: findedItem.offer,
+          stock: findedItem.stock,
+        };
+      }
+      return item;
+    });
+    setCart(updatedNewCart);
+  };
 
   return (
     <CartContext.Provider
