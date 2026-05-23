@@ -54,11 +54,9 @@ export const CartProvider = ({ children }) => {
 
   const resetProdQtyCart = (product) => {
     if (!product) return;
-
     const newCart = cart.map((item) =>
       item.id === product.id ? { ...item, quantity: 1 } : item,
     );
-
     setCart(newCart);
   };
 
