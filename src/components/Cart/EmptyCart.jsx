@@ -4,7 +4,7 @@ import { CartIcon } from "../Icons/index";
 
 export const EmptyCart = () => {
   return (
-    <article className="bg-cyan-100 border border-gray-400 rounded-xl flex flex-col items-center  md:flex-row  p-4">
+    <article className="bg-cyan-100 border border-gray-400 rounded-xl flex flex-col items-center md:flex-row  p-4">
       <CartIcon className="w-16 h-16 mx-3 text-gray-300" />
       <div className="mx-2 text-center md:text-left">
         <h4 className="text-xl font-semibold">Your cart is empty</h4>
