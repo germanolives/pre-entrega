@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { Button } from "../common/Button";
 import { ImgWithSkeleton } from "../common/ImgWithSkeleton";
+import { formatSlug } from "../../utils/formatSlug";
 import { TrashIcon } from "../Icons/index";
 
 export const CartItem = ({ item }) => {
@@ -23,9 +25,11 @@ export const CartItem = ({ item }) => {
   return (
     <article className="flex flex-col bg-cyan-100 border border-gray-400 rounded-xl p-2">
       <div className="flex flex-row justify-between items-center border-b border-gray-300 h-12">
-        <h2 className="text-sm font-bold text-blue-800 capitalize line-clamp-2 leading-tight px-2 overflow-hidden">
-          {item.title}
-        </h2>
+        <Link to={`/products/${formatSlug(item.category)}/${formatSlug(item.title)}/tienda/${item.id}`}>
+          <h2 className="text-sm font-bold text-blue-800 capitalize line-clamp-2 leading-tight px-2 overflow-hidden">
+            {item.title}
+          </h2>
+        </Link>
         <Button
           variant="cristal"
           className="px-1"
@@ -37,12 +41,14 @@ export const CartItem = ({ item }) => {
 
       <div className="flex flex-row justify-between mt-0">
         <div className="bg-cyan-50 flex flex-col border border-gray-300 rounded-sm rounded-t-none border-t-0">
-          <ImgWithSkeleton
-            title={item.title}
-            image={item.image}
-            className={`object-contain p-2`}
-            size={`w-30 h-30`}
-          />
+          <Link to={`/products/${formatSlug(item.category)}`}>
+            <ImgWithSkeleton
+              title={item.title}
+              image={item.image}
+              className={`object-contain p-2`}
+              size={`w-30 h-30`}
+            />
+          </Link>
           <div className="flex flex-col">
             <p className="text-xxs text-gray-500">Unit Price</p>
             <span className="flex px-2 border-t border-b border-gray-300 text-xs justify-center items-center w-30 text-gray-500">
