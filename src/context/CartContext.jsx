@@ -93,8 +93,34 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  // const checkCart = (data) => {
+  //   const cartId = idGenerator();
+  //   const newCart = cart.filter(
+  //     (cartItem) =>
+  //       cartItem.id ===
+  //       data.find(
+  //         (dataItem) => dataItem.id === cartItem.id && dataItem.stock > 0,
+  //       )?.id,
+  //   );
+  //   const updatedNewCart = newCart.map((item) => {
+  //     const findedItem = data.find((dataItem) => dataItem.id === item.id);
+  //     if (findedItem) {
+  //       return {
+  //         ...item,
+  //         cartId,
+  //         price: findedItem.price,
+  //         quantity:
+  //           item.quantity > findedItem.stock ? findedItem.stock : item.quantity,
+  //         offer: findedItem.offer,
+  //         stock: findedItem.stock,
+  //       };
+  //     }
+  //     return item;
+  //   });
+  //   setCart(updatedNewCart);
+  // };
+
   const checkCart = (data) => {
-    const cartId = idGenerator();
     const newCart = cart.filter(
       (cartItem) =>
         cartItem.id ===
@@ -107,7 +133,6 @@ export const CartProvider = ({ children }) => {
       if (findedItem) {
         return {
           ...item,
-          cartId,
           price: findedItem.price,
           quantity:
             item.quantity > findedItem.stock ? findedItem.stock : item.quantity,
@@ -122,7 +147,15 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, clearCart, getCartQuantity, getCartTotal, resetProdQtyCart }}
+      value={{
+        cart,
+        addToCart,
+        clearCart,
+        getCartQuantity,
+        getCartTotal,
+        checkCart,
+        resetProdQtyCart,
+      }}
     >
       {children}
     </CartContext.Provider>

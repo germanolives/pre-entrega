@@ -1,15 +1,11 @@
-import { useQuery } from "../../hooks/useQuery";
-import { RenderContent } from "../common/RenderContent";
 import { ConfirmPuchaseItem } from "./ConfirmPuchaseItem";
 
-export const ConfirmPurchaseContent = () => {
-  const { data, loading, error } = useQuery();
+export const ConfirmPurchaseContent = ({data}) => {
+
 
   return (
-    <div>
-      <RenderContent loading={loading} error={error} data={data}>
+    <div className="w-full md:w-80 sticky top-31 right-8 self-start">
         <ConfirmPuchaseItem data={data} />
-      </RenderContent>
     </div>
   );
 };

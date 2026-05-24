@@ -23,7 +23,7 @@ export const CartItem = ({ item }) => {
   );
 
   return (
-    <article className="flex flex-col bg-cyan-100 border border-gray-400 rounded-xl p-2">
+    <article className="flex flex-col bg-cyan-100 border border-gray-200 rounded-xl p-2 shadow-md">
       <div className="flex flex-row justify-between items-center border-b border-gray-300 h-12">
         <Link to={`/products/${formatSlug(item.category)}/${formatSlug(item.title)}/tienda/${item.id}`}>
           <h2 className="text-sm font-bold text-blue-800 capitalize line-clamp-2 leading-tight px-2 overflow-hidden">
@@ -39,7 +39,7 @@ export const CartItem = ({ item }) => {
         </Button>
       </div>
 
-      <div className="flex flex-row justify-between mt-0">
+      <div className="flex flex-row justify-evenly mt-0">
         <div className="bg-cyan-50 flex flex-col border border-gray-300 rounded-sm rounded-t-none border-t-0">
           <Link to={`/products/${formatSlug(item.category)}`}>
             <ImgWithSkeleton
