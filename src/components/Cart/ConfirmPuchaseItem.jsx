@@ -1,8 +1,9 @@
 import { useCart } from "../../context/CartContext";
 import { Button } from "../common/Button";
+import { TrashIcon } from "..//Icons/index";
 
 export const ConfirmPuchaseItem = ({ data }) => {
-  const { cart, checkCart, getCartTotal, getCartQuantity } = useCart();
+  const { clearCart, getCartTotal, getCartQuantity } = useCart();
   const countryPrice = new Intl.NumberFormat("en-GB", {
     style: "currency",
     currency: "EUR",
@@ -11,8 +12,17 @@ export const ConfirmPuchaseItem = ({ data }) => {
 
   return (
     <aside className="bg-green-300 flex flex-col justify-center items-center p-2 border border-gray-200 rounded-xl shadow-md ">
-      <h2 className="mb-2">Purchase summary</h2>
-      <div className="bg-green-200 flex flex-col justify-center items-center border border-gray-300 rounded-sm border-t-0 mb-3 p-1 w-6/7">
+      <div className="flex flex-row justify-between w-11/12 mb-2">
+        <h2 className="">Purchase summary</h2>
+        <Button
+          variant="cristal"
+          className="px-1"
+          onClick={() => clearCart()}
+        >
+          <TrashIcon className="w-6 h-6 text-gray-600 hover:text-blue-600" />
+        </Button>
+      </div>
+      <div className="bg-green-200 flex flex-col justify-center items-center border border-gray-300 rounded-sm border-t-0 mb-3 p-1 w-11/12">
         <div className="flex flex-col">
           <p className="text-xs text-gray-500">Products (Quantity)</p>
           <span className="flex px-2 border-t border-b border-gray-300 text-xl justify-center items-center w-30 text-black">
