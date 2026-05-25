@@ -1,18 +1,16 @@
-import { SearchbarContainer } from "../Searchbar/SearchbarContainer";
 import { Link } from "react-router-dom";
 import { NavbarProdCategContent } from "./NavbarProdCategContent";
 import { useLocation } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { CartIcon } from "../Icons/index";
 
-export const MovilNavbar = () => {
+export const MovilNavbar = ({menuChange}) => {
   const location = useLocation();
   const { getCartQuantity } = useCart();
   return (
     <nav className="grow md:hidden">
-      <SearchbarContainer />
-      <ul className="p-2 border border-gray-400 rounded-sm m-2">
-        <li className="">
+      <ul className="p-2 border border-gray-400 rounded-sm m-2 text-sm">
+        <li className="m-1" onClick={menuChange}>
           <Link
             to={"/"}
             className={`${location.pathname === "/" ? "text-blue-600" : "text-gray-600"}`}
@@ -20,7 +18,7 @@ export const MovilNavbar = () => {
             HOME
           </Link>
         </li>
-        <li>
+        <li className="m-1" onClick={menuChange}>
           <Link
             to={"/products"}
             className={`${location.pathname.includes("/products") ? "text-blue-600" : "text-gray-600"}`}
@@ -29,7 +27,7 @@ export const MovilNavbar = () => {
           </Link>
           <NavbarProdCategContent />
         </li>
-        <li>
+        <li className="m-1" onClick={menuChange}>
           <Link
             to={"/services"}
             className={`${location.pathname === "/services" ? "text-blue-600" : "text-gray-600"}`}
@@ -37,7 +35,7 @@ export const MovilNavbar = () => {
             SERVICES
           </Link>
         </li>
-        <li>
+        <li className="m-1" onClick={menuChange}>
           <Link
             to={"/aboutUs"}
             className={`${location.pathname === "/aboutUs" ? "text-blue-600" : "text-gray-600"}`}
@@ -45,7 +43,7 @@ export const MovilNavbar = () => {
             ABOUT US
           </Link>
         </li>
-        <li>
+        <li className="m-1" onClick={menuChange}>
           <Link
             to={"/login"}
             className={`${location.pathname === "/login" || location.pathname === "/register" ? "text-blue-600" : "text-gray-600"}`}
@@ -53,7 +51,7 @@ export const MovilNavbar = () => {
             MY ACCOUNT
           </Link>
         </li>
-        <li className="flex items-center">
+        <li className="flex items-center m-1" onClick={menuChange}>
           <Link
             to={"/cart"}
             className={`${location.pathname === "/cart" ? "text-blue-600" : "text-gray-600"}`}
@@ -66,7 +64,7 @@ export const MovilNavbar = () => {
             </div>
           </Link>
         </li>
-        <li>
+        <li className="m-1" onClick={menuChange}>
           <Link
             to={"/contact"}
             className={`${location.pathname === "/contact" ? "text-blue-600" : "text-gray-600"}`}
