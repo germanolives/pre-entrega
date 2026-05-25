@@ -29,7 +29,7 @@ export const SearchbarContainer = () => {
     : [];
 
   return (
-    <div className="hidden md:block w-full">
+    <div className="w-full">
       <form className="flex p-2 gap-2 justify-evenly" onSubmit={manageShipment}>
         <label htmlFor="" className="flex flex-col grow relative">
           <input

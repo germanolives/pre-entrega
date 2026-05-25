@@ -9,9 +9,9 @@ export const Navbar = () => {
   const location = useLocation();
   const { getCartQuantity } = useCart();
   return (
-    <nav className="grow grid grid-rows-[2fr_1fr]">
+    <nav className="hidden md:grid grid-rows-[2fr_1fr] grow">
       <SearchbarContainer />
-      <ul className="hidden md:flex justify-evenly items-center border-t border-gray-400 text-xs">
+      <ul className="flex justify-evenly items-center border-t border-gray-400 text-xs">
         <li className="flex items-center">
           <Link
             to={"/"}
