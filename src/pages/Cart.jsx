@@ -18,7 +18,7 @@ export const Cart = () => {
 
   return (
     <section
-      className={`flex flex-col gap-4 md:flex-row mx-4 border-2 border-gray-400 rounded-xl p-4 justify-between`}
+      className={`flex flex-col gap-4 md:flex-row mx-4 border-2 border-gray-300 rounded-xl p-4 justify-between`}
     >
       <RenderContent data={data} loading={loading} error={error}>
         {cart.length > 0 ? (

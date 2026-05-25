@@ -4,7 +4,7 @@ import { TeamContainer } from "../components/Team/TeamContainer";
 
 export const Footer = () => {
   return (
-    <footer className="bg-lime-50 grid-rows-2 mx-4 rounded-xl border-2 border-gray-400 p-4 mt-8">
+    <footer className="bg-lime-50 grid-rows-2 mx-4 rounded-xl border-2 border-gray-300 p-4 mt-8 text-gray-500">
       <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_2fr_2fr_2fr] mx-8 gap-8 ">
         <div>
           <h5 className="mb-2">TIENDA S.A.U.</h5>

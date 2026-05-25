@@ -37,7 +37,7 @@ export const SearchbarContainer = () => {
             value={dataIn.name}
             onChange={manageChange}
             disabled={loading}
-            className="flex grow border px-4 rounded-sm"
+            className="flex grow border border-gray-400 px-4 rounded-sm"
             type="text"
             placeholder={`${loading ? "Loading products..." : "Enter the product..."}`}
           />
@@ -59,7 +59,7 @@ export const SearchbarContainer = () => {
         </label>
         <Button
           variant="ghost"
-          className="border rounded-sm px-6 py-2"
+          className="border border-gray-400 rounded-sm px-6 py-2"
           type="submit"
         >
           Go

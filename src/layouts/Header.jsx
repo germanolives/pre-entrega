@@ -4,7 +4,7 @@ import { logo } from "../data/brand/logo";
 
 export const Header = () => {
   return (
-    <header className="sticky top-0 left-0 mx-4 z-50 flex rounded-xl border-2 border-gray-400 bg-slate-300 mb-4">
+    <header className="sticky top-0 left-0 mx-4 z-50 flex rounded-xl border-2 border-gray-300 bg-slate-300 mb-4">
       <Link to={"/"}>
         <img
           className={"rounded-2xl border-r-2 w-30 h-auto md:w-40"}
