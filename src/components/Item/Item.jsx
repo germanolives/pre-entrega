@@ -17,7 +17,7 @@ export const Item = ({ id, title, price, description, category, image }) => {
 
   const formattedPrice = countryPrice.format(price);
 
-  const favUndofav = () => setFavorite(!favorite);
+  const favUndofav = () => setFavorite((prev) => !prev);
 
   return (
     <article className="grid grid-rows-[auto_auto_1fr_auto] bg-gray-200 p-4 shadow-2xl border border-gray-300 h-full rounded-sm">
