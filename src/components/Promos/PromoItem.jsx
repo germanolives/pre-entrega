@@ -27,7 +27,7 @@ export const PromoItem = ({ item, promo }) => {
 
   return (
     <article className="grid grid-rows-[auto_auto_1fr_auto] bg-gray-200 p-4 shadow-2xl border border-gray-300 h-full rounded-sm">
-      <div className="flex flax-row justify-between">
+      <div className="flex flex-row justify-between">
         <Link to={productPath}>
           <h3 className="text-sm text-black text-left capitalize line-clamp-2 leading-tight px-2 min-h-9 overflow-hidden">
             {item.title}
