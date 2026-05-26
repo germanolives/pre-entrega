@@ -8,7 +8,8 @@ import { useFavorite } from "../../context/FavoriteContext";
 import { useCart } from "../../context/CartContext";
 
 export const FavoritesItem = ({ item }) => {
-  const [isAdded, setIsAdded] = useState(false);
+  const { addToCart, isItemInCart } = useCart();
+  const [isAdded, setIsAdded] = useState(isItemInCart(item));
   const titleSlug = formatSlug(item.title);
   const categorySlug = formatSlug(item.category);
   const productPath = `/products/${categorySlug}/${titleSlug}/${item.id}`;
@@ -25,7 +26,7 @@ export const FavoritesItem = ({ item }) => {
     toggleFavorite(item);
   };
 
-  const { addToCart } = useCart();
+  
 
   const handleAdd = () => {
     !isAdded && addToCart(item, 1);
