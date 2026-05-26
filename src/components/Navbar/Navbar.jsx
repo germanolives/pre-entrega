@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import { NavbarProdCategContent } from "./NavbarProdCategContent";
 import { useLocation } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
-import { CartIcon } from "../Icons/index";
+import { useFavorite } from "../../context/FavoriteContext";
+import { CartIcon, FavoriteIcon } from "../Icons/index";
 
 export const Navbar = () => {
   const location = useLocation();
   const { getCartQuantity } = useCart();
+  const { getFavoriteQuantity } = useFavorite();
   return (
     <nav className="hidden md:grid grid-rows-[2fr_1fr] grow">
       <SearchbarContainer />
@@ -70,6 +72,19 @@ export const Navbar = () => {
               </Link>
             </li>
           </ul>
+        </li>
+        <li className="flex items-center">
+          <Link
+            to={"/favorites"}
+            className={`${location.pathname === "/favorites" ? "text-blue-600" : "text-gray-600"}`}
+          >
+            <div className="flex gap-0.5">
+              <FavoriteIcon className="w-5 h-5" />
+              <span className="border border-gray-400 rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center font-semibold text-xxs bg-gray-200">
+                {getFavoriteQuantity()}
+              </span>
+            </div>
+          </Link>
         </li>
         <li className="flex items-center">
           <Link

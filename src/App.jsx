@@ -8,6 +8,7 @@ import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { AboutUs } from "./pages/AboutUs";
 import { Cart } from "./pages/Cart";
+import { Favorites } from "./pages/Favorites";
 import { Contact } from "./pages/Contact";
 import { ScrollToTop } from "./components/common/ScrollTo";
 import { ScrollControllsWithWhatsapp } from "./components/common/ScrollControllsWithWhatsapp";
@@ -28,6 +29,7 @@ export const App = () => {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="aboutUs" element={<AboutUs />} />
+          <Route path="favorites" element={<Favorites />} />
           <Route path="cart" element={<Cart />} />
           <Route path="contact" element={<Contact />} />
           <Route

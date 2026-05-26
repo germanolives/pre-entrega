@@ -37,12 +37,17 @@ export const FavoriteProvider = ({ children }) => {
     return searchProduct ? true : false;
   };
 
+  const getFavoriteQuantity = () => {
+    return favorite ? favorite.length : 0;
+  };
+
   return (
     <FavoriteContext.Provider
       value={{
         favorite,
         toggleFavorite,
         isFavorite,
+        getFavoriteQuantity,
       }}
     >
       {children}
