@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../common/Button";
 import { SearchbarList } from "./SearchbarList";
 import { useQuery } from "../../hooks/useQuery";
+import { SearchIcon } from "../Icons/index";
 
 export const SearchbarContainer = () => {
   const [dataIn, setDataIn] = useState({
@@ -17,58 +18,62 @@ export const SearchbarContainer = () => {
   };
   const manageShipment = (event) => {
     event.preventDefault();
-    if (matches.length>0) {
+    if (matches.length > 0) {
       navigate(`/products/search/${dataIn.name.trim().toLowerCase()}`);
-      setDataIn({name: ""})
+      setDataIn({ name: "" });
     }
   };
 
   const query = dataIn.name.trim().toLocaleLowerCase();
-  const matches = query && data
-    ? data.filter((item) => item.title.toLowerCase().includes(query))
-    : [];
+  const matches =
+    query && data
+      ? data.filter((item) => item.title.toLowerCase().includes(query))
+      : [];
 
   return (
     <div className="w-full">
-      <form className="flex p-2 gap-2 justify-evenly" onSubmit={manageShipment}>
-        <label htmlFor="" className="flex flex-col grow relative">
+      {/* 🟢 Le damos un flex horizontal limpio al formulario */}
+      <form className="flex p-2 items-center w-full" onSubmit={manageShipment}>
+        {/* Contenedor del Input y las listas absolutas desplegables */}
+        <div className="flex grow relative min-w-0">
           <input
             name="name"
             value={dataIn.name}
             onChange={manageChange}
             disabled={loading}
-            className="flex grow border border-gray-400 px-4 rounded-sm"
+            // 🟢 CLAVE: Agregamos 'w-full min-w-0' para romper el ancho nativo del navegador
+            className="w-full min-w-0 border border-r-0 border-gray-400 px-4 h-9 text-sm rounded-sm rounded-r-none focus:outline-none"
             type="text"
-            placeholder={`${loading ? "Loading products..." : "Enter the product..."}`}
+            placeholder={`${loading ? "Loading..." : "Enter product..."}`} // 💡 Placeholder un toque más corto ayuda en pantallas mini
           />
+
+          {/* Desplegables de Error / Not Found / Matches (Se mantienen igual) */}
           {error && query && (
-            <div className="z-50 absolute block w-full top-full bg-red-100 text-red-700 p-2 text-xs border border-red-300 rounded-b-sm shadow-md">
-              ⚠️ Error loading products: {error}
+            <div className="z-50 absolute block w-full top-full left-0 bg-red-100 text-red-700 p-2 text-xs border border-red-300 rounded-b-sm shadow-md">
+              ⚠️ Error: {error}
             </div>
           )}
           {!loading && !error && query && matches.length === 0 && (
-            <div className="z-50 absolute block w-full top-full bg-slate-200 rounded-b-sm border border-t-0 px-4 shadow-xl text-sm italic">
-              No products were found with "{query}"
+            <div className="z-50 absolute block w-full top-full left-0 bg-slate-200 rounded-b-sm border border-t-0 px-4 py-1 shadow-xl text-sm italic">
+              No products found with "{query}"
             </div>
           )}
           {!error && !loading && query && matches.length > 0 && (
-            <div className="z-50 absolute block w-full top-full bg-slate-300 rounded-b-sm border border-t-0 px-4 shadow-xl text-sm">
+            <div className="z-50 absolute block w-full top-full left-0 bg-slate-300 rounded-b-sm border border-t-0 px-4 py-1 shadow-xl text-sm">
               <SearchbarList data={matches} reset={setDataIn} />
             </div>
           )}
-        </label>
+        </div>
+
+        {/* 🟢 El botón queda al mismo nivel que el contenedor del input, compartiendo el formulario */}
         <Button
           variant="ghost"
-          className="border border-gray-400 rounded-sm px-6 py-2"
+          className="border border-gray-400 rounded-sm rounded-l-none h-9 p-2 flex items-center justify-center shrink-0"
           type="submit"
         >
-          Go
+          <SearchIcon className="w-5 h-5 text-gray-500" />
         </Button>
       </form>
     </div>
   );
 };
-
-
-
-
