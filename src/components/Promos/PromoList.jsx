@@ -4,7 +4,7 @@ export const PromoList = ({ data, promo }) => {
   return (
     <>
       {data.map((item) => (
-        <PromoItem key={item.id} {...item} promo={promo} />
+        <PromoItem key={item.id} item={item} promo={promo} />
       ))}
     </>
   );

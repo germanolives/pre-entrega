@@ -37,7 +37,7 @@ export const App = () => {
           <Route path="promos/black-friday/:id" element={<Promos />} />
           <Route path="products/:categorySlug/" element={<Categories />} />
           <Route
-            path="products/:categorySlug/:titleSlug/:favoriteSlug/:id"
+            path="products/:categorySlug/:titleSlug/:id"
             element={<ProductDetail />}
           />
         </Route>

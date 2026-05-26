@@ -5,8 +5,10 @@ import { Button } from "../common/Button";
 import { DiscountList } from "../Discount/DiscountList";
 import { formatSlug } from "../../utils/formatSlug";
 import { useCart } from "../../context/CartContext";
+import { FavoriteIcon } from "../Icons/index";
+import { useFavorite } from "../../context/FavoriteContext";
 
-export const ItemDetail = ({ data, favorite }) => {
+export const ItemDetail = ({ data }) => {
   const {
     title,
     price,
@@ -17,7 +19,7 @@ export const ItemDetail = ({ data, favorite }) => {
     stock,
   } = data;
 
-  const flagFav = favorite === "favorite" ? true : false;
+  const { isFavorite, toggleFavorite } = useFavorite();
   const [count, setCount] = useState(0);
   const [isAdded, setIsAdded] = useState(false);
   const appliedOffer = offer.find((o) => count >= o.qty);
@@ -53,7 +55,9 @@ export const ItemDetail = ({ data, favorite }) => {
     addToCart(data, count);
   };
 
-  console.log("Contenido del carrito global:", cart);
+const favUndofav = () => {
+    toggleFavorite(data);
+  };
 
 
   return (
@@ -63,11 +67,13 @@ export const ItemDetail = ({ data, favorite }) => {
           <h1 className="text-xl font-bold text-blue-800 mt-auto capitalize line-clamp-3 leading-tight px-2 min-h-15 overflow-hidden">
             {title}
           </h1>
-          <span
-            className={`${flagFav ? "bg-blue-800 h-7 rounded-sm" : "hidden"}`}
-          >
-            ⭐
-          </span>
+           <Button
+          variant="cristal"
+          onClick={favUndofav}
+          className={`rounded-sm items-start ${isFavorite(data) ? "opacity-100 hover:opacity-80" : "opacity-20 hover:opacity-40"}`}
+        >
+          <FavoriteIcon className="w-6 h-6 mb-9" />
+        </Button>
         </div>
         <Link to={`/products/${formatSlug(category)}`}>
           <div className="w-full aspect-square overflow-hidden bg-white border border-gray-100 rounded-sm">
