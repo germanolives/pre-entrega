@@ -35,7 +35,7 @@ export const CartItem = ({ item }) => {
           className="px-1"
           onClick={() => clearCart(item)}
         >
-          <TrashIcon className="w-4 h-4 text-gray-600 hover:text-blue-600" />
+          <TrashIcon className="w-4 h-4 mb-3 text-gray-600 hover:text-blue-600" />
         </Button>
       </div>
 
