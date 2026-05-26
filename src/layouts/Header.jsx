@@ -17,8 +17,8 @@ export const Header = () => {
         <Link to={"/"} className="w-15 md:w-25 shrink-0">
           <img
             className={"rounded-2xl border border-gray-400 p-1 w-15 md:w-25"}
-            src={logo.image}
-            alt={logo.title}
+            src={logo[1].image}
+            alt={logo[1].title}
             fetchPriority="high"
             loading="eager"
           />

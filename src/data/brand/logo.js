@@ -1,6 +1,15 @@
-import logoImage from "../../assets/images/brand/logo_circle.webp";
+import storeLogo from "../../assets/images/brand/logo.webp";
+import circleLogo from "../../assets/images/brand/logo_circle.webp";
 
-export const logo = {
-  title: "Store Logo",
-  image: logoImage,
-};
+export const logo = [
+  {
+    id: 1,
+    title: "Store Logo",
+    image: storeLogo,
+  },
+  {
+    id: 2,
+    title: "Circle Logo",
+    image: circleLogo,
+  },
+];
