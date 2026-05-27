@@ -4,7 +4,7 @@ export const addProperties = (data, plusData, stock) => {
         ...item,
         offers: plusData,
         stock: stock
-          ? Number(stock.find((s) => s.id === item.id)?.qty ?? 0)
+          ? Number(stock.find((s) => String(s.id) === String(item.id))?.qty ?? 0)
           : 0,
       }))
     : [
@@ -12,7 +12,7 @@ export const addProperties = (data, plusData, stock) => {
           ...data,
           offers: plusData,
           stock: stock
-            ? Number(stock.find((s) => s.id === data.id)?.qty ?? 0)
+            ? Number(stock.find((s) => String(s.id) === String(data.id))?.qty ?? 0)
             : 0,
         },
       ];

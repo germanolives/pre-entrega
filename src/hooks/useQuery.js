@@ -16,7 +16,6 @@ export const useQuery = (categorySlug = null, titleSlug = null, id = null) => {
     const getData = async () => {
       const api = false;
       const urlProductsJson = "/data/products.json";
-      // const urlOffersJson = "/data/offers.json";
       const urlAllProductsApi = "https://fakestoreapi.com/products";
       const urlOneProductApi = `https://fakestoreapi.com/products/${id}`;
       const urlProducts = !api
@@ -27,34 +26,23 @@ export const useQuery = (categorySlug = null, titleSlug = null, id = null) => {
 
       try {
         const resProd = await fetch(urlProducts);
-
-        // const [resProd, resOffers] = await Promise.all([
-        //   fetch(urlProducts),
-        //   fetch(urlOffersJson),
-        // ]);
-
         if (!resProd.ok) {
           throw new Error("Producto no disponible");
         }
-        // if (!resOffers.ok) {
-        //   throw new Error("Ofertas no disponibles");
-        // }
-
         const prods = await resProd.json();
         const realProd = Array.isArray(prods)
-          ? prods.map((item) => ({ ...item, id: Number(item.id) || 0 }))
-          : { ...prods, id: Number(prods.id) || 0 };
-        // const searchOffers = await resOffers.json();
+          ? prods.map((item) => ({ ...item, id: String(item.id) || "" }))
+          : { ...prods, id: String(prods.id) ||"" };
         const searchOffers = offers.map((item) => ({
           ...item,
-          id: Number(item.id) || 0,
+          id: String(item.id) ||"",
         }));
         const sortedOffers = [...searchOffers].sort((a, b) => b.qty - a.qty);
         const realOffers = sortedOffers;
 
         if (categorySlug && titleSlug && id) {
           const realProductFound = Array.isArray(realProd)
-            ? realProd.find((item) => item.id === parseInt(id))
+            ? realProd.find((item) => String(item.id) === String(id))
             : realProd;
 
           if (!realProductFound) throw new Error("El producto no existe");
@@ -67,7 +55,7 @@ export const useQuery = (categorySlug = null, titleSlug = null, id = null) => {
             offers: realOffers,
             stock: stock
               ? Number(
-                  stock.find((item) => item.id === realProductFound.id)?.qty ??
+                  stock.find((item) => String(item.id) === String(realProductFound.id))?.qty ??
                     0,
                 )
               : 0,
