@@ -2,7 +2,7 @@ export const addProperties = (data, plusData, stock) => {
   const dataRich = Array.isArray(data)
     ? data.map((item) => ({
         ...item,
-        offer: plusData,
+        offers: plusData,
         stock: stock
           ? Number(stock.find((s) => s.id === item.id)?.qty ?? 0)
           : 0,
@@ -10,7 +10,7 @@ export const addProperties = (data, plusData, stock) => {
     : [
         {
           ...data,
-          offer: plusData,
+          offers: plusData,
           stock: stock
             ? Number(stock.find((s) => s.id === data.id)?.qty ?? 0)
             : 0,

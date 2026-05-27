@@ -15,15 +15,15 @@ export const ItemDetail = ({ data }) => {
     description,
     category,
     image,
-    offer,
+    offers,
     stock,
   } = data;
 
   const { isFavorite, toggleFavorite } = useFavorite();
   const [count, setCount] = useState(0);
   const [isAdded, setIsAdded] = useState(false);
-  const appliedOffer = offer.find((o) => count >= o.qty);
-  const discount = appliedOffer ? appliedOffer.discount : 0;
+  const appliedoffers = offers.find((o) => count >= o.qty);
+  const discount = appliedoffers ? appliedoffers.discount : 0;
   const countryPrice = new Intl.NumberFormat("en-GB", {
     style: "currency",
     currency: "EUR",
@@ -93,7 +93,7 @@ const favUndofav = () => {
       <aside className="p-6 shadow-2xl border border-gray-300 flex flex-col justify-between items-center">
         <DiscountList
           message={"Today's deals available"}
-          offer={offer}
+          offers={offers}
           price={price}
         />
         <p className="text-xxs">Available Stock: {stock-count} units</p>

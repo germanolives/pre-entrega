@@ -73,10 +73,10 @@ export const CartProvider = ({ children }) => {
     if (product) {
       const searchProd = cart.find((item) => item.id === product.id);
       if (searchProd) {
-        const appliedOffer = searchProd.offer.find(
+        const appliedOffers = searchProd.offers.find(
           (o) => searchProd.quantity >= o.qty,
         );
-        const discount = appliedOffer ? appliedOffer.discount : 0;
+        const discount = appliedOffers ? appliedOffers.discount : 0;
         const finalPrice =
           searchProd.price - (discount / 100) * searchProd.price;
         return searchProd.quantity * finalPrice;
@@ -85,8 +85,8 @@ export const CartProvider = ({ children }) => {
       }
     } else {
       return cart.reduce((acc, item) => {
-        const appliedOffer = item.offer.find((o) => item.quantity >= o.qty);
-        const discount = appliedOffer ? appliedOffer.discount : 0;
+        const appliedOffers = item.offers.find((o) => item.quantity >= o.qty);
+        const discount = appliedOffers ? appliedOffers.discount : 0;
         const finalPrice = item.price - (discount / 100) * item.price;
         return acc + item.quantity * finalPrice;
       }, 0);
@@ -111,7 +111,7 @@ export const CartProvider = ({ children }) => {
   //         price: findedItem.price,
   //         quantity:
   //           item.quantity > findedItem.stock ? findedItem.stock : item.quantity,
-  //         offer: findedItem.offer,
+  //         offers: findedItem.offers,
   //         stock: findedItem.stock,
   //       };
   //     }
@@ -136,7 +136,7 @@ export const CartProvider = ({ children }) => {
           price: findedItem.price,
           quantity:
             item.quantity > findedItem.stock ? findedItem.stock : item.quantity,
-          offer: findedItem.offer,
+          offers: findedItem.offers,
           stock: findedItem.stock,
         };
       }

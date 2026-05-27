@@ -28,7 +28,7 @@ export const useQuery = (categorySlug = null, titleSlug = null, id = null) => {
       try {
         const resProd = await fetch(urlProducts);
 
-        // const [resProd, resOffer] = await Promise.all([
+        // const [resProd, resOffers] = await Promise.all([
         //   fetch(urlProducts),
         //   fetch(urlOffersJson),
         // ]);
@@ -36,7 +36,7 @@ export const useQuery = (categorySlug = null, titleSlug = null, id = null) => {
         if (!resProd.ok) {
           throw new Error("Producto no disponible");
         }
-        // if (!resOffer.ok) {
+        // if (!resOffers.ok) {
         //   throw new Error("Ofertas no disponibles");
         // }
 
@@ -44,13 +44,13 @@ export const useQuery = (categorySlug = null, titleSlug = null, id = null) => {
         const realProd = Array.isArray(prods)
           ? prods.map((item) => ({ ...item, id: Number(item.id) || 0 }))
           : { ...prods, id: Number(prods.id) || 0 };
-        // const offer = await resOffer.json();
-        const offer = offers.map((item) => ({
+        // const searchOffers = await resOffers.json();
+        const searchOffers = offers.map((item) => ({
           ...item,
           id: Number(item.id) || 0,
         }));
-        const sortedOffers = [...offer].sort((a, b) => b.qty - a.qty);
-        const realOffer = sortedOffers;
+        const sortedOffers = [...searchOffers].sort((a, b) => b.qty - a.qty);
+        const realOffers = sortedOffers;
 
         if (categorySlug && titleSlug && id) {
           const realProductFound = Array.isArray(realProd)
@@ -64,7 +64,7 @@ export const useQuery = (categorySlug = null, titleSlug = null, id = null) => {
           }
           const productFound = {
             ...realProductFound,
-            offer: realOffer,
+            offers: realOffers,
             stock: stock
               ? Number(
                   stock.find((item) => item.id === realProductFound.id)?.qty ??
@@ -74,7 +74,7 @@ export const useQuery = (categorySlug = null, titleSlug = null, id = null) => {
           };
           setData(productFound);
         } else {
-          const data = addProperties(realProd, realOffer, stock);
+          const data = addProperties(realProd, realOffers, stock);
           setData(data);
         }
       } catch (error) {
