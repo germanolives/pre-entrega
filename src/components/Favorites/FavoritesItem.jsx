@@ -75,7 +75,7 @@ export const FavoritesItem = ({ item }) => {
 
         <Button
           variant={
-            availableStock <= 0 ? "tertiary" : !isAdded ? "primary" : "tertiary"
+            availableStock <= 0 ? "outline" : !isAdded ? "primary" : "tertiary"
           }
           className="px-1 rounded-md w-30 font-semibold transition-colors duration-300"
           onClick={handleAdd}
