@@ -24,11 +24,14 @@ export const FavoritesItem = ({ item }) => {
     toggleFavorite(item);
   };
   const availableStock = Math.max(0, item.stock - unitsInCart);
+
   const handleAdd = () => {
     if (availableStock > 0) {
       addToCart(item, 1);
     }
   };
+
+
   const isOutOfStock = stock === unitsInCart;
 
   return (
