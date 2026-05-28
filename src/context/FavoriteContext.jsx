@@ -21,10 +21,18 @@ export const FavoriteProvider = ({ children }) => {
   }, [favorite]);
 
   const toggleFavorite = (product) => {
+    if (!product || !product.id) return;
+
     setFavorite((prev) => {
-      const itemInFavorite = prev.find((item) => item.id === product.id);
+      const itemInFavorite = prev.find((item) => {
+        if (!item.id) return false;
+        return String(item.id) === String(product.id);
+      });
+
       if (itemInFavorite) {
-        return prev.filter((item) => item.id !== product.id);
+        return prev.filter(
+          (item) => item.id && String(item.id) !== String(product.id),
+        );
       } else {
         return [...prev, { ...product }];
       }
@@ -32,13 +40,39 @@ export const FavoriteProvider = ({ children }) => {
   };
 
   const isFavorite = (product) => {
-    if (!product) return false;
-    const searchProduct = favorite.find((item) => item.id === product.id);
-    return searchProduct ? true : false;
+    if (!product || !product.id) return false;
+    return favorite.some(
+      (item) => item.id && String(item.id) === String(product.id),
+    );
   };
 
   const getFavoriteQuantity = () => {
     return favorite ? favorite.length : 0;
+  };
+
+  const checkFavorite = (data) => {
+    const newFavorite = favorite.filter((favoriteItem) => {
+      const matchingDataItem = data.find(
+        (dataItem) => String(dataItem.id) === String(favoriteItem.id),
+      );
+      return matchingDataItem !== undefined;
+    });
+
+    const updatedNewFavorite = newFavorite.map((item) => {
+      const findedItem = data.find(
+        (dataItem) => String(dataItem.id) === String(item.id),
+      );
+      if (findedItem) {
+        return {
+          ...item,
+          price: findedItem.price,
+          offers: findedItem.offers,
+          stock: findedItem.stock,
+        };
+      }
+      return item;
+    });
+    setFavorite(updatedNewFavorite);
   };
 
   return (
@@ -48,6 +82,7 @@ export const FavoriteProvider = ({ children }) => {
         toggleFavorite,
         isFavorite,
         getFavoriteQuantity,
+        checkFavorite,
       }}
     >
       {children}

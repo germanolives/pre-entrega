@@ -1,6 +1,4 @@
-import { useState, useContext, createContext, useEffect } from "react";
-import { CartItem } from "../components/Cart/CartItem";
-import { idGenerator } from "../utils/idGenerator";
+import { useState, useEffect, createContext, useContext } from "react";
 
 export const CartContext = createContext();
 
@@ -23,10 +21,10 @@ export const CartProvider = ({ children }) => {
   }, [cart]);
 
   const addToCart = (product, quantity) => {
-    const itemInCart = cart.find((item) => item.id === product.id);
+    const itemInCart = cart.find((item) => String(item.id) === String(product.id));
     if (itemInCart) {
       const updatedCart = cart.map((item) =>
-        item.id === product.id
+        String(item.id) === String(product.id)
           ? {
               ...item,
               quantity:
@@ -42,11 +40,7 @@ export const CartProvider = ({ children }) => {
 
   const clearCart = (product = null) => {
     if (product) {
-      const searchProd = cart.find((item) => item.id === product.id);
-      const newCart = searchProd
-        ? cart.filter((item) => item.id != searchProd.id)
-        : cart;
-      setCart(newCart);
+      setCart(cart.filter((item) => String(item.id) !== String(product.id)));
     } else {
       setCart([]);
     }
@@ -55,14 +49,14 @@ export const CartProvider = ({ children }) => {
   const resetProdQtyCart = (product) => {
     if (!product) return;
     const newCart = cart.map((item) =>
-      item.id === product.id ? { ...item, quantity: 1 } : item,
+      String(item.id) === String(product.id) ? { ...item, quantity: 1 } : item,
     );
     setCart(newCart);
   };
 
   const getCartQuantity = (product = null) => {
     if (product) {
-      const searchProd = cart.find((item) => item.id === product.id);
+      const searchProd = cart.find((item) => String(item.id) === String(product.id));
       return searchProd ? searchProd.quantity : 0;
     } else {
       return cart.reduce((acc, item) => acc + item.quantity, 0);
@@ -71,7 +65,7 @@ export const CartProvider = ({ children }) => {
 
   const getCartTotal = (product = null) => {
     if (product) {
-      const searchProd = cart.find((item) => item.id === product.id);
+      const searchProd = cart.find((item) => String(item.id) === String(product.id));
       if (searchProd) {
         const appliedOffers = searchProd.offers.find(
           (o) => searchProd.quantity >= o.qty,
@@ -93,43 +87,16 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // const checkCart = (data) => {
-  //   const cartId = idGenerator();
-  //   const newCart = cart.filter(
-  //     (cartItem) =>
-  //       cartItem.id ===
-  //       data.find(
-  //         (dataItem) => dataItem.id === cartItem.id && dataItem.stock > 0,
-  //       )?.id,
-  //   );
-  //   const updatedNewCart = newCart.map((item) => {
-  //     const findedItem = data.find((dataItem) => dataItem.id === item.id);
-  //     if (findedItem) {
-  //       return {
-  //         ...item,
-  //         cartId,
-  //         price: findedItem.price,
-  //         quantity:
-  //           item.quantity > findedItem.stock ? findedItem.stock : item.quantity,
-  //         offers: findedItem.offers,
-  //         stock: findedItem.stock,
-  //       };
-  //     }
-  //     return item;
-  //   });
-  //   setCart(updatedNewCart);
-  // };
-
   const checkCart = (data) => {
-    const newCart = cart.filter(
-      (cartItem) =>
-        cartItem.id ===
-        data.find(
-          (dataItem) => dataItem.id === cartItem.id && dataItem.stock > 0,
-        )?.id,
-    );
+    const newCart = cart.filter((cartItem) => {
+      const matchingDataItem = data.find(
+        (dataItem) => String(dataItem.id) === String(cartItem.id) && dataItem.stock > 0,
+      );
+      return matchingDataItem !== undefined;
+    });
+
     const updatedNewCart = newCart.map((item) => {
-      const findedItem = data.find((dataItem) => dataItem.id === item.id);
+      const findedItem = data.find((dataItem) => String(dataItem.id) === String(item.id));
       if (findedItem) {
         return {
           ...item,
@@ -147,9 +114,9 @@ export const CartProvider = ({ children }) => {
 
   const isItemInCart = (product) => {
     if (!product) return false;
-    const searchProduct = cart.find((item) => item.id === product.id);
+    const searchProduct = cart.find((item) => String(item.id) === String(product.id));
     return searchProduct ? true : false;
-  }
+  };
 
   return (
     <CartContext.Provider

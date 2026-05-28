@@ -9,20 +9,14 @@ import { FavoriteIcon } from "../Icons/index";
 import { useFavorite } from "../../context/FavoriteContext";
 
 export const ItemDetail = ({ data }) => {
-  const {
-    title,
-    price,
-    description,
-    category,
-    image,
-    offers,
-    stock,
-  } = data;
-
+  const { title, price, description, category, image, offers, stock } = data;
+  const { getCartQuantity, addToCart } = useCart();
   const { isFavorite, toggleFavorite } = useFavorite();
   const [count, setCount] = useState(0);
-  const [isAdded, setIsAdded] = useState(false);
-  const appliedoffers = offers.find((o) => count >= o.qty);
+  const unitsInCart = getCartQuantity(data);
+  const showAsAdded = unitsInCart > 0 && count === 0;
+  const availableStock = Math.max(0, stock - unitsInCart - count);
+  const appliedoffers = offers.find((o) => unitsInCart + count >= o.qty);
   const discount = appliedoffers ? appliedoffers.discount : 0;
   const countryPrice = new Intl.NumberFormat("en-GB", {
     style: "currency",
@@ -30,50 +24,38 @@ export const ItemDetail = ({ data }) => {
   });
   const finalPrice = price - (discount / 100) * price;
   const formattedPrice = countryPrice.format(finalPrice);
-  const increase = () => setCount((prev) => prev + 1);
-  const decrease = () => setCount((prev) => prev - 1);
   const addProduct = () => {
-    setIsAdded(false);
-    increase();
+    if (stock - unitsInCart - count > 0) setCount((prev) => prev + 1);
   };
   const delProduct = () => {
-    setIsAdded(false);
-    count > 0 && decrease();
+    if (count > 0) setCount((prev) => prev - 1);
   };
-  const resetProduct = () => {
-    setCount(0);
-    setIsAdded(false);
-  };
-  const changeColor = () => {
-    if (count > 0) {
-      setIsAdded(true);
+  const resetProduct = () => setCount(0);
+  const handleAdd = () => {
+    if (count > 0 && count <= stock - unitsInCart) {
+      addToCart(data, count);
+      setCount(0);
     }
   };
-  const { cart, addToCart } = useCart();
-  const handleAdd = () => {
-    changeColor();
-    addToCart(data, count);
-  };
-
-const favUndofav = () => {
+  const favUndofav = () => {
     toggleFavorite(data);
   };
-
+  const isOutOfStock = stock === unitsInCart;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 w-full md:w-2/3 mx-auto">
       <article className="grid grid-rows-[auto_1fr_auto_auto] bg-gray-200 p-4 shadow-2xl border border-gray-300 h-full rounded-sm">
-        <div className="flex flax-row justify-between">
+        <div className="flex flex-row justify-between">
           <h1 className="text-xl font-bold text-blue-800 mt-auto capitalize line-clamp-3 leading-tight px-2 min-h-15 overflow-hidden">
             {title}
           </h1>
-           <Button
-          variant="cristal"
-          onClick={favUndofav}
-          className={`rounded-sm items-start ${isFavorite(data) ? "opacity-100 hover:opacity-80" : "opacity-20 hover:opacity-40"}`}
-        >
-          <FavoriteIcon className="w-6 h-6 mb-9" />
-        </Button>
+          <Button
+            variant="cristal"
+            onClick={favUndofav}
+            className={`rounded-sm items-start ${isFavorite(data) ? "opacity-100 hover:opacity-80" : "opacity-20 hover:opacity-40"}`}
+          >
+            <FavoriteIcon className="w-6 h-6 mb-9" />
+          </Button>
         </div>
         <Link to={`/products/${formatSlug(category)}`}>
           <div className="w-full aspect-square overflow-hidden bg-white border border-gray-100 rounded-sm">
@@ -84,9 +66,7 @@ const favUndofav = () => {
             />
           </div>
         </Link>
-        <p className="text-base capitalize  text-gray-800 mt-auto">
-          {category}
-        </p>
+        <p className="text-base capitalize text-gray-800 mt-auto">{category}</p>
         <p className="text-xs text-gray-600">{description}</p>
       </article>
 
@@ -96,96 +76,65 @@ const favUndofav = () => {
           offers={offers}
           price={price}
         />
-        <p className="text-xxs">Available Stock: {stock-count} units</p>
+        <div className="text-center my-2">
+          <p className="text-xxs font-medium text-gray-700">
+            Available Stock: {availableStock} units
+          </p>
+          <p className="text-xxs font-medium text-blue-700">
+            Added to cart: {unitsInCart} units
+          </p>
+        </div>
+
         <div className="flex flex-col justify-center items-center">
           <p
-            className={`text-4xl font-bold ${isAdded ? "text-red-500" : " text-blue-900"}`}
+            className={`text-4xl font-bold transition-colors duration-300 ${showAsAdded ? "text-red-500" : "text-blue-900"}`}
           >
             {formattedPrice}
           </p>
+
           <span className="p-2">
             <Button
               onClick={delProduct}
               variant="outline"
+              disabled={count === 0}
               className="px-3 py-1 mx-1 border-0"
             >
               ➖
             </Button>
             <Button
               onClick={resetProduct}
-              variant={isAdded ? "tertiary" : "primary"}
+              variant={showAsAdded ? "tertiary" : "primary"}
               disabled={count === 0}
-              className={`px-4 py-2 rounded-xl min-w-14 transition-all ${count >= 150 ? "ring-4 ring-cyan-400" : count >= 100 ? "ring-4 ring-fuchsia-400" : count >= 50 ? "ring-4 ring-yellow-300" : count >= 20 ? "ring-4 ring-emerald-400" : count >= 10 ? "ring-4 ring-amber-400" : ""}`}
+              className={`px-4 py-2 rounded-xl min-w-14`}
             >
               {count}
             </Button>
             <Button
               onClick={addProduct}
               variant="outline"
+              disabled={availableStock <= 0}
               className="px-3 py-1 mx-1"
             >
               ➕
             </Button>
           </span>
+
           <Button
             onClick={handleAdd}
-            variant={isAdded ? "tertiary" : "primary"}
-            disabled={count > stock || count === 0}
-            className={`rounded-xl w-48 py-2`}
+            variant={
+              isOutOfStock ? "outline" : showAsAdded ? "tertiary" : "primary"
+            }
+            disabled={count === 0 || isOutOfStock}
+            className="rounded-xl w-48 py-2 font-semibold transition-all duration-300"
           >
-            {isAdded ? "Added to cart" : "Add to cart"}
+            {isOutOfStock
+              ? "Out of Stock"
+              : showAsAdded
+                ? "Added to Cart"
+                : "Add to Cart"}
           </Button>
         </div>
       </aside>
     </div>
   );
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const [cart, setCart] = useState([]);
-
-// const addToCart = () => {
-//   changeColor();
-//   const operId = (userId = 1) => {
-//     const timestamp = Date.now();
-//     const random = Math.floor(Math.random() * 1000);
-
-//     return `TRX-${userId}-${id}-${timestamp}-${random}-${count}`;
-//   };
-
-//   setCart([
-//     ...cart,
-//     {
-//       cartId: operId(),
-//       prodId: id,
-//       prodTitle: title,
-//       prodImg: image,
-//       prodQty: count,
-//       prodPrice: finalPrice,
-//       userId: 1,
-//     },
-//   ]);
-// };
-
-// console.log(cart);

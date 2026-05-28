@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { ImgWithSkeleton } from "../common/ImgWithSkeleton";
 import { formatSlug } from "../../utils/formatSlug";
 import { Button } from "../common/Button";
 import { FavoriteIcon } from "../Icons/index";
 import { useFavorite } from "../../context/FavoriteContext";
 import { useCart } from "../../context/CartContext";
+import { ImgWithSkeleton } from "../common/ImgWithSkeleton";
 
 export const FavoritesItem = ({ item }) => {
-  const { cart, addToCart, isItemInCart, getCartQuantity } = useCart();
-  const [isAdded, setIsAdded] = useState(isItemInCart(item));
+  const { addToCart, getCartQuantity } = useCart();
+  const { toggleFavorite, isFavorite } = useFavorite();
+  const unitsInCart = getCartQuantity(item);
+  const isAdded = unitsInCart > 0;
   const titleSlug = formatSlug(item.title);
   const categorySlug = formatSlug(item.category);
   const productPath = `/products/${categorySlug}/${titleSlug}/${item.id}`;
@@ -18,20 +19,17 @@ export const FavoritesItem = ({ item }) => {
     style: "currency",
     currency: "EUR",
   });
-
-  const { toggleFavorite, isFavorite } = useFavorite();
   const formattedPrice = countryPrice.format(item.price);
-
   const favUndofav = () => {
     toggleFavorite(item);
   };
-
-  const availableStock = item.stock - getCartQuantity(item);
-
+  const availableStock = Math.max(0, item.stock - unitsInCart);
   const handleAdd = () => {
-    !isAdded && availableStock >= 1 && addToCart(item, 1);
-    availableStock > 0 && setIsAdded((prev) => !prev);
+    if (availableStock > 0) {
+      addToCart(item, 1);
+    }
   };
+  const isOutOfStock = stock === unitsInCart;
 
   return (
     <article className="grid grid-rows-[auto_auto_1fr_auto] bg-gray-200 p-4 shadow-2xl border border-gray-300 h-full rounded-sm">
@@ -49,6 +47,7 @@ export const FavoritesItem = ({ item }) => {
           <FavoriteIcon className="w-4 h-4 mb-6 ml-3" />
         </Button>
       </div>
+
       <Link to={categoryPath}>
         <div className="w-full aspect-square overflow-hidden bg-white border border-gray-100 rounded-sm">
           <ImgWithSkeleton
@@ -58,17 +57,35 @@ export const FavoritesItem = ({ item }) => {
           />
         </div>
       </Link>
-      <p className="text-xs text-gray-600 line-clamp-3">{item.description}</p>
-      <div className="flex flex-row justify-between">
+
+      <p className="text-xs text-gray-600 line-clamp-3 my-2">
+        {item.description}
+      </p>
+      <p className="text-xxs text-right font-medium text-gray-700">
+        Available Stock: {availableStock} units
+      </p>
+      <p className="text-xxs text-right font-medium text-blue-700">
+        Added to cart: {unitsInCart} units
+      </p>
+      
+      <div className="flex flex-row justify-between mt-auto pt-2">
         <span className="text-xl font-bold text-blue-800 mt-auto">
           {formattedPrice}
         </span>
+
         <Button
-          variant={`${!isAdded ? "primary" : "tertiary"}`}
-          className="px-1 rounded-md w-30"
+          variant={
+            availableStock <= 0 ? "tertiary" : !isAdded ? "primary" : "tertiary"
+          }
+          className="px-1 rounded-md w-30 font-semibold transition-colors duration-300"
           onClick={handleAdd}
+          disabled={availableStock <= 0}
         >
-          {!isAdded ? "Add to Cart" : "Added to Cart"}
+          {availableStock <= 0
+            ? "Out of Stock"
+            : !isAdded
+              ? "Add to Cart"
+              : "Added to Cart"}
         </Button>
       </div>
     </article>
