@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../common/Button";
 import { SearchbarList } from "./SearchbarList";
@@ -32,22 +32,18 @@ export const SearchbarContainer = () => {
 
   return (
     <div className="w-full">
-      {/* 🟢 Le damos un flex horizontal limpio al formulario */}
       <form className="flex p-2 items-center w-full" onSubmit={manageShipment}>
-        {/* Contenedor del Input y las listas absolutas desplegables */}
         <div className="flex grow relative min-w-0">
           <input
             name="name"
             value={dataIn.name}
             onChange={manageChange}
             disabled={loading}
-            // 🟢 CLAVE: Agregamos 'w-full min-w-0' para romper el ancho nativo del navegador
             className="w-full min-w-0 border border-r-0 border-gray-400 px-4 h-9 text-sm rounded-sm rounded-r-none focus:outline-none"
             type="text"
-            placeholder={`${loading ? "Loading..." : "Enter product..."}`} // 💡 Placeholder un toque más corto ayuda en pantallas mini
+            placeholder={`${loading ? "Loading..." : "Enter product..."}`}
           />
 
-          {/* Desplegables de Error / Not Found / Matches (Se mantienen igual) */}
           {error && query && (
             <div className="z-50 absolute block w-full top-full left-0 bg-red-100 text-red-700 p-2 text-xs border border-red-300 rounded-b-sm shadow-md">
               ⚠️ Error: {error}
@@ -65,7 +61,6 @@ export const SearchbarContainer = () => {
           )}
         </div>
 
-        {/* 🟢 El botón queda al mismo nivel que el contenedor del input, compartiendo el formulario */}
         <Button
           variant="ghost"
           className="border border-gray-400 rounded-sm rounded-l-none h-9 p-2 flex items-center justify-center shrink-0"

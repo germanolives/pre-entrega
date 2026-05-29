@@ -4,7 +4,7 @@ import { RenderContent } from "../components/common/RenderContent";
 import { useQuery } from "../hooks/useQuery";
 
 export const ProductDetail = () => {
-  const { categorySlug, titleSlug, favoriteSlug, id } = useParams();
+  const { categorySlug, titleSlug, id } = useParams();
   const { data, loading, error } = useQuery(categorySlug, titleSlug, id);
 
   return (
@@ -12,7 +12,7 @@ export const ProductDetail = () => {
       className={`mx-4 border-2 border-gray-400 rounded-xl p-8 flex justify-center items-center`}
     >
       <RenderContent loading={loading} error={error} data={data}>
-        <ItemDetail data={data} favorite={favoriteSlug} />
+        <ItemDetail data={data} />
       </RenderContent>
     </section>
   );
