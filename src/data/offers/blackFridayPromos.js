@@ -15,7 +15,7 @@ export const blackFridayPromos = [
   {
     id: 2,
     title: "Promo 02",
-    description: "35% discount and 18 installments on electronics excepto en monitores",
+    description: "35% discount and 18 installments on electronics products, except monitors",
     appliesTo: [9, 10, 11, 12],
     discount: 35,
     image: promo02,
