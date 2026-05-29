@@ -5,6 +5,8 @@ import { useLocation } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useFavorite } from "../../context/FavoriteContext";
 import { CartIcon, FavoriteIcon } from "../Icons/index";
+// import { migrateCatalogToFirebase } from "../../services/migrator";
+// import { Button } from "../common/Button";
 
 export const Navbar = () => {
   const location = useLocation();
@@ -47,6 +49,15 @@ export const Navbar = () => {
             ABOUT US
           </Link>
         </li>
+        {/* <li className="flex items-center">
+          <Button
+            variant="secondary"
+            className="px-1"
+            onClick={migrateCatalogToFirebase}
+          >
+            FIREBASE
+          </Button>
+        </li> */}
         <li className="flex items-center flex-col group relative">
           <Link
             to={"/login"}
