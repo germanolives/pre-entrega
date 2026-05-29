@@ -15,11 +15,14 @@ export const FavoritesItem = ({ item }) => {
   const categorySlug = formatSlug(item.category);
   const productPath = `/products/${categorySlug}/${titleSlug}/${item.id}`;
   const categoryPath = `/products/${categorySlug}`;
+  const appliedoffers = item.offers.find((o) => unitsInCart >= o.qty);
+  const discount = appliedoffers ? appliedoffers.discount : 0;
   const countryPrice = new Intl.NumberFormat("en-GB", {
     style: "currency",
     currency: "EUR",
   });
-  const formattedPrice = countryPrice.format(item.price);
+  const finalPrice = item.price - (discount / 100) * item.price;
+  const formattedPrice = countryPrice.format(finalPrice);
   const favUndofav = () => {
     toggleFavorite(item);
   };
@@ -30,9 +33,6 @@ export const FavoritesItem = ({ item }) => {
       addToCart(item, 1);
     }
   };
-
-
-  const isOutOfStock = stock === unitsInCart;
 
   return (
     <article className="grid grid-rows-[auto_auto_1fr_auto] bg-gray-200 p-4 shadow-2xl border border-gray-300 h-full rounded-sm">
@@ -64,15 +64,15 @@ export const FavoritesItem = ({ item }) => {
       <p className="text-xs text-gray-600 line-clamp-3 my-2">
         {item.description}
       </p>
-      <p className="text-xxs text-right font-medium text-gray-700">
+      <p className={`text-xxs text-right font medium text-blue-700`}>
         Available Stock: {availableStock} units
       </p>
-      <p className="text-xxs text-right font-medium text-blue-700">
+      <p className={`text-xxs text-right font-medium ${!isAdded ? "text-blue-700" : "text-red-700"}`}>
         Added to cart: {unitsInCart} units
       </p>
-      
+
       <div className="flex flex-row justify-between mt-auto pt-2">
-        <span className="text-xl font-bold text-blue-800 mt-auto">
+        <span className={`text-xl font-bold ${!isAdded ? "text-blue-700" : "text-red-700"}`}>
           {formattedPrice}
         </span>
 
@@ -86,9 +86,7 @@ export const FavoritesItem = ({ item }) => {
         >
           {availableStock <= 0
             ? "Out of Stock"
-            : !isAdded
-              ? "Add to Cart"
-              : "Added to Cart"}
+            : "Add to Cart"}
         </Button>
       </div>
     </article>

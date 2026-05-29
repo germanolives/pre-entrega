@@ -77,10 +77,10 @@ export const ItemDetail = ({ data }) => {
           price={price}
         />
         <div className="text-center my-2">
-          <p className="text-xxs font-medium text-gray-700">
+          <p className={`text-xxs font medium text-blue-700`}>
             Available Stock: {availableStock} units
           </p>
-          <p className="text-xxs font-medium text-blue-700">
+          <p className={`text-xxs font-medium ${!showAsAdded ? "text-blue-700" : "text-red-700"}`}>
             Added to cart: {unitsInCart} units
           </p>
         </div>
@@ -127,11 +127,7 @@ export const ItemDetail = ({ data }) => {
             disabled={count === 0 || isOutOfStock}
             className="rounded-xl w-48 py-2 font-semibold transition-all duration-300"
           >
-            {isOutOfStock
-              ? "Out of Stock"
-              : showAsAdded
-                ? "Added to Cart"
-                : "Add to Cart"}
+            {isOutOfStock ? "Out of Stock" : "Add to Cart"}
           </Button>
         </div>
       </aside>
