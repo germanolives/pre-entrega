@@ -24,6 +24,9 @@ export const SourceProvider = ({ children }) => {
   }, [source]);
 
   const changeSource = (newSource) => {
+    if (!navigator.onLine && newSource != "local") {
+      return;
+    }
     setSource(newSource);
   };
 
