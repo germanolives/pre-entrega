@@ -1,6 +1,7 @@
 import { useCart } from "../../context/CartContext";
 import { Button } from "../common/Button";
 import { TrashIcon } from "..//Icons/index";
+import { Link } from "react-router-dom"; 
 
 export const ConfirmPuchaseItem = ({ data }) => {
   const { clearCart, getCartTotal, getCartQuantity } = useCart();
@@ -37,7 +38,7 @@ export const ConfirmPuchaseItem = ({ data }) => {
         </div>
       </div>
       <Button className="px-4 py-2 rounded-xl" variant="primary">
-        Proceed to checkout
+        <Link>Proceed to checkout</Link>
       </Button>
     </aside>
   );
