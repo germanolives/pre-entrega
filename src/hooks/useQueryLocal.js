@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 
-export const useQueryLocal = (categorySlug = null, titleSlug = null, id = null, source) => {
+export const useQueryLocal = (
+  categorySlug = null,
+  titleSlug = null,
+  id = null,
+  source,
+) => {
   const [data, setData] = useState(
     categorySlug && titleSlug && id ? null : categorySlug ? [] : [],
   );
