@@ -3,12 +3,15 @@ import { NavbarProdCategContent } from "./NavbarProdCategContent";
 import { useLocation } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useFavorite } from "../../context/FavoriteContext";
-import { CartIcon, FavoriteIcon } from "../Icons/index";
+import { CartIcon, FavoriteIcon, DatabaseIcon } from "../Icons/index";
+import { useSource } from "../..//context/SourceContext";
+import { Button } from "../common/Button";
 
-export const MovilNavbar = ({menuChange}) => {
+export const MovilNavbar = ({ menuChange }) => {
   const location = useLocation();
   const { getCartQuantity } = useCart();
   const { getFavoriteQuantity } = useFavorite();
+  const { nameSource, changeSource } = useSource();
   return (
     <nav className="grow md:hidden">
       <ul className="p-2 border border-gray-400 rounded-sm m-2 text-sm">
@@ -53,6 +56,32 @@ export const MovilNavbar = ({menuChange}) => {
             MY ACCOUNT
           </Link>
         </li>
+        <li className="m-1">
+          <Button
+            className={`flex gap-0.5 cursor-pointer font-normal ${nameSource() === "LOCAL" ? "text-blue-600" : "text-gray-600"}`}
+            variant="cristal"
+            onClick={() => {changeSource("local"); menuChange()}}
+          >
+            <DatabaseIcon className="w-5 h-5" />
+            <span className="border border-gray-400 rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center font-semibold text-xxs bg-gray-200">
+              LOCAL
+            </span>
+          </Button>
+        </li>
+        <li className="m-1">
+          <Button
+            className={`flex gap-0.5 cursor-pointer font-normal ${nameSource() === "API" ? "text-blue-600" : "text-gray-600"}`}
+            variant="cristal"
+            onClick={() => {changeSource("api"); menuChange()}}
+          >
+            <DatabaseIcon className="w-5 h-5" />
+            <span className="border border-gray-400 rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center font-semibold text-xxs bg-gray-200">
+              API
+            </span>
+          </Button>
+        </li>
+
+
         <li className="flex items-center m-1" onClick={menuChange}>
           <Link
             to={"/favorites"}

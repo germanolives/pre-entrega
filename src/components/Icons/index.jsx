@@ -151,3 +151,16 @@ export const BookmarkIcon = ({ className }) => (
     <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z" />
   </svg>
 );
+
+export const DatabaseIcon = ({ className }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    {/* Representación de los tres discos apilados característicos de un servidor/DB */}
+    <path d="M12 2C6.48 2 2 3.79 2 6v4c0 2.21 4.48 4 10 4s10-1.79 10-4V6c0-2.21-4.48-4-10-4zm0 18c-5.52 0-10-1.79-10-4v-4c0 2.21 4.48 4 10 4s10-1.79 10-4v4c0 2.21-4.48 4-10 4zm0-6c-5.52 0-10-1.79-10-4v-4c0 2.21 4.48 4 10 4s10-1.79 10-4v4c0 2.21-4.48 4-10 4z" />
+  </svg>
+);
+
