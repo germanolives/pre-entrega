@@ -1,6 +1,6 @@
 {
   description = "Entorno de desarrollo Web Pro";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
   outputs = { self, nixpkgs }:
     let
@@ -9,9 +9,9 @@
     in {
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
-          nodejs_24 pnpm bun deno python312 git gh
-          nodePackages.firebase-tools
-          nodePackages.typescript-language-server
+          nodejs_24 pnpm bun deno python313 git gh
+          firebase-tools
+          typescript-language-server
         ];
         shellHook = ''
           export NODE_OPTIONS="--max-old-space-size=2048"
@@ -22,7 +22,7 @@
             pkgs.nspr
           ]}
           alias flogin="firebase login --no-localhost"
-          echo "🚀 Web Environment Activated (NixOS 25.11)"
+          echo "🚀 Web Environment Activated (NixOS 26.05)"
           echo "🔥 Firebase & Pro-Libs Ready."
         '';
       };
