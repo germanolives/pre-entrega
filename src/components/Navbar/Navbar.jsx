@@ -107,6 +107,15 @@ export const Navbar = () => {
             </li>
             <li className="p-0.5">
               <Button
+                className={`cursor-pointer font-normal ${nameSource() === "DB" ? "text-blue-600" : "text-gray-600"}`}
+                variant="cristal"
+                onClick={() => changeSource("db")}
+              >
+                DB
+              </Button>
+            </li>
+            <li className="p-0.5">
+              <Button
                 className={`cursor-pointer font-normal ${nameSource() === "API" ? "text-blue-600" : "text-gray-600"}`}
                 variant="cristal"
                 onClick={() => changeSource("api")}

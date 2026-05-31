@@ -70,6 +70,18 @@ export const MovilNavbar = ({ menuChange }) => {
         </li>
         <li className="m-1">
           <Button
+            className={`flex gap-0.5 cursor-pointer font-normal ${nameSource() === "DB" ? "text-blue-600" : "text-gray-600"}`}
+            variant="cristal"
+            onClick={() => {changeSource("db"); menuChange()}}
+          >
+            <DatabaseIcon className="w-5 h-5" />
+            <span className="border border-gray-400 rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center font-semibold text-xxs bg-gray-200">
+              DB
+            </span>
+          </Button>
+        </li>
+        <li className="m-1">
+          <Button
             className={`flex gap-0.5 cursor-pointer font-normal ${nameSource() === "API" ? "text-blue-600" : "text-gray-600"}`}
             variant="cristal"
             onClick={() => {changeSource("api"); menuChange()}}
@@ -80,8 +92,6 @@ export const MovilNavbar = ({ menuChange }) => {
             </span>
           </Button>
         </li>
-
-
         <li className="flex items-center m-1" onClick={menuChange}>
           <Link
             to={"/favorites"}
