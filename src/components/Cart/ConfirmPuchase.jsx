@@ -1,9 +1,9 @@
 import { useCart } from "../../context/CartContext";
 import { Button } from "../common/Button";
-import { TrashIcon } from "..//Icons/index";
-import { Link } from "react-router-dom"; 
+import { TrashIcon } from "../Icons/index";
+import { Link } from "react-router-dom";
 
-export const ConfirmPuchaseItem = ({ data }) => {
+export const ConfirmPurchase = () => {
   const { clearCart, getCartTotal, getCartQuantity } = useCart();
   const countryPrice = new Intl.NumberFormat("en-GB", {
     style: "currency",
@@ -12,14 +12,10 @@ export const ConfirmPuchaseItem = ({ data }) => {
   const formattedTotalPrice = countryPrice.format(getCartTotal());
 
   return (
-    <aside className="bg-green-300 flex flex-col justify-center items-center p-2 border border-gray-200 rounded-xl shadow-md ">
+    <div className="bg-green-300 flex flex-col justify-center items-center p-2 border border-gray-200 rounded-xl shadow-md ">
       <div className="flex flex-row justify-between w-11/12 mb-2">
         <h2 className="">Purchase summary</h2>
-        <Button
-          variant="cristal"
-          className="px-1"
-          onClick={() => clearCart()}
-        >
+        <Button variant="cristal" className="px-1" onClick={() => clearCart()}>
           <TrashIcon className="w-6 h-6 text-gray-600 hover:text-blue-600" />
         </Button>
       </div>
@@ -40,6 +36,6 @@ export const ConfirmPuchaseItem = ({ data }) => {
       <Button className="px-4 py-2 rounded-xl" variant="primary">
         <Link>Proceed to checkout</Link>
       </Button>
-    </aside>
+    </div>
   );
 };

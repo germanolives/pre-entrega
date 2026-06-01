@@ -4,7 +4,7 @@ import { useQuery } from "../hooks/useQuery";
 import { RenderContent } from "../components/common/RenderContent";
 import { CartList } from "../components/Cart/CartList";
 import { EmptyCart } from "../components/Cart/EmptyCart";
-import { ConfirmPurchaseContent } from "../components/Cart/ConfirmPurchaseContent";
+import { ConfirmPurchase } from "../components/Cart/ConfirmPuchase";
 
 export const Cart = () => {
   const { cart, checkCart } = useCart();
@@ -24,7 +24,9 @@ export const Cart = () => {
         {cart.length > 0 ? (
           <>
             <CartList data={cart} />
-            <ConfirmPurchaseContent data={cart}/>
+            <aside className="w-full md:w-80 sticky top-30 right-8 self-start">
+              <ConfirmPurchase />
+            </aside>
           </>
         ) : (
           <EmptyCart />
