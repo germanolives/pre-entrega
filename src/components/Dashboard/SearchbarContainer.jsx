@@ -21,7 +21,7 @@ export const SearchbarContainer = () => {
   const manageShipment = (event) => {
     event.preventDefault();
     if (matches.length > 0) {
-      navigate(`/products/search/${dataIn.name.trim().toLowerCase()}`);
+      navigate(`/dashboard/search/${dataIn.name.trim().toLowerCase()}`);
       setDataIn({ name: "" });
     }
   };

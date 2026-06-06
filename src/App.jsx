@@ -47,6 +47,10 @@ export const App = () => {
         </Route>
         <Route path="dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
+          <Route
+            path="/dashboard/search/:filterSlug"
+            element={<FiltredProducts />}
+          />
         </Route>
       </Routes>
     </>

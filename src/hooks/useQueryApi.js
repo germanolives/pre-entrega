@@ -15,6 +15,7 @@ export const useQueryApi = (
   );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     if (source !== "api") {
@@ -87,7 +88,11 @@ export const useQueryApi = (
       }
     };
     getData();
-  }, [categorySlug, titleSlug, id, source]);
+  }, [categorySlug, titleSlug, id, source, reload]);
 
-  return { data, loading, error };
+  const refetch = () => {
+    setReload((prev) => !prev);
+  };
+
+  return { data, loading, error, refetch };
 };

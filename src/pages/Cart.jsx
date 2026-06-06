@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useCart } from "../context/CartContext";
-import { useQuery } from "../hooks/useQuery";
+import { useProducts } from "../context/ProductsContext";
 import { RenderContent } from "../components/common/RenderContent";
 import { CartList } from "../components/Cart/CartList";
 import { EmptyCart } from "../components/Cart/EmptyCart";
@@ -8,8 +8,11 @@ import { ConfirmPurchase } from "../components/Cart/ConfirmPuchase";
 
 export const Cart = () => {
   const { cart, checkCart } = useCart();
-  const { data, loading, error } = useQuery();
-  const [checkOut, setCheckOut] = useState(false);
+  const { data, loading, error, refetch } = useProducts();
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   useEffect(() => {
     if (data && !loading && data.length > 0) {
@@ -18,11 +21,7 @@ export const Cart = () => {
   }, [data, loading]);
 
   const checkOutOn = () => {
-    setCheckOut((prev) => !prev);
-
-    if (data && !loading && data.length > 0) {
-      checkCart(data);
-    }
+    refetch();
   };
 
   return (
@@ -34,7 +33,7 @@ export const Cart = () => {
           <>
             <CartList data={cart} />
             <aside className="w-full md:w-80 sticky top-30 right-8 self-start">
-              <ConfirmPurchase checkOutOn={checkOutOn}/>
+              <ConfirmPurchase checkOutOn={checkOutOn} />
             </aside>
           </>
         ) : (
