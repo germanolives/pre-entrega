@@ -9,7 +9,8 @@ import { useSource } from "../..//context/SourceContext";
 import { Button } from "../common/Button";
 
 // import { migrateCatalogToFirebase } from "../../services/migrator";
-// import { Button } from "../common/Button";
+// import { exportCatalogToJson } from "../../services/exporter";
+
 
 export const Navbar = () => {
   const location = useLocation();
@@ -59,7 +60,16 @@ export const Navbar = () => {
             className="px-1"
             onClick={migrateCatalogToFirebase}
           >
-            FIREBASE
+            LOCAL TO DB
+          </Button>
+        </li>
+         <li className="flex items-center">
+          <Button
+            variant="secondary"
+            className="px-1"
+            onClick={exportCatalogToJson}
+          >
+            DB TO LOCAL
           </Button>
         </li> */}
         <li className="flex items-center flex-col group relative">
@@ -87,6 +97,14 @@ export const Navbar = () => {
               </Link>
             </li>
           </ul>
+        </li>
+        <li className="flex items-center">
+          <Link
+            to={"/dashboard"}
+            className={`${location.pathname === "/dashboard" ? "text-blue-600" : "text-gray-600"}`}
+          >
+            DASHBOARD
+          </Link>
         </li>
         <li className="flex items-center flex-col group relative">
           <div className="flex gap-0.5">

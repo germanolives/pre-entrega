@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../common/Button";
+import { Button } from "../../components/common/Button";
 import { SearchbarList } from "./SearchbarList";
 import { useProducts } from "../../context/ProductsContext";
-import { SearchIcon } from "../Icons/index";
+import { SearchIcon } from "../../components/Icons/index";
+import { useSearch } from "../../context/SearchContext";
 
 export const SearchbarContainer = () => {
   const [dataIn, setDataIn] = useState({
@@ -11,6 +12,7 @@ export const SearchbarContainer = () => {
   });
   const { data, loading, error } = useProducts();
   const navigate = useNavigate();
+  const { selectedField } = useSearch();
 
   const manageChange = (event) => {
     const { name, value } = event.target;
@@ -27,7 +29,7 @@ export const SearchbarContainer = () => {
   const query = dataIn.name.trim().toLocaleLowerCase();
   const matches =
     query && data
-      ? data.filter((item) => item.title.toLowerCase().includes(query))
+      ? data.filter((item) => item[selectedField.field].toLowerCase().includes(query))
       : [];
 
   return (

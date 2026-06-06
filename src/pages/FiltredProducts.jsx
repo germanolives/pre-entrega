@@ -1,11 +1,11 @@
 import { ItemList } from "../components/Item/ItemList";
 import { RenderContent } from "../components/common/RenderContent";
-import { useQuery } from "../hooks/useQuery";
+import { useProducts } from "../context/ProductsContext";
 import { useParams } from "react-router-dom";
 
 export const FiltredProducts = () => {
   const { filterSlug } = useParams();
-  const { data, loading, error } = useQuery();
+  const { data, loading, error } = useProducts();
 
   const cleanFilter = filterSlug ? filterSlug.toLowerCase() : "";
   const searchedProds =

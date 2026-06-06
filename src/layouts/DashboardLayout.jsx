@@ -1,11 +1,10 @@
 import { Header } from "./Header";
-import { Footer } from "./Footer";
 import { Outlet } from "react-router-dom";
-import { Navbar } from "../components/Navbar/Navbar";
+import { Navbar } from "../components/Dashboard/Navbar";
 import { MovilNavbar } from "../components/Navbar/MovilNavbar";
 import { SearchbarContainer } from "../components/Searchbar/SearchbarContainer";
 
-export const MainLayout = () => {
+export const DashboardLayout = () => {
   return (
     <>
       <Header
@@ -16,7 +15,6 @@ export const MainLayout = () => {
       <main className="grow">
         <Outlet />
       </main>
-      <Footer />
     </>
   );
 };

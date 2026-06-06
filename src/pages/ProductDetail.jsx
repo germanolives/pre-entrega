@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
 import { ItemDetail } from "../components/Item/ItemDetail";
 import { RenderContent } from "../components/common/RenderContent";
-import { useQuery } from "../hooks/useQuery";
+import { useProducts } from "../context/ProductsContext";
 
 export const ProductDetail = () => {
   const { categorySlug, titleSlug, id } = useParams();
-  const { data, loading, error } = useQuery(categorySlug, titleSlug, id);
+  const { data, loading, error } = useProducts(categorySlug, titleSlug, id);
 
   return (
     <section

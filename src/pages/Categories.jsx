@@ -1,12 +1,11 @@
 import { ItemList } from "../components/Item/ItemList";
 import { RenderContent } from "../components/common/RenderContent";
-import { useQuery } from "../hooks/useQuery";
+import { useProducts } from "../context/ProductsContext";
 import { useParams } from "react-router-dom";
-// import { formatSlug } from "../utils/formatSlug";
 
 export const Categories = () => {
   const { categorySlug } = useParams();
-  const { data, loading, error } = useQuery(categorySlug);
+  const { data, loading, error } = useProducts(categorySlug);
 
   // const categ = data
   //   ? data.filter((item) => formatSlug(item.category) === categorySlug)

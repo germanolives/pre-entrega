@@ -3,7 +3,7 @@ import { Button } from "../common/Button";
 import { TrashIcon } from "../Icons/index";
 import { Link } from "react-router-dom";
 
-export const ConfirmPurchase = () => {
+export const ConfirmPurchase = ({ checkOutOn }) => {
   const { clearCart, getCartTotal, getCartQuantity } = useCart();
   const countryPrice = new Intl.NumberFormat("en-GB", {
     style: "currency",
@@ -33,7 +33,11 @@ export const ConfirmPurchase = () => {
           </span>
         </div>
       </div>
-      <Button className="px-4 py-2 rounded-xl" variant="primary">
+      <Button
+        className="px-4 py-2 rounded-xl"
+        variant="primary"
+        onClick={checkOutOn}
+      >
         <Link>Proceed to checkout</Link>
       </Button>
     </div>

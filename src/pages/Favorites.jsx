@@ -1,13 +1,13 @@
 import { useEffect } from "react"; 
 import { FavoritesList } from "../components/Favorites/FavoritesList";
 import { useFavorite } from "../context/FavoriteContext";
-import { useQuery } from "../hooks/useQuery";
+import { useProducts } from "../context/ProductsContext";
 import { EmptyFavorites } from "../components/Favorites/EmptyFavorites";
 import { RenderContent } from "../components/common/RenderContent";
 
 export const Favorites = () => {
   const { favorite, checkFavorite } = useFavorite();
-  const { data, loading, error } = useQuery();
+  const { data, loading, error } = useProducts();
 
   useEffect(() => {
     if (data && !loading && data.length > 0) {

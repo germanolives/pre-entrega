@@ -1,19 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Navbar } from "../components/Navbar/Navbar";
+import { MovilNavbar } from "../components/Navbar/MovilNavbar";
 import { Link } from "react-router-dom";
 import { logo } from "../data/brand/logo";
 import { Button } from "../components/common/Button";
 import { MenuIcon } from "../components/Icons/index";
+import { SearchbarContainer } from "../components/Searchbar/SearchbarContainer";
 
-export const Header = ({
-  renderNavbar,
-  renderMovilNavbar,
-  renderSearchbarContainer,
-}) => {
+export const Header = () => {
   const [menu, setMenu] = useState(false);
   const menuChange = () => setMenu((prev) => !prev);
 
   return (
-    <header className="sticky top-0 left-0 mx-4 z-50 rounded-xl bg-slate-300 mb-4 h-15 md:h-25">
+    <header className="sticky top-0 left-0 mx-4 z-50 rounded-xl bg-slate-300 mb-4">
       <div className="flex justify-between items-center">
         <Link to={"/"} className="w-15 md:w-25 shrink-0">
           <img
@@ -24,8 +23,10 @@ export const Header = ({
             loading="eager"
           />
         </Link>
-        <div className="flex grow md:hidden">{renderSearchbarContainer()}</div>
-        {renderNavbar()}
+        <div className="flex grow md:hidden">
+          <SearchbarContainer />
+        </div>
+        <Navbar />
         <div className="flex flex-col items-end md:hidden">
           <Button variant="cristal" onClick={menuChange}>
             <MenuIcon
@@ -34,7 +35,7 @@ export const Header = ({
           </Button>
         </div>
       </div>
-      {menu && renderMovilNavbar(menuChange)}
+      {menu && <MovilNavbar menuChange={menuChange} />}
     </header>
   );
 };

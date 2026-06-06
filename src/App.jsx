@@ -15,6 +15,8 @@ import { ScrollControllsWithWhatsapp } from "./components/common/ScrollControlls
 import { Categories } from "./pages/Categories";
 import { FiltredProducts } from "./pages/FiltredProducts";
 import { Promos } from "./pages/Promos";
+import { DashboardLayout } from "./layouts/DashboardLayout";
+import { Dashboard } from "./pages/Dashboard";
 
 export const App = () => {
   return (
@@ -42,6 +44,9 @@ export const App = () => {
             path="products/:categorySlug/:titleSlug/:id"
             element={<ProductDetail />}
           />
+        </Route>
+        <Route path="dashboard" element={<DashboardLayout />}>
+          <Route index element={<Dashboard />} />
         </Route>
       </Routes>
     </>

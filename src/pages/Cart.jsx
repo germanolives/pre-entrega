@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useCart } from "../context/CartContext";
 import { useQuery } from "../hooks/useQuery";
 import { RenderContent } from "../components/common/RenderContent";
@@ -9,12 +9,21 @@ import { ConfirmPurchase } from "../components/Cart/ConfirmPuchase";
 export const Cart = () => {
   const { cart, checkCart } = useCart();
   const { data, loading, error } = useQuery();
+  const [checkOut, setCheckOut] = useState(false);
 
   useEffect(() => {
     if (data && !loading && data.length > 0) {
       checkCart(data);
     }
   }, [data, loading]);
+
+  const checkOutOn = () => {
+    setCheckOut((prev) => !prev);
+
+    if (data && !loading && data.length > 0) {
+      checkCart(data);
+    }
+  };
 
   return (
     <section
@@ -25,7 +34,7 @@ export const Cart = () => {
           <>
             <CartList data={cart} />
             <aside className="w-full md:w-80 sticky top-30 right-8 self-start">
-              <ConfirmPurchase />
+              <ConfirmPurchase checkOutOn={checkOutOn}/>
             </aside>
           </>
         ) : (

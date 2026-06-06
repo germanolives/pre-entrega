@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
 import { PromoList } from "../components/Promos/PromoList";
 import { RenderContent } from "../components/common/RenderContent";
-import { useQuery } from "../hooks/useQuery";
+import { useProducts } from "../context/ProductsContext";
 import { blackFridayPromos } from "../data/offers/blackFridayPromos";
 
 export const Promos = () => {
-  const { data, loading, error } = useQuery();
+  const { data, loading, error } = useProducts();
   const { id } = useParams();
 
   const promoProds = blackFridayPromos
