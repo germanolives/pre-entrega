@@ -1,6 +1,4 @@
-import { useQuery } from "../../hooks/useQuery";
 import { useProducts } from "../../context/ProductsContext";
-import { RenderContent } from "../common/RenderContent";
 import { NavProdCategList } from "./NavProdCategList";
 
 export const NavbarProdCategContent = () => {
@@ -11,9 +9,9 @@ export const NavbarProdCategContent = () => {
 
   return (
     <>
-      <RenderContent data={data} loading={loading} error={error}>
-        <NavProdCategList data={categories} />
-      </RenderContent>
+    {!loading && !error && categories.length > 0 && (
+      <NavProdCategList data={categories} />
+    )}
     </>
   );
 };

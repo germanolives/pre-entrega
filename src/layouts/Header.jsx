@@ -13,7 +13,7 @@ export const Header = ({
   const menuChange = () => setMenu((prev) => !prev);
 
   return (
-    <header className="sticky top-0 left-0 mx-4 z-50 rounded-xl bg-slate-300 mb-4 h-15 md:h-25">
+    <header className="sticky top-0 left-0 mx-4 z-50 rounded-xl bg-slate-300 mb-4">
       <div className="flex justify-between items-center">
         <Link to={"/"} className="w-15 md:w-25 shrink-0">
           <img
