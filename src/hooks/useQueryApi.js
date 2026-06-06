@@ -3,6 +3,7 @@ import { formatSlug } from "../utils/formatSlug";
 import { addProperties } from "../utils/addProperties";
 import { offers } from "../data/offers/offers";
 import { stock } from "../data/stock/stock";
+import { idToCode } from "../utils/idToCode";
 
 export const useQueryApi = (
   categorySlug = null,
@@ -42,8 +43,8 @@ export const useQueryApi = (
         }
         const prods = await resProd.json();
         const realProd = Array.isArray(prods)
-          ? prods.map((item) => ({ ...item, id: String(item.id) || "" }))
-          : { ...prods, id: String(prods.id) || "" };
+          ? prods.map((item) => ({ ...item, id: String(item.id), code: idToCode(String(item.id)) || "" }))
+          : { ...prods, id: String(prods.id), code: idToCode(String(prods.id)) || "" };
         const searchOffers = offers.map((item) => ({
           ...item,
           id: String(item.id) || "",
