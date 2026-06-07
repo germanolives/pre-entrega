@@ -17,6 +17,8 @@ import { FiltredProducts } from "./pages/FiltredProducts";
 import { Promos } from "./pages/Promos";
 import { DashboardLayout } from "./layouts/DashboardLayout";
 import { Dashboard } from "./pages/Dashboard";
+import { FiltredDashboard } from "./pages/FiltredDashboard";
+import { DashboardDetail } from "./pages/DashboardDetail";
 
 export const App = () => {
   return (
@@ -48,8 +50,12 @@ export const App = () => {
         <Route path="dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
           <Route
-            path="/dashboard/search/:filterSlug"
-            element={<FiltredProducts />}
+            path="/dashboard/search/:fieldSlug/:filterSlug"
+            element={<FiltredDashboard />}
+          />
+          <Route
+            path="/dashboard/:categorySlug/:titleSlug/:id"
+            element={<DashboardDetail />}
           />
         </Route>
       </Routes>

@@ -8,7 +8,7 @@ export const SearchbarList = ({ data, reset }) => {
       {data.map((item) => (
         <LinkCustom
           key={item.id}
-          to={`/products/${item.categorySlug}/${item.titleSlug}/${item.id}`}
+          to={`/dashboard/${item.categorySlug}/${item.titleSlug}/${item.id}`}
           reset={reset}
         >
           <li>

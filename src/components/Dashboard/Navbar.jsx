@@ -34,10 +34,10 @@ export const Navbar = () => {
 
         <li className="flex items-center">
           <Link
-            to={"/dashboard"}
+            to={"/"}
             className={`${location.pathname === "/dashboard" ? "text-blue-600" : "text-gray-600"}`}
           >
-            DASHBOARD
+            HOME
           </Link>
         </li>
       </ul>

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { Navbar } from "../components/Navbar/Navbar";
-import { MovilNavbar } from "../components/Navbar/MovilNavbar";
+import { Navbar } from "./Navbar";
+import { MovilNavbar } from "./MovilNavbar";
 import { Link } from "react-router-dom";
-import { logo } from "../data/brand/logo";
-import { Button } from "../components/common/Button";
-import { MenuIcon } from "../components/Icons/index";
-import { SearchbarContainer } from "../components/Searchbar/SearchbarContainer";
+import { logo } from "../../data/brand/logo";
+import { Button } from "../common/Button";
+import { MenuIcon } from "../Icons/index";
+import { SearchbarContainer } from "./SearchbarContainer";
 
 export const Header = () => {
   const [menu, setMenu] = useState(false);
@@ -14,7 +14,7 @@ export const Header = () => {
   return (
     <header className="sticky top-0 left-0 mx-4 z-50 rounded-xl bg-slate-300 mb-4">
       <div className="flex justify-between items-center">
-        <Link to={"/"} className="w-15 md:w-25 shrink-0">
+        <Link to={"/dashboard"} className="w-15 md:w-25 shrink-0">
           <img
             className={"rounded-2xl border border-gray-400 p-1 w-15 md:w-25"}
             src={logo[1].image}
