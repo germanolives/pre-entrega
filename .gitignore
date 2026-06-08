@@ -25,3 +25,7 @@ dist-ssr
 
 # Firebase Keys (Security)
 serviceAccountKey.json
+
+# environment variables
+.env
+.env.production

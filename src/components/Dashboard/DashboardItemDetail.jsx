@@ -3,6 +3,7 @@ import { ImgWithSkeleton } from "../common/ImgWithSkeleton";
 import { Button } from "../common/Button";
 import TextareaAutosize from "react-textarea-autosize";
 import { formatSlug } from "../../utils/formatSlug";
+import { useProducts } from "../../context/ProductsContext";
 
 import { offers as ALL_AVAILABLE_OFFERS } from "../../data/offers/offers";
 
@@ -13,7 +14,7 @@ export const DashboardItemDetail = ({ data }) => {
     categorySlug: data.categorySlug || formatSlug(data.category),
     offers: data.offers || [],
   });
-
+  const { updateProduct } = useProducts();
   const length = dataForm.title?.length || 0;
   const initialRows = length > 70 ? 3 : length > 35 ? 2 : 1;
 
@@ -87,6 +88,7 @@ export const DashboardItemDetail = ({ data }) => {
       "¡Validación exitosa! Guardando datos en el sistema:",
       dataForm,
     );
+    updateProduct(dataForm);
   };
 
   return (
@@ -261,7 +263,6 @@ export const DashboardItemDetail = ({ data }) => {
             />
           </div>
 
-          {/* 🌟 PANEL DE CHECKBOXES CORREGIDO */}
           <div className="flex flex-col border border-gray-400 rounded-sm p-2 bg-white gap-1.5 w-full">
             <label className="text-xs italic text-gray-500">
               Apply cumulative discounts:

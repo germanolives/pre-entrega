@@ -1,5 +1,8 @@
+import { useState, useEffect } from "react";
 import { useContext, createContext } from "react";
 import { useQuery } from "../hooks/useQuery";
+import { db } from "../config/firebase";
+import { doc, updateDoc } from"firebase/firestore";
 
 export const ProductsContext = createContext();
 
@@ -9,17 +12,17 @@ export const useProducts = (categorySlug = null, titleSlug = null, id = null) =>
     throw new Error("useProducts debe ser usado dentro de un ProductsProvider");
   }
 
-  const { data, loading, error, refetch } = context;
+  const { data, loading, error, refetch, updateProduct } = context;
   if (loading || error) return context;
 
   if (categorySlug && titleSlug && id) {
     const product = data.find((item) => item.id === id) || null;
-    return { loading, error, data: product, refetch };
+    return { loading, error, data: product, refetch, updateProduct };
   }
 
   if (categorySlug) {
     const category = data.filter((item) => item.categorySlug === categorySlug);
-    return { loading, error, data: category, refetch };
+    return { loading, error, data: category, refetch, updateProduct };
   }
 
   return context;
@@ -27,8 +30,32 @@ export const useProducts = (categorySlug = null, titleSlug = null, id = null) =>
 
 export const ProductsProvider = ({ children }) => {
   const { data: products, loading, error, refetch } = useQuery();
+  const [ data, setData ] = useState([]);
 
-  const data = !loading && !error && Array.isArray(products) ? products : [];
+  useEffect(()=>{
+    if (!loading && !error && Array.isArray(products)) {
+      setData(products);
+    }
+  }, [products, loading, error]);
+
+  const updateProduct = async (item) => {
+    try {
+      const productRef = doc(db, "products", item.id);
+      await updateDoc(productRef, item);
+
+      setData((prevProducts) =>
+        prevProducts.map((prod) =>
+          prod.id === item.id ? { ...prod, ...item } : prod
+        )
+      );
+
+      return { success: true };
+    } catch (err) {
+      console.error("Error crítico al actualizar en Firestore:", err);
+      return { success: false, error: err };
+    }
+  };
+
 
   return (
     <ProductsContext.Provider
@@ -37,6 +64,7 @@ export const ProductsProvider = ({ children }) => {
         loading,
         error,
         refetch,
+        updateProduct,
       }}
     >
       {children}
