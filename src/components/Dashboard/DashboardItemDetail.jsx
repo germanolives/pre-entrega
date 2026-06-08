@@ -7,14 +7,15 @@ import { offers as ALL_AVAILABLE_OFFERS } from "../../data/offers/offers";
 
 export const DashboardItemDetail = ({
   dataForm,
+  imagePreview, // 🌟 CORREGIDO: Ahora recibe el string blob temporal del contenedor
   handleSubmit,
   handleChange,
   handleRatingChange,
   handlePriceChange,
   handleStockChange,
-  handleOfferToggle
+  handleOfferToggle,
+  handleImageChange,
 }) => {
-
   const length = dataForm.title?.length || 0;
   const initialRows = length > 70 ? 3 : length > 35 ? 2 : 1;
 
@@ -29,15 +30,14 @@ export const DashboardItemDetail = ({
     slug: formatSlug(cat),
   }));
 
-
-
   return (
     <form
       onSubmit={handleSubmit}
       className="grid grid-cols-1 md:grid-cols-2 w-full md:w-2/3 mx-auto gap-4"
     >
+      {/* COLUMNA IZQUIERDA */}
       <div className="flex flex-col bg-gray-200 p-4 shadow-2xl border border-gray-300 h-full rounded-sm gap-2">
-        {/* ID  */}
+        {/* ID */}
         <div className="flex flex-col justify-between border border-gray-400 rounded-sm min-h-10.5 bg-transparent">
           <h6 className="text-xs italic text-gray-500 px-2 pt-0.5">id:</h6>
           <span className="text-xs text-blue-700 mt-auto leading-tight px-2 pb-1 grow flex items-center bg-gray-300/30 select-all font-mono">
@@ -73,9 +73,7 @@ export const DashboardItemDetail = ({
 
         {/* DESCRIPTION */}
         <div className="flex flex-col justify-between border border-gray-400 rounded-sm min-h-10.5">
-          <label className="text-xs italic text-gray-500 px-2">
-            description:
-          </label>
+          <label className="text-xs italic text-gray-500 px-2">description:</label>
           <TextareaAutosize
             className="text-xs text-blue-700 mt-auto leading-tight px-2 pb-1 grow resize-none overflow-hidden bg-transparent focus:outline-none"
             onChange={handleChange}
@@ -90,12 +88,10 @@ export const DashboardItemDetail = ({
         <div className="flex flex-col border border-gray-400 rounded-sm p-2 bg-gray-300/20 gap-2">
           <p className="text-xs italic text-gray-500 px-1">rating:</p>
           <div className="flex flex-col justify-between border border-gray-300 rounded-sm bg-white min-h-9">
-            <label className="bg-gray-100 text-xxs italic text-gray-400 px-2">
-              rate:
-            </label>
+            <label className="text-xxs italic text-gray-400 px-2 pt-0.5">rate:</label>
             <input
               type="text"
-              className="text-xs text-blue-700 leading-tight px-2 pb-1 bg-gray-100 focus:outline-none"
+              className="text-xs text-blue-700 leading-tight px-2 pb-1 bg-transparent focus:outline-none" // 🌟 Corregido a bg-transparent
               onChange={handleRatingChange}
               name="rate"
               value={dataForm.rating.rate}
@@ -103,12 +99,10 @@ export const DashboardItemDetail = ({
             />
           </div>
           <div className="flex flex-col justify-between border border-gray-300 rounded-sm bg-white min-h-9">
-            <label className="bg-gray-100 text-xxs italic text-gray-400 px-2">
-              count:
-            </label>
+            <label className="text-xxs italic text-gray-400 px-2 pt-0.5">count:</label>
             <input
               type="text"
-              className="text-xs text-blue-700 leading-tight px-2 pb-1 bg-gray-100 focus:outline-none"
+              className="text-xs text-blue-700 leading-tight px-2 pb-1 bg-transparent focus:outline-none" // 🌟 Corregido a bg-transparent
               onChange={handleRatingChange}
               name="count"
               value={dataForm.rating.count}
@@ -119,9 +113,7 @@ export const DashboardItemDetail = ({
 
         {/* TITLE SLUG */}
         <div className="flex flex-col justify-between border border-gray-400 rounded-sm min-h-10.5">
-          <label className="text-xs italic text-gray-500 px-2">
-            titleSlug:
-          </label>
+          <label className="text-xs italic text-gray-500 px-2">titleSlug:</label>
           <input
             type="text"
             className="text-xs text-blue-700 mt-auto leading-tight px-2 pb-1 grow bg-transparent focus:outline-none opacity-60"
@@ -133,9 +125,7 @@ export const DashboardItemDetail = ({
 
         {/* CATEGORY SLUG */}
         <div className="flex flex-col justify-between border border-gray-400 rounded-sm min-h-10.5">
-          <label className="text-xs italic text-gray-500 px-2">
-            categorySlug:
-          </label>
+          <label className="text-xs italic text-gray-500 px-2">categorySlug:</label>
           <input
             type="text"
             className="text-xs text-blue-700 mt-auto leading-tight px-2 pb-1 grow bg-transparent focus:outline-none opacity-60"
@@ -164,23 +154,35 @@ export const DashboardItemDetail = ({
         </div>
       </div>
 
+      {/* COLUMNA DERECHA */}
       <div className="p-4 shadow-2xl border border-gray-300 flex flex-col justify-between items-center bg-gray-50 rounded-sm h-full">
         <div className="flex flex-col w-full gap-2">
           <div className="flex flex-col justify-between border border-gray-400 rounded-sm p-2 bg-white">
-            <label className="text-xs italic text-gray-500 mb-2">image:</label>
+            <h6 className="text-xs italic text-gray-500 mb-2">image:</h6>
             <div className="w-2/3 aspect-square overflow-hidden bg-white border border-gray-100 rounded-sm mx-auto">
+              {/* 🌟 CORREGIDO: Prioriza imagePreview si hay un archivo seleccionado, si no muestra la url de base */}
               <ImgWithSkeleton
-                image={dataForm.image}
+                image={imagePreview || dataForm.image}
                 className="object-contain p-2 transform transition-transform duration-500 ease-in-out hover:scale-105"
                 size={"w-full h-full"}
+              />            
+            </div>
+            <div className="flex flex-col justify-between border border-gray-400 rounded-sm my-0.5 min-h-10.5 p-1 bg-gray-50">
+              <label className="text-xxs italic text-gray-400 px-1 truncate max-w-full">
+                {imagePreview ? "New image selected" : `Current path: ${dataForm.image || "None"}`}
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="text-xs text-blue-700 mt-auto leading-tight px-1 pb-1 grow bg-transparent focus:outline-none cursor-pointer file:mr-2 file:py-0.5 file:px-2 file:rounded-sm file:border-0 file:text-xs file:bg-cyan-50 file:text-cyan-700 file:font-semibold"
+                name="image"
               />
             </div>
           </div>
 
           <div className="flex flex-col justify-between border border-gray-400 rounded-sm my-0.5 min-h-10.5">
-            <label className="text-xs italic text-gray-500 px-2">
-              price (EUR):
-            </label>
+            <label className="text-xs italic text-gray-500 px-2">price (EUR):</label>
             <input
               type="text"
               onChange={handlePriceChange}
@@ -203,15 +205,13 @@ export const DashboardItemDetail = ({
             />
           </div>
 
+          {/* PANEL DE CHECKBOXES */}
           <div className="flex flex-col border border-gray-400 rounded-sm p-2 bg-white gap-1.5 w-full">
-            <label className="text-xs italic text-gray-500">
-              Apply cumulative discounts:
-            </label>
+            <label className="text-xs italic text-gray-500">Apply cumulative discounts:</label>
             <div className="flex flex-col gap-1">
               {ALL_AVAILABLE_OFFERS.map((offer) => {
-                // 🌟 CLAVE: Buscamos si el ID de la oferta global coincide con alguna cargada en el producto
                 const isChecked = dataForm.offers.some(
-                  (productOffer) => productOffer.id === offer.id,
+                  (productOffer) => productOffer.id === offer.id
                 );
 
                 return (
@@ -222,8 +222,8 @@ export const DashboardItemDetail = ({
                     <input
                       type="checkbox"
                       id={`offer-${offer.id}`}
-                      checked={isChecked} // Sincronizado perfecto con el booleano real
-                      onChange={() => handleOfferToggle(offer)} // 🌟 Pasamos el objeto de la oferta entero
+                      checked={isChecked}
+                      onChange={() => handleOfferToggle(offer)}
                       className="w-3.5 h-3.5 text-cyan-600 rounded-sm cursor-pointer focus:ring-transparent"
                     />
                     <label
@@ -241,7 +241,7 @@ export const DashboardItemDetail = ({
           <Button
             variant="primary"
             type="submit"
-            className="rounded-md py-2 uppercase"
+            className="rounded-md py-2 uppercase mt-2 w-full font-bold tracking-wider"
           >
             Confirm and Save Changes
           </Button>

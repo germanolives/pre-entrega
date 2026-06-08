@@ -3,16 +3,29 @@ import { formatSlug } from "../../utils/formatSlug";
 import { useProducts } from "../../context/ProductsContext";
 import { DashboardItemDetail } from "./DashboardItemDetail";
 
-export const DashboardItemContainer = ({ data }) => {
-  const [dataForm, setDataForm] = useState({
-    ...data,
-    titleSlug: data.titleSlug || formatSlug(data.title),
-    categorySlug: data.categorySlug || formatSlug(data.category),
-    offers: data.offers || [],
-  });
+export const DashboardNewItemContainer = () => {
+  const { addProduct } = useProducts();
   const [imageFile, setImageFile] = useState(null);
+  
   const [imagePreview, setImagePreview] = useState("");
-  const { updateProduct } = useProducts();
+
+  const [dataForm, setDataForm] = useState({
+    id: crypto.randomUUID(),
+    code: "",
+    title: "",
+    titleSlug: "",
+    price: "",
+    description: "",
+    category: "",
+    categorySlug: "",
+    image: "",
+    rating: {
+      rate: "0",
+      count: "0"
+    },
+    offers: [],
+    stock: "",
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,13 +66,11 @@ export const DashboardItemContainer = ({ data }) => {
   const handleOfferToggle = (selectedOffer) => {
     setDataForm((prev) => {
       const currentOffers = prev.offers;
-
-      // 🌟 Evaluamos si el producto ya tiene esta oferta comparando los IDs de los objetos
       const exists = currentOffers.some((item) => item.id === selectedOffer.id);
 
       const updatedOffers = exists
-        ? currentOffers.filter((item) => item.id !== selectedOffer.id) // Si está, la sacamos
-        : [...currentOffers, selectedOffer]; // Si no está, sumamos el objeto completo
+        ? currentOffers.filter((item) => item.id !== selectedOffer.id)
+        : [...currentOffers, selectedOffer];
 
       return {
         ...prev,
@@ -68,7 +79,6 @@ export const DashboardItemContainer = ({ data }) => {
     });
   };
 
-  // 2. El manejador captura el objeto binario completo
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -81,26 +91,13 @@ export const DashboardItemContainer = ({ data }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!imageFile) {
+      alert("Por favor, selecciona una imagen para poder crear el nuevo producto.");
+      return;
+    }
+
     try {
-      // 🌟 ESCENARIO A: El usuario NO eligió ninguna foto nueva en el input
-      if (!imageFile) {
-        if (!dataForm.image) {
-          // Si no tiene imagen previa ni nueva, es un error
-          alert("Por favor, selecciona una imagen para el producto.");
-          return;
-        }
-
-        console.log(
-          "Sincronizando cambios de texto (mantiene la imagen actual)...",
-        );
-        const res = await updateProduct(dataForm);
-        if (res?.success) alert("¡Producto modificado con éxito!");
-        return; // Frenamos la ejecución acá de forma segura
-      }
-
-      // 🌟 ESCENARIO B: El usuario SÍ seleccionó una foto nueva (Para crear o reemplazar)
-      console.log("Detectado archivo nuevo. Iniciando subida a ImgBB...");
-
+      console.log("Subiendo imagen del nuevo producto a ImgBB...");
       const apiKey = import.meta.env.VITE_IMGBB_API_KEY;
       const formData = new FormData();
       formData.append("image", imageFile);
@@ -110,7 +107,7 @@ export const DashboardItemContainer = ({ data }) => {
         {
           method: "POST",
           body: formData,
-        },
+        }
       );
 
       const imgbbData = await imgbbResp.json();
@@ -118,34 +115,49 @@ export const DashboardItemContainer = ({ data }) => {
       if (imgbbData.success) {
         console.log("Imagen subida con éxito. URL:", imgbbData.data.url);
 
-        // Armamos el objeto final pisando la propiedad 'image'
+        // Estructuramos el objeto completo con la URL real de internet
         const finalProduct = {
           ...dataForm,
           image: imgbbData.data.url,
         };
 
-        console.log(
-          "Guardando producto completo con nueva URL en Firestore:",
-          finalProduct,
-        );
-        const res = await updateProduct(finalProduct);
+        console.log("Guardando nuevo registro en Firestore:", finalProduct);
+        
+        const res = await addProduct(finalProduct);
 
         if (res?.success) {
-          alert("¡Producto e imagen guardados con éxito!");
-          setImageFile(null); // Limpiamos el binario para futuros envíos
+          alert("¡Nuevo repuesto creado y sincronizado con éxito!");
+          
+          setImageFile(null);
+          setImagePreview("");
+          setDataForm({
+            id: crypto.randomUUID(),
+            code: "",
+            title: "",
+            titleSlug: "",
+            price: "",
+            description: "",
+            category: "",
+            categorySlug: "",
+            image: "",
+            rating: { rate: "0", count: "0" },
+            offers: [],
+            stock: "",
+          });
         }
       } else {
         throw new Error("La API de ImgBB rechazó la subida del archivo.");
       }
     } catch (error) {
-      console.error("Error crítico en el proceso de envío:", error);
-      alert("Hubo un fallo al intentar procesar el formulario.");
+      console.error("Error crítico en el proceso de alta:", error);
+      alert("Hubo un fallo al intentar registrar el nuevo producto.");
     }
   };
 
   return (
     <DashboardItemDetail
       dataForm={dataForm}
+      imagePreview={imagePreview}
       handleSubmit={handleSubmit}
       handleChange={handleChange}
       handleRatingChange={handleRatingChange}
@@ -153,7 +165,6 @@ export const DashboardItemContainer = ({ data }) => {
       handleStockChange={handleStockChange}
       handleOfferToggle={handleOfferToggle}
       handleImageChange={handleImageChange}
-      imagePreview={imagePreview}
     />
   );
 };
