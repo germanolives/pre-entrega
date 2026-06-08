@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { DashboardItemDetail } from "../components/Dashboard/DashboardItemDetail";
+import { DashboardItemContainer } from "../components/Dashboard/DashboardItemContainer";
 import { RenderContent } from "../components/common/RenderContent";
 import { useProducts } from "../context/ProductsContext";
 
@@ -12,7 +12,7 @@ export const DashboardDetail = () => {
       className={`mx-4 border-2 border-gray-400 rounded-xl p-8 flex justify-center items-center`}
     >
       <RenderContent loading={loading} error={error} data={data}>
-        <DashboardItemDetail data={data} />
+        <DashboardItemContainer data={data} />
       </RenderContent>
     </section>
   );
