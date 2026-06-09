@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useProducts } from "../../context/ProductsContext";
 import { useNavigate } from "react-router-dom";
 import { EditIcon, TrashIcon } from "../Icons/index";
 import { Button } from "../common/Button";
 
 export const ProductItem = ({ item }) => {
   const navigate = useNavigate();
+  const { deleteProduct } = useProducts();
   const countryPrice = new Intl.NumberFormat("en-GB", {
     style: "currency",
     currency: "EUR",
@@ -38,6 +39,7 @@ export const ProductItem = ({ item }) => {
       <Button
         variant="cristal"
         className="bg-cyan-100 border border-gray-300 rounded-sm flex items-center justify-center"
+        onClick={()=>deleteProduct(item.id)}
       >
         <TrashIcon className="text-red-400 w-6 h-6" />
       </Button>

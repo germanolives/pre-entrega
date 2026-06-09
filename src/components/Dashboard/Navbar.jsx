@@ -16,8 +16,8 @@ export const Navbar = () => {
   return (
     <nav className="hidden md:grid grid-rows-[2fr_1fr] grow">
       <SearchbarContainer />
-      <ul className="flex justify-start items-center border-t border-gray-400 text-xs">
-        <div className="flex flex-row items-center px-6"><span className="text-gray-600">SEARCH BY:</span>
+      <ul className="flex justify-between items-center border-t border-gray-400 text-xs">
+        <div className="flex flex-row items-center px-6">
           {search.map((item) => (
             <li className="">
               {" "}
@@ -38,6 +38,13 @@ export const Navbar = () => {
             className={`${location.pathname === "/dashboard" ? "text-blue-600" : "text-gray-600"}`}
           >
             HOME
+          </Link>
+        </li>
+        <li className="flex items-center">
+          <Link
+            to={"/dashboard/add-product"}
+          >
+            ADD
           </Link>
         </li>
       </ul>

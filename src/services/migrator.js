@@ -45,7 +45,7 @@
 
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
-import jsonProducts from "../../public/data/products.json";
+import jsonProducts from "../../public/data/products-backup.json";
 
 export const migrateCatalogToFirebase = async () => {
   console.log("🚀 Starting the migration of spare parts to Firestore...");

@@ -19,6 +19,7 @@ import { DashboardLayout } from "./layouts/DashboardLayout";
 import { Dashboard } from "./pages/Dashboard";
 import { FiltredDashboard } from "./pages/FiltredDashboard";
 import { DashboardDetail } from "./pages/DashboardDetail";
+import { DashboardNewItemContainer } from "./pages/DashboardNewItemContainer";
 
 export const App = () => {
   return (
@@ -49,6 +50,10 @@ export const App = () => {
         </Route>
         <Route path="dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
+          <Route
+            path="/dashboard/add-product"
+            element={<DashboardNewItemContainer />}
+          />
           <Route
             path="/dashboard/search/:fieldSlug/:filterSlug"
             element={<FiltredDashboard />}

@@ -20,6 +20,7 @@ export const DashboardItemDetail = ({
   const initialRows = length > 70 ? 3 : length > 35 ? 2 : 1;
 
   const BASE_CATEGORIES = [
+    "",
     "electronics",
     "jewelery",
     "men's clothing",
