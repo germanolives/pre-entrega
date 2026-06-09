@@ -2,6 +2,7 @@ import { useProducts } from "../../context/ProductsContext";
 import { useNavigate } from "react-router-dom";
 import { EditIcon, TrashIcon } from "../Icons/index";
 import { Button } from "../common/Button";
+import { Modal } from "../common/Modal";
 
 export const ProductItem = ({ item }) => {
   const navigate = useNavigate();

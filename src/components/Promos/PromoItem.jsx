@@ -27,19 +27,23 @@ export const PromoItem = ({ item, promo }) => {
 
   return (
     <article className="grid grid-rows-[auto_auto_1fr_auto] bg-gray-200 p-4 shadow-2xl border border-gray-300 h-full rounded-sm">
-      <div className="flex flex-row justify-between">
-        <Link to={productPath}>
-          <h3 className="text-sm text-black text-left capitalize line-clamp-2 leading-tight px-2 min-h-9 overflow-hidden">
-            {item.title}
-          </h3>
-        </Link>
-        <Button
-          variant="cristal"
-          onClick={favUndofav}
-          className={`rounded-sm items-start ${isFavorite(item) ? "opacity-100 hover:opacity-80" : "opacity-20 hover:opacity-40"}`}
-        >
-          <FavoriteIcon className="w-6 h-6 mb-9 ml-3" />
-        </Button>
+      <div className="w-full aspect-35/9 overflow-hidden">
+        <div className=" overflow-hidden">
+          <div className="flex flex-row justify-between">
+            <Link to={productPath}>
+              <h3 className="text-sm text-black text-left capitalize line-clamp-2 leading-tight px-2 min-h-9 overflow-hidden">
+                {item.title}
+              </h3>
+            </Link>
+            <Button
+              variant="cristal"
+              onClick={favUndofav}
+              className={`rounded-sm items-start ${isFavorite(item) ? "opacity-100 hover:opacity-80" : "opacity-20 hover:opacity-40"}`}
+            >
+              <FavoriteIcon className="w-6 h-6 mb-9 ml-3" />
+            </Button>
+          </div>
+        </div>
       </div>
       <Link to={categoryPath}>
         <div className="w-full aspect-square flex justify-center items-center overflow-hidden bg-white border border-gray-100 rounded-sm p-2">
@@ -56,10 +60,12 @@ export const PromoItem = ({ item, promo }) => {
           {promo.description}
         </p>
         <div>
-          <p className="text-base line-through mr-2 font-bold text-blue-800 mt-auto">
-            {formattedPrevPrice}
-          </p>
-          <p className="text-4xl font-bold text-blue-800 mt-auto">
+          <div className=" overflow-hidden">
+            <p className="text-base line-through mr-2 font-bold text-blue-800 mt-auto">
+              {formattedPrevPrice}
+            </p>
+          </div>
+          <p className="text-4xl font-bold text-blue-800 mt-auto w-35">
             {formattedPrice}
           </p>
         </div>

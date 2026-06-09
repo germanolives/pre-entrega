@@ -10,7 +10,7 @@ export const HeroItem = ({ id, image, title, description, priority = false }) =>
       <img
         src={image}
         alt={title}
-        className="hidden md:block w-full h-full object-cover opacity-80"
+        className="hidden md:block w-full h-full opacity-80"
         fetchPriority={priority ? "high" : "low"}
         loading={priority ? "eager" : "lazy"}
       />
