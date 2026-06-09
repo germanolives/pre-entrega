@@ -17,7 +17,7 @@ export const Favorites = () => {
 
   return (
     <section
-      className={`mx-4 border-2 border-gray-300 rounded-xl p-4 grid grid-cols-1 gap-4 md:${favorite.length > 0 ? "grid-cols-5" : "flex"}`}
+      className={`mx-4 border-2 border-gray-300 rounded-xl p-4 grid grid-cols-1 gap-4 md:${favorite.length > 0 ? "grid-cols-4" : "flex"}`}
     >
       <RenderContent data={data} loading={loading} error={error}>
         {favorite.length > 0 ? (

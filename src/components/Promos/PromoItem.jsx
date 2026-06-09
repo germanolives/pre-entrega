@@ -29,8 +29,8 @@ export const PromoItem = ({ item, promo }) => {
     <article className="grid grid-rows-[auto_auto_1fr_auto] bg-gray-200 p-4 shadow-2xl border border-gray-300 h-full rounded-sm">
       <div className="w-full aspect-35/9 overflow-hidden">
         <div className=" overflow-hidden">
-          <div className="flex flex-row justify-between">
-            <Link to={productPath}>
+          <div className="flex flex-row justify-between items-start w-full gap-1">
+            <Link to={productPath} className="grow min-w-0">
               <h3 className="text-sm text-black text-left capitalize line-clamp-2 leading-tight px-2 min-h-9 overflow-hidden">
                 {item.title}
               </h3>
@@ -38,7 +38,7 @@ export const PromoItem = ({ item, promo }) => {
             <Button
               variant="cristal"
               onClick={favUndofav}
-              className={`rounded-sm items-start ${isFavorite(item) ? "opacity-100 hover:opacity-80" : "opacity-20 hover:opacity-40"}`}
+              className={`rounded-sm shrink-0 items-start ${isFavorite(item) ? "opacity-100 hover:opacity-80" : "opacity-20 hover:opacity-40"}`}
             >
               <FavoriteIcon className="w-6 h-6 mb-9 ml-3" />
             </Button>
