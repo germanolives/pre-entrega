@@ -59,7 +59,7 @@ export const App = () => {
             element={<FiltredDashboard />}
           />
           <Route
-            path="/dashboard/:categorySlug/:titleSlug/:id"
+            path="/dashboard/edit/:categorySlug/:titleSlug/:id"
             element={<DashboardDetail />}
           />
         </Route>

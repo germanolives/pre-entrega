@@ -27,10 +27,10 @@ export const FiltredDashboard = () => {
 
   return (
     <section
-      className={`mx-28.5 border-2 border-gray-300 rounded-xl p-8 ${loading ? "flex justify-center items-center" : "grid grid-cols-1 gap-4"}`}
+      className={` md:mx-15 border-2 border-gray-300 rounded-xl p-8 ${loading ? "flex justify-center items-center" : "grid grid-cols-1 gap-4"}`}
     >
-      <RenderContent loading={loading} error={error} data={searchedProds}>
-                <div className="sticky top-25 self-start p-5 gap-5 grid grid-cols-[3fr_5fr_3fr_2fr_2fr_0.75fr_0.75fr] bg-cyan-300 border border-gray-300 rounded-sm">
+      <RenderContent data={data} loading={loading} error={error}>
+        <div className="flex flex-row flex-wrap  md:grid grid-cols-[minmax(120px,200px)_minmax(100px,200px)_minmax(100px,200px)_minmax(75px,100px)_minmax(50px,100px)_25px_25px] p-3 bg-cyan-300 border border-gray-300 gap-3 rounded-sm text-xs justify-center md:sticky top-25 items-start">
           <Button
             onClick={() =>
               selectFieldOrder((prev) => ({
@@ -40,9 +40,9 @@ export const FiltredDashboard = () => {
               }))
             }
             variant="primary"
-            className="rounded-sm text-center"
+            className="px-1 rounded-sm text-center"
           >
-            CODE
+            COD
           </Button>
           <Button
             onClick={() =>
@@ -53,9 +53,9 @@ export const FiltredDashboard = () => {
               }))
             }
             variant="primary"
-            className="rounded-sm text-center"
+            className="px-1 rounded-sm text-center"
           >
-            TITLE
+            TIT
           </Button>
           <Button
             onClick={() =>
@@ -66,9 +66,9 @@ export const FiltredDashboard = () => {
               }))
             }
             variant="primary"
-            className="rounded-sm text-center"
+            className="px-1 rounded-sm text-center"
           >
-            CATEGORY
+            CAT
           </Button>
           <Button
             onClick={() =>
@@ -79,9 +79,9 @@ export const FiltredDashboard = () => {
               }))
             }
             variant="primary"
-            className="rounded-sm text-center"
+            className="px-1 rounded-sm text-center"
           >
-            PRICE
+            PRI
           </Button>
           <Button
             onClick={() =>
@@ -92,14 +92,14 @@ export const FiltredDashboard = () => {
               }))
             }
             variant="primary"
-            className="rounded-sm text-center"
+            className="px-1 rounded-sm text-center"
           >
-            STOCK
+            STO
           </Button>
-          <span className="flex items-center justify-center rounded-sm text-white font-semibold bg-green-500">EDIT</span>
-          <span className="flex items-center justify-center rounded-sm text-white font-semibold bg-red-400">DEL</span>
+          <span className="hidden md:flex items-center justify-center rounded-sm text-white font-semibold bg-green-500 px-1">EDT</span>
+          <span className="hidden md:flex items-center justify-center rounded-sm text-white font-semibold bg-red-400 px-1">DEL</span>
         </div>
-        <ProductList data={searchedProds} select={fieldOrder} />
+        <ProductList select={fieldOrder} data={searchedProds} />
       </RenderContent>
     </section>
   );

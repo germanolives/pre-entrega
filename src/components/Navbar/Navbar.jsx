@@ -4,9 +4,8 @@ import { NavbarProdCategContent } from "./NavbarProdCategContent";
 import { useLocation } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useFavorite } from "../../context/FavoriteContext";
-import { CartIcon, FavoriteIcon, DatabaseIcon } from "../Icons/index";
+import { CartIcon, FavoriteIcon } from "../Icons/index";
 import { useSource } from "../..//context/SourceContext";
-import { Button } from "../common/Button";
 
 // import { migrateCatalogToFirebase } from "../../services/migrator";
 // import { exportCatalogToJson } from "../../services/exporter";
@@ -105,43 +104,6 @@ export const Navbar = () => {
           >
             DASHBOARD
           </Link>
-        </li>
-        <li className="flex items-center flex-col group relative">
-          <div className="flex gap-0.5">
-            <DatabaseIcon className="w-5 h-5" />
-            <span className="border border-gray-400 rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center font-semibold text-xxs bg-gray-200">
-              {nameSource()}
-            </span>
-          </div>
-          <ul className="hidden group-hover:block absolute top-full bg-slate-200 shadow-md border border-gray-400 p-2 min-w-30 z-50 rounded-xl">
-            <li className="p-0.5">
-              <Button
-                className={`cursor-pointer font-normal ${nameSource() === "LOCAL" ? "text-blue-600" : "text-gray-600"}`}
-                variant="cristal"
-                onClick={() => changeSource("local")}
-              >
-                LOCAL
-              </Button>
-            </li>
-            <li className="p-0.5">
-              <Button
-                className={`cursor-pointer font-normal ${nameSource() === "DB" ? "text-blue-600" : "text-gray-600"}`}
-                variant="cristal"
-                onClick={() => changeSource("db")}
-              >
-                DB
-              </Button>
-            </li>
-            <li className="p-0.5">
-              <Button
-                className={`cursor-pointer font-normal ${nameSource() === "API" ? "text-blue-600" : "text-gray-600"}`}
-                variant="cristal"
-                onClick={() => changeSource("api")}
-              >
-                API
-              </Button>
-            </li>
-          </ul>
         </li>
         <li className="flex items-center">
           <Link

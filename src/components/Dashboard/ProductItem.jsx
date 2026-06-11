@@ -23,20 +23,20 @@ export const ProductItem = ({ item }) => {
   };
 
   return (
-    <div className="grid grid-cols-1  md:grid-cols-[3fr_5fr_3fr_2fr_2fr_0.75fr_0.75fr] bg-cyan-200 border border-gray-300 p-5 gap-5 rounded-sm">
-      <span className="bg-cyan-100 border p-1 border-gray-300 rounded-sm text-center">
+    <div className="grid grid-cols-1  md:grid-cols-[minmax(120px,200px)_minmax(100px,200px)_minmax(100px,200px)_minmax(75px,100px)_minmax(50px,100px)_25px_25px] p-2 bg-cyan-200 border border-gray-300 gap-3 rounded-sm text-xs justify-center">
+      <span className="bg-cyan-100 border p-1 border-gray-300 rounded-sm text-center h-6">
         {item.code}
       </span>
-      <span className="bg-cyan-100 border p-1 border-gray-300 rounded-sm text-left line-clamp-1">
+      <span className="bg-cyan-100 border p-1 border-gray-300 rounded-sm text-left line-clamp-1 h-6">
         {item.title}
       </span>
-      <span className="bg-cyan-100 border p-1 border-gray-300 rounded-sm text-left line-clamp-1">
+      <span className="bg-cyan-100 border p-1 border-gray-300 rounded-sm text-left line-clamp-1 h-6">
         {item.category}
       </span>
-      <span className="bg-cyan-100 border p-1 border-gray-300 rounded-sm text-right">
+      <span className="bg-cyan-100 border p-1 border-gray-300 rounded-sm text-right h-6">
         {formattedPrice}
       </span>
-      <span className="bg-cyan-100 border p-1 border-gray-300 rounded-sm text-right">
+      <span className="bg-cyan-100 border p-1 border-gray-300 rounded-sm text-right h-6">
         {item.stock}
       </span>
       <Button
@@ -44,18 +44,18 @@ export const ProductItem = ({ item }) => {
         className="bg-cyan-100 border border-gray-300 rounded-sm flex items-center justify-center"
         onClick={() => {
           navigate(
-            `/dashboard/${item.categorySlug}/${item.titleSlug}/${item.id}`,
+            `/dashboard/edit/${item.categorySlug}/${item.titleSlug}/${item.id}`,
           );
         }}
       >
-        <EditIcon className="text-green-500  w-6 h-6" />
+        <EditIcon className="text-green-500  w-4 h-4" />
       </Button>
       <Button
         variant="cristal"
         className="bg-cyan-100 border border-gray-300 rounded-sm flex items-center justify-center"
         onClick={() => setIsModalOpen(true)}
       >
-        <TrashIcon className="text-red-400 w-6 h-6" />
+        <TrashIcon className="text-red-400 w-4 h-4" />
       </Button>
       <Modal
         isOpen={isModalOpen}
