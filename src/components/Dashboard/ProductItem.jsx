@@ -15,12 +15,14 @@ export const ProductItem = ({ item }) => {
     currency: "EUR",
   });
   const formattedPrice = countryPrice.format(item.price);
+
   const handleDeleteConfirm = async () => {
     const res = await deleteProduct(item.id);
     if (res?.success) {
       setIsModalOpen(false); // Cerramos el modal de inmediato
     }
   };
+
 
   return (
     <div className="grid grid-cols-1  md:grid-cols-[minmax(120px,200px)_minmax(100px,200px)_minmax(100px,200px)_minmax(75px,100px)_minmax(50px,100px)_25px_25px] p-2 bg-cyan-200 border border-gray-300 gap-3 rounded-sm text-xs justify-center">
@@ -71,13 +73,15 @@ export const ProductItem = ({ item }) => {
 
           <div className="flex justify-end gap-2 mt-2">
             <Button
-              className="bg-gray-300 text-gray-700 hover:bg-gray-400 text-xxs py-1.5 px-3 rounded-sm uppercase font-bold"
+            variant="primary"
+              className="py-1.5 px-3 rounded-sm uppercase font-bold"
               onClick={() => setIsModalOpen(false)}
             >
               Cancel
             </Button>
             <Button
-              className="bg-red-600 text-white hover:bg-red-700 text-xxs py-1.5 px-3 rounded-sm uppercase font-bold"
+            variant="tertiary"
+              className="py-1.5 px-3 rounded-sm uppercase font-bold"
               onClick={handleDeleteConfirm}
             >
               Yes, Delete

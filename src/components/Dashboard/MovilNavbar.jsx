@@ -56,7 +56,7 @@ export const MovilNavbar = ({ menuChange }) => {
         </li>
         <li className="m-1">
           <Button
-            className={`flex gap-0.5 cursor-pointer font-normal ${nameSource() === "LOCAL" ? "text-blue-600" : "text-gray-600"}`}
+            className={`flex gap-0.5 cursor-pointer font-normal ${nameSource === "LOCAL" ? "text-blue-600" : "text-gray-600"}`}
             variant="cristal"
             onClick={() => {changeSource("local"); menuChange()}}
           >
@@ -68,7 +68,7 @@ export const MovilNavbar = ({ menuChange }) => {
         </li>
         <li className="m-1">
           <Button
-            className={`flex gap-0.5 cursor-pointer font-normal ${nameSource() === "DB" ? "text-blue-600" : "text-gray-600"}`}
+            className={`flex gap-0.5 cursor-pointer font-normal ${nameSource === "DB" ? "text-blue-600" : "text-gray-600"}`}
             variant="cristal"
             onClick={() => {changeSource("db"); menuChange()}}
           >
@@ -80,7 +80,7 @@ export const MovilNavbar = ({ menuChange }) => {
         </li>
         <li className="m-1">
           <Button
-            className={`flex gap-0.5 cursor-pointer font-normal ${nameSource() === "API" ? "text-blue-600" : "text-gray-600"}`}
+            className={`flex gap-0.5 cursor-pointer font-normal ${nameSource === "API" ? "text-blue-600" : "text-gray-600"}`}
             variant="cristal"
             onClick={() => {changeSource("api"); menuChange()}}
           >

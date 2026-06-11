@@ -34,7 +34,7 @@ export const Modal = ({ isOpen, onClose, title, children }) => {
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 transition-colors text-sm font-mono leading-none p-1"
           >
-            ✕
+            ❎
           </button>
         </div>
 

@@ -59,7 +59,8 @@ export const ProductsProvider = ({ children }) => {
   }, [products, loading, error]);
 
   const updateProduct = async (item) => {
-    if (nameSource !== "db") {
+    console.log("Origen actual en el ABM:", nameSource)
+    if (nameSource !== "DB") {
       console.warn("Modo local: Modificando producto en memoria.");
       setData((prevProducts) =>
         prevProducts.map((prod) =>
@@ -86,7 +87,7 @@ export const ProductsProvider = ({ children }) => {
   };
 
   const addProduct = async (item) => {
-    if (nameSource !== "db") {
+    if (nameSource !== "DB") {
       console.warn("Modo local: Insertando producto en memoria.");
       setData((prevProducts) => [...prevProducts, item]);
       return { success: true, local: true };
@@ -105,7 +106,7 @@ export const ProductsProvider = ({ children }) => {
   };
 
   const deleteProduct = async (id) => {
-    if (nameSource !== "db") {
+    if (nameSource !== "DB") {
       console.warn("Modo local: Eliminando producto en memoria.");
       setData((prevProducts) => prevProducts.filter((prod) => prod.id !== id));
       return { success: true, local: true };

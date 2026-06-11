@@ -30,9 +30,7 @@ export const SourceProvider = ({ children }) => {
     setSource(newSource);
   };
 
-  const nameSource = () => {
-    return source.toUpperCase();
-  };
+  const nameSource = source.toUpperCase();
 
   return (
     <SourceContext.Provider
