@@ -45,7 +45,11 @@ export const Navbar = () => {
             DASHBOARD
           </Link>
         </li>
-
+        <li className="flex items-center">
+          <Link to={"/dashboard/add-product"} className="text-gray-600">
+            ADD PRODUCT
+          </Link>
+        </li>
         <li className="flex items-center flex-col group relative">
           <div className="flex gap-0.5">
             <DatabaseIcon className="w-5 h-5" />
@@ -92,9 +96,6 @@ export const Navbar = () => {
           </Link>
         </li>
 
-        <li className="flex items-center justify-center rounded-sm text-white font-semibold bg-blue-900 px-1">
-          <Link to={"/dashboard/add-product"}>ADD PRODUCT</Link>
-        </li>
         <li className="flex items-center">
           <span
             // to={"/dashboard"}
