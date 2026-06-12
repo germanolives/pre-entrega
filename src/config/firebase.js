@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
+import { getAuth } from "firebase/auth"; // 🌟 1. IMPORTAMOS EL MÓDULO DE AUTENTICACIÓN
 
 const firebaseConfig = {
   apiKey: "AIzaSyBPkHYkWpduM6bOW3sYTWzWtWeXe4dMciU",
@@ -12,6 +13,9 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+
+// 🌟 2. INICIALIZAMOS Y EXPORTAMOS 'auth' PARA EL PROVIDER
+export const auth = getAuth(app); 
 
 export const db = getFirestore(app);
 export const analytics = getAnalytics(app);

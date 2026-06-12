@@ -16,12 +16,12 @@ export const ProductItem = ({ item }) => {
   });
   const formattedPrice = countryPrice.format(item.price);
 
-  const handleDeleteConfirm = async () => {
-    const res = await deleteProduct(item.id);
-    if (res?.success) {
-      setIsModalOpen(false); // Cerramos el modal de inmediato
-    }
-  };
+  // const handleDeleteConfirm = async () => {
+  //   const res = await deleteProduct(item.id);
+  //   if (res?.success) {
+  //     setIsModalOpen(false); // Cerramos el modal de inmediato
+  //   }
+  // };
 
 
   return (
@@ -55,11 +55,11 @@ export const ProductItem = ({ item }) => {
       <Button
         variant="cristal"
         className="bg-cyan-100 border border-gray-300 rounded-sm flex items-center justify-center"
-        onClick={() => setIsModalOpen(true)}
+        onClick={() => deleteProduct(item.id)}
       >
         <TrashIcon className="text-red-400 w-4 h-4" />
       </Button>
-      <Modal
+      {/* <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         title="Confirm Deletion"
@@ -88,7 +88,7 @@ export const ProductItem = ({ item }) => {
             </Button>
           </div>
         </div>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };
