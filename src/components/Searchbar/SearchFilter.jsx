@@ -13,7 +13,7 @@ export const SearchFilter = () => {
             <Button
               onClick={() => changeSearch(item.field)}
               variant={`${selectedField.field === item.field ? "primary" : "secondary"}`}
-              className="rounded-sm w-12  mx-0.5"
+              className="rounded-sm w-8  mx-0.5"
             >
               {item.field.toUpperCase().slice(0, 3)}
             </Button>

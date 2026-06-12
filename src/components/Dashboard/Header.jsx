@@ -34,7 +34,6 @@ export const Header = () => {
           <Navbar />
           <div className="flex justify-end text-xxs mr-1 md:hidden">
             <span
-              // to={"/dashboard"}
               className={`text-right ${location.pathname === "/dashboard" ? "text-blue-600" : location.pathname.startsWith("/dashboard/edit") ? "text-green-600" : "text-blue-600"}`}
             >
               {`${location.pathname === "/dashboard" ? `[ ${getProductsQuantity()} PRODS - ${getTotalStock()} UNITS ]` : location.pathname.startsWith("/dashboard/edit") ? "[ EDITING PRODUCT ]" : "[ ADDING PRODUCT ]"}`}
@@ -44,7 +43,7 @@ export const Header = () => {
         <div className="flex flex-col items-end md:hidden">
           <Button variant="cristal" onClick={menuChange}>
             <MenuIcon
-              className={`w-5 h-5 border border-gray-500 ${menu ? "text-blue-500" : "text-gray-500"} rounded-xl hover:text-blue-500 m-3`}
+              className={`w-4 h-4 border border-gray-500 ${menu ? "text-blue-500" : "text-gray-500"} rounded-xl hover:text-blue-500 m-3 ml-1.5`}
             />
           </Button>
         </div>
