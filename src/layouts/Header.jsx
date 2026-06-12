@@ -13,7 +13,7 @@ export const Header = ({
   const menuChange = () => setMenu((prev) => !prev);
 
   return (
-    <header className="sticky top-0 left-0 mx-4 z-50 rounded-xl bg-slate-300 mb-4">
+    <header className="py-0.75 sticky top-0 left-0 mx-4 z-50 rounded-xl bg-slate-300 mb-4 md:py-0">
       <div className="flex justify-between items-center">
         <Link to={"/"} className="w-15 md:w-25 shrink-0">
           <img
@@ -29,7 +29,7 @@ export const Header = ({
         <div className="flex flex-col items-end md:hidden">
           <Button variant="cristal" onClick={menuChange}>
             <MenuIcon
-              className={`w-5 h-5 border border-gray-500 ${menu ? "text-blue-500" : "text-gray-500"} rounded-xl hover:text-blue-500 m-3`}
+              className={`w-4 h-4 border border-gray-500 ${menu ? "text-blue-500" : "text-gray-500"} rounded-xl hover:text-blue-500 m-3 ml-1.5`}
             />
           </Button>
         </div>

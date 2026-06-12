@@ -6,7 +6,7 @@ export const SearchFilter = () => {
   return (
     <div className="flex items-center border border-gray-400 border-t-0 rounded-sm rounded-t-none mx-1">
       <span className="text-gray-500 text-xxs ml-2">SEARCH:</span>
-      <ul className="flex flex-row items-center text-xs">
+      <ul className="flex flex-row items-center text-xxs">
         {search.map((item) => (
           <li key={item.field} className="">
             {" "}
