@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Navbar } from "./Navbar";
 import { MovilNavbar } from "./MovilNavbar";
 import { Link } from "react-router-dom";
@@ -6,10 +7,14 @@ import { logo } from "../../data/brand/logo";
 import { Button } from "../common/Button";
 import { MenuIcon } from "../Icons/index";
 import { SearchbarContainer } from "./SearchbarContainer";
+import { SearchFilter } from "../Searchbar/SearchFilter";
+import { useProducts } from "../../context/ProductsContext";
 
 export const Header = () => {
   const [menu, setMenu] = useState(false);
   const menuChange = () => setMenu((prev) => !prev);
+  const { getProductsQuantity, getTotalStock } = useProducts();
+  const location = useLocation();
 
   return (
     <header className="sticky top-0 left-0 mx-4 z-50 rounded-xl bg-slate-300 mb-4">
@@ -23,10 +28,19 @@ export const Header = () => {
             loading="eager"
           />
         </Link>
-        <div className="flex grow md:hidden">
+        <div className="grow">
           <SearchbarContainer />
+          <SearchFilter />
+          <Navbar />
+          <div className="flex justify-end text-xxs mr-1 md:hidden">
+            <span
+              // to={"/dashboard"}
+              className={`text-right ${location.pathname === "/dashboard" ? "text-blue-600" : location.pathname.startsWith("/dashboard/edit") ? "text-green-600" : "text-blue-600"}`}
+            >
+              {`${location.pathname === "/dashboard" ? `[ ${getProductsQuantity()} PRODS - ${getTotalStock()} UNITS ]` : location.pathname.startsWith("/dashboard/edit") ? "[ EDITING PRODUCT ]" : "[ ADDING PRODUCT ]"}`}
+            </span>
+          </div>
         </div>
-        <Navbar />
         <div className="flex flex-col items-end md:hidden">
           <Button variant="cristal" onClick={menuChange}>
             <MenuIcon

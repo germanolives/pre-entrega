@@ -34,14 +34,14 @@ export const SearchbarContainer = () => {
 
   return (
     <div className="w-full">
-      <form className="flex p-2 items-center w-full" onSubmit={manageShipment}>
+      <form className="flex px-1 items-center w-full" onSubmit={manageShipment}>
         <div className="flex grow relative min-w-0">
           <input
             name="name"
             value={dataIn.name}
             onChange={manageChange}
             disabled={loading}
-            className="w-full min-w-0 border border-r-0 border-gray-400 px-4 h-9 text-sm rounded-sm rounded-r-none focus:outline-none"
+            className="w-full min-w-0 border border-r-0 border-gray-400 px-4 h-9 text-sm rounded-tl-sm focus:outline-none"
             type="text"
             placeholder={`${loading ? "Loading..." : "Enter product..."}`}
           />
@@ -65,7 +65,7 @@ export const SearchbarContainer = () => {
 
         <Button
           variant="ghost"
-          className="border border-gray-400 rounded-sm rounded-l-none h-9 p-2 flex items-center justify-center shrink-0"
+          className="border border-gray-400 rounded-tr-sm  h-9 p-2 flex items-center justify-center shrink-0"
           type="submit"
         >
           <SearchIcon className="w-5 h-5 text-gray-500" />

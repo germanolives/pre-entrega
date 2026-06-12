@@ -2,6 +2,8 @@
 
 @theme {
   --text-xxs: 0.625rem; /* Esto son 10px */
+  --breakpoint-mini: 400px;
+  --breakpoint-nav: 1125px;
 }
 
 

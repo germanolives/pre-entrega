@@ -1,8 +1,6 @@
-import { SearchbarContainer } from "./SearchbarContainer";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useSource } from "../..//context/SourceContext";
-import { useSearch } from "../../context/SearchContext";
 import { Button } from "../../components/common/Button";
 import { DatabaseIcon } from "../Icons/index";
 import { useProducts } from "../../context/ProductsContext";
@@ -10,35 +8,23 @@ import { useProducts } from "../../context/ProductsContext";
 export const Navbar = () => {
   const location = useLocation();
   const { nameSource, changeSource } = useSource();
-  const { search, changeSearch, selectedField } = useSearch();
   const { getProductsQuantity, getTotalStock } = useProducts();
   return (
-    <nav className="hidden md:grid grid-rows-[2fr_1fr] grow">
-      <SearchbarContainer />
-      <ul className="flex justify-between items-center border-t border-gray-400 text-xs gap-4">
-        <li className="flex items-center  border border-gray-400 rounded-sm ml-2.5">
-          <span className="text-gray-500 text-xs ml-1">SEARCH BY:</span>
-          <ul className="flex flex-row items-center px-0.5">
-            {search.map((item) => (
-              <li className="">
-                {" "}
-                <Button
-                  onClick={() => changeSearch(item.field)}
-                  variant={`${selectedField.field === item.field ? "primary" : "secondary"}`}
-                  className="rounded-sm w-12  mx-1"
-                >
-                  {item.field.toUpperCase().slice(0, 3)}
-                </Button>
-              </li>
-            ))}
-          </ul>
+    <nav className="hidden md:flex grow justify-center pt-2">
+      <ul className="flex justify-evenly grow items-center border-t border-gray-400 text-xs gap-4">
+        <li className="flex items-center">
+          <Link
+            to={"/"}
+            className="text-gray-600"
+          >
+            HOME
+          </Link>
         </li>
-
         <li className="flex items-center">
           <Link
             to={"/dashboard"}
-            // className={`${location.pathname.startsWith("/dashboard") ? "text-blue-600" : "text-gray-600"}`}
-            className="text-gray-600"
+            className={`${location.pathname.startsWith("/dashboard") ? "text-blue-600" : "text-gray-600"}`}
+  
           >
             DASHBOARD
           </Link>
@@ -90,14 +76,13 @@ export const Navbar = () => {
             to={"/"}
             className={`${location.pathname === "/" ? "text-blue-600" : "text-gray-600"}`}
           >
-            LOG OFF
+            LOGOUT
           </Link>
         </li>
 
         <li className="flex items-center">
           <span
-            // to={"/dashboard"}
-            className={`w-50 text-right mr-21 ${location.pathname === "/dashboard" ? "text-blue-600" : location.pathname.startsWith("/dashboard/edit") ? "text-green-600" : "text-blue-600"}`}
+            className={`w-50 text-right ${location.pathname === "/dashboard" ? "text-blue-600" : location.pathname.startsWith("/dashboard/edit") ? "text-green-600" : "text-blue-600"}`}
           >
             {`${location.pathname === "/dashboard" ? `[ ${getProductsQuantity()} PRODS - ${getTotalStock()} UNITS ]` : location.pathname.startsWith("/dashboard/edit") ? "[ EDITING PRODUCT ]" : "[ ADDING PRODUCT ]"}`}
           </span>
