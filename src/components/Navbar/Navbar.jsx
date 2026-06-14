@@ -1,4 +1,3 @@
-import { SearchbarContainer } from "../Searchbar/SearchbarContainer";
 import { Link } from "react-router-dom";
 import { NavbarProdCategContent } from "./NavbarProdCategContent";
 import { useLocation } from "react-router-dom";
@@ -59,9 +58,8 @@ const logOff = () => {
 
 
   return (
-    <nav className="hidden md:grid grid-rows-[2fr_1fr] grow" ref={menuRef}>
-      <SearchbarContainer />
-      <ul className="flex justify-evenly items-center border-t border-gray-400 text-xs">
+    <nav className="hidden md:block px-2" ref={menuRef}>
+      <ul className="flex justify-evenly items-center rounded-sm border border-gray-400 text-xs">
 
         {/* MENU HOME */}
         <li className="flex items-center w-20">

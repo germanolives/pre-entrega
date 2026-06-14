@@ -32,14 +32,14 @@ export const SearchbarContainer = () => {
 
   return (
     <div className="w-full">
-      <form className="flex p-2 items-center w-full" onSubmit={manageShipment}>
+      <form className="flex px-2  items-center w-full" onSubmit={manageShipment}>
         <div className="flex grow relative min-w-0">
           <input
             name="name"
             value={dataIn.name}
             onChange={manageChange}
             disabled={loading}
-            className="w-full min-w-0 border border-r-0 border-gray-400 px-4 h-9 text-sm rounded-sm rounded-r-none focus:outline-none"
+            className="w-full min-w-0 border border-r-0 border-gray-400 px-2 h-9 text-sm rounded-sm rounded-r-none focus:outline-none"
             type="text"
             placeholder={`${loading ? "Loading..." : "Enter product..."}`}
           />
