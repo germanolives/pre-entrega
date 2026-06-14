@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext, useContext } from "react";
+import { useAuth } from "./AuthContext";
 
 export const CartContext = createContext();
 
@@ -11,17 +12,34 @@ export const useCart = () => {
 };
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState(() => {
-    const localData = localStorage.getItem("cart");
-    return localData ? JSON.parse(localData) : [];
-  });
+  const { user } = useAuth();
+  const currentUser = user ? user.uid : null;
+  const userCart = `cart.${currentUser}`;
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+    const localData = localStorage.getItem(userCart);
+    setCart(localData ? JSON.parse(localData) : []);
+  }, [userCart]);
+
+  useEffect(() => {
+    if (currentUser) {
+      localStorage.setItem(userCart, JSON.stringify(cart));
+    }
+  }, [userCart, cart]);
 
   const addToCart = (product, quantity) => {
-    const itemInCart = cart.find((item) => String(item.id) === String(product.id));
+    if (
+      !product ||
+      !product.id ||
+      !quantity ||
+      quantity <= 0 ||
+      !currentUser
+    )
+      return;
+    const itemInCart = cart.find(
+      (item) => String(item.id) === String(product.id),
+    );
     if (itemInCart) {
       const updatedCart = cart.map((item) =>
         String(item.id) === String(product.id)
@@ -39,6 +57,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const clearCart = (product = null) => {
+    if (!currentUser) return;
     if (product) {
       setCart(cart.filter((item) => String(item.id) !== String(product.id)));
     } else {
@@ -47,7 +66,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const resetProdQtyCart = (product) => {
-    if (!product) return;
+    if (!product || !currentUser) return;
     const newCart = cart.map((item) =>
       String(item.id) === String(product.id) ? { ...item, quantity: 1 } : item,
     );
@@ -56,7 +75,9 @@ export const CartProvider = ({ children }) => {
 
   const getCartQuantity = (product = null) => {
     if (product) {
-      const searchProd = cart.find((item) => String(item.id) === String(product.id));
+      const searchProd = cart.find(
+        (item) => String(item.id) === String(product.id),
+      );
       return searchProd ? searchProd.quantity : 0;
     } else {
       return cart.reduce((acc, item) => acc + item.quantity, 0);
@@ -64,8 +85,11 @@ export const CartProvider = ({ children }) => {
   };
 
   const getCartTotal = (product = null) => {
+    if (!currentUser) return 0;
     if (product) {
-      const searchProd = cart.find((item) => String(item.id) === String(product.id));
+      const searchProd = cart.find(
+        (item) => String(item.id) === String(product.id),
+      );
       if (searchProd) {
         const appliedOffers = searchProd.offers.find(
           (o) => searchProd.quantity >= o.qty,
@@ -88,15 +112,19 @@ export const CartProvider = ({ children }) => {
   };
 
   const checkCart = (data) => {
+    if (!data || !currentUser) return;
     const newCart = cart.filter((cartItem) => {
       const matchingDataItem = data.find(
-        (dataItem) => String(dataItem.id) === String(cartItem.id) && dataItem.stock > 0,
+        (dataItem) =>
+          String(dataItem.id) === String(cartItem.id) && dataItem.stock > 0,
       );
       return matchingDataItem !== undefined;
     });
 
     const updatedNewCart = newCart.map((item) => {
-      const findedItem = data.find((dataItem) => String(dataItem.id) === String(item.id));
+      const findedItem = data.find(
+        (dataItem) => String(dataItem.id) === String(item.id),
+      );
       if (findedItem) {
         return {
           ...item,
@@ -113,8 +141,11 @@ export const CartProvider = ({ children }) => {
   };
 
   const isItemInCart = (product) => {
+    if (!currentUser) return;
     if (!product) return false;
-    const searchProduct = cart.find((item) => String(item.id) === String(product.id));
+    const searchProduct = cart.find(
+      (item) => String(item.id) === String(product.id),
+    );
     return searchProduct ? true : false;
   };
 

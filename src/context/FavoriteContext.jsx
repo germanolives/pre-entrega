@@ -1,4 +1,5 @@
 import { useState, useContext, createContext, useEffect } from "react";
+import { useAuth } from "./AuthContext";
 
 export const FavoriteContext = createContext();
 
@@ -11,17 +12,24 @@ export const useFavorite = () => {
 };
 
 export const FavoriteProvider = ({ children }) => {
-  const [favorite, setFavorite] = useState(() => {
-    const localData = localStorage.getItem("favorite");
-    return localData ? JSON.parse(localData) : [];
-  });
+  const { user } = useAuth();
+  const currentUser = user ? user.uid : null;
+  const userFavorites = `favorite.${currentUser}`;
+  const [favorite, setFavorite] = useState([]);
 
   useEffect(() => {
-    localStorage.setItem("favorite", JSON.stringify(favorite));
-  }, [favorite]);
+    const localData = localStorage.getItem(userFavorites);
+    setFavorite(localData ? JSON.parse(localData) : []);
+  }, [userFavorites]);
+
+  useEffect(() => {
+    if (currentUser) {
+      localStorage.setItem(userFavorites, JSON.stringify(favorite));
+    }
+  }, [favorite, userFavorites]);
 
   const toggleFavorite = (product) => {
-    if (!product || !product.id) return;
+    if (!product.id || !currentUser) return;
 
     setFavorite((prev) => {
       const itemInFavorite = prev.find((item) => {

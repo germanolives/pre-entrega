@@ -20,6 +20,7 @@ import { Dashboard } from "./pages/Dashboard";
 import { FiltredDashboard } from "./pages/FiltredDashboard";
 import { DashboardDetail } from "./pages/DashboardDetail";
 import { DashboardNewItemContainer } from "./pages/DashboardNewItemContainer";
+import { ProtectedLayout } from "./layouts/ProtectedLayout";
 
 export const App = () => {
   return (
@@ -34,8 +35,10 @@ export const App = () => {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="aboutUs" element={<AboutUs />} />
-          <Route path="favorites" element={<Favorites />} />
-          <Route path="cart" element={<Cart />} />
+          <Route element={<ProtectedLayout />}>
+            <Route path="favorites" element={<Favorites />} />
+            <Route path="cart" element={<Cart />} />
+          </Route>
           <Route path="contact" element={<Contact />} />
           <Route
             path="products/search/:filterSlug"
@@ -48,20 +51,22 @@ export const App = () => {
             element={<ProductDetail />}
           />
         </Route>
-        <Route path="dashboard" element={<DashboardLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route
-            path="/dashboard/add-product"
-            element={<DashboardNewItemContainer />}
-          />
-          <Route
-            path="/dashboard/search/:fieldSlug/:filterSlug"
-            element={<FiltredDashboard />}
-          />
-          <Route
-            path="/dashboard/edit/:categorySlug/:titleSlug/:id"
-            element={<DashboardDetail />}
-          />
+        <Route element={<ProtectedLayout requiredRole="admin" />}>
+          <Route path="dashboard" element={<DashboardLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route
+              path="/dashboard/add-product"
+              element={<DashboardNewItemContainer />}
+            />
+            <Route
+              path="/dashboard/search/:fieldSlug/:filterSlug"
+              element={<FiltredDashboard />}
+            />
+            <Route
+              path="/dashboard/edit/:categorySlug/:titleSlug/:id"
+              element={<DashboardDetail />}
+            />
+          </Route>
         </Route>
       </Routes>
     </>

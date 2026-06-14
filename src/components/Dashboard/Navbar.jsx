@@ -4,9 +4,11 @@ import { useSource } from "../..//context/SourceContext";
 import { Button } from "../../components/common/Button";
 import { DatabaseIcon } from "../Icons/index";
 import { useProducts } from "../../context/ProductsContext";
+import { useAuth } from "../../context/AuthContext";
 
 export const Navbar = () => {
   const location = useLocation();
+  const { logout } = useAuth();
   const { nameSource, changeSource } = useSource();
   const { getProductsQuantity, getTotalStock } = useProducts();
   return (
@@ -35,7 +37,7 @@ export const Navbar = () => {
           </Link>
         </li>
         <li className="flex items-center flex-col group relative">
-          <div className="flex gap-0.5">
+          <div className="flex gap-0.5 text-blue-600">
             <DatabaseIcon className="w-5 h-5" />
             <span className="border border-gray-400 rounded-full h-5 w-10 px-1.5 flex items-center justify-center font-semibold text-xxs bg-gray-200">
               {nameSource}
@@ -75,6 +77,7 @@ export const Navbar = () => {
           <Link
             to={"/"}
             className={`${location.pathname === "/" ? "text-blue-600" : "text-gray-600"}`}
+            onClick={logout}
           >
             LOGOUT
           </Link>

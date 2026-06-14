@@ -8,7 +8,7 @@ import {
 } from "firebase/auth";
 
 // 🌟 CORREGIDO: Separamos e importamos los métodos nativos de Firestore
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore"; // 🌟 Agregamos 'setDoc'
 import { auth, db } from "../config/firebase"; // 💡 NOTA: Idealmente traelos de tu archivo de config centralizado
 
 export const AuthContext = createContext();
@@ -26,10 +26,27 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   // Funciones del ABM de Autenticación
-  const signup = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
-  };
+  const signup = async (email, password) => {
+    // 1. Creamos el usuario en Firebase Auth primero
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
+    const newAuthUser = userCredential.user;
 
+    // 2. Apuntamos a la colección "usuarios", nombrando al documento EXACTAMENTE como el uid de Auth
+    const userDocRef = doc(db, "users", newAuthUser.uid);
+
+    // 3. Guardamos los metadatos iniciales y el rol por defecto
+    await setDoc(userDocRef, {
+      email: newAuthUser.email,
+      rol: "user", // 👮‍♂️ Todos nacen como usuario regular. Si querés un admin, lo cambiás a mano en la consola.
+      createdAt: new Date().toISOString(),
+    });
+
+    return userCredential;
+  };
   const login = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
@@ -44,7 +61,7 @@ export const AuthProvider = ({ children }) => {
       try {
         if (currentUser) {
           // Si hay un usuario, vamos a buscar su rol asignado en Firestore
-          const userDocRef = doc(db, "usuarios", currentUser.uid);
+          const userDocRef = doc(db, "users", currentUser.uid);
           const userDocSnap = await getDoc(userDocRef);
 
           if (userDocSnap.exists()) {
@@ -80,7 +97,8 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {children} {/* 🌟 Dejamos que renderice libre, el loading lo maneja el router o las pantallas */}
+      {children}{" "}
+      {/* 🌟 Dejamos que renderice libre, el loading lo maneja el router o las pantallas */}
     </AuthContext.Provider>
   );
 };

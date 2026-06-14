@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { ImgWithSkeleton } from "../common/ImgWithSkeleton";
 import { Button } from "../common/Button";
 import { DiscountList } from "../Discount/DiscountList";
@@ -7,9 +7,14 @@ import { formatSlug } from "../../utils/formatSlug";
 import { useCart } from "../../context/CartContext";
 import { FavoriteIcon } from "../Icons/index";
 import { useFavorite } from "../../context/FavoriteContext";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export const ItemDetail = ({ data }) => {
   const { title, price, description, category, image, offers, stock } = data;
+  const { user } = useAuth();
+  const currentUser = user ? user.uid : null;
+  const navigate = useNavigate();
   const { getCartQuantity, addToCart } = useCart();
   const { isFavorite, toggleFavorite } = useFavorite();
   const [count, setCount] = useState(0);
@@ -32,6 +37,10 @@ export const ItemDetail = ({ data }) => {
   };
   const resetProduct = () => setCount(0);
   const handleAdd = () => {
+    if (!currentUser) {
+      navigate("/login", { state: { from: location.pathname } });
+      return;
+    }
     if (count > 0 && count <= stock - unitsInCart) {
       addToCart(data, count);
       setCount(0);
@@ -80,7 +89,9 @@ export const ItemDetail = ({ data }) => {
           <p className={`text-xxs font medium text-blue-700`}>
             Available Stock: {availableStock} units
           </p>
-          <p className={`text-xxs font-medium ${!showAsAdded ? "text-blue-700" : "text-red-700"}`}>
+          <p
+            className={`text-xxs font-medium ${!showAsAdded ? "text-blue-700" : "text-red-700"}`}
+          >
             Added to cart: {unitsInCart} units
           </p>
         </div>
