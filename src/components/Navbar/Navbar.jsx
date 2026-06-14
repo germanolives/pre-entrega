@@ -5,14 +5,15 @@ import { useLocation } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useFavorite } from "../../context/FavoriteContext";
 import { CartIcon, FavoriteIcon } from "../Icons/index";
-import { useSource } from "../..//context/SourceContext";
 import { useAuth } from "../../context/AuthContext";
 import { Button } from "../common/Button";
+import { useState, useRef, useEffect } from "react";
+import { ChevronDownIcon } from "../Icons/index";
 
-// import { migrateCatalogToFirebase } from "../../services/migrator";
-// import { exportCatalogToJson } from "../../services/exporter";
+
 
 export const Navbar = () => {
+  const menuRef = useRef(null);
   const location = useLocation();
   const { getCartQuantity } = useCart();
   const { getFavoriteQuantity } = useFavorite();
@@ -23,134 +24,206 @@ export const Navbar = () => {
     : "GUEST";
   const displayUserEmail = user?.email ? user.email : "";
   const typeUser = user && user.rol;
-  const isAdmin = user && user.rol==="admin";
+  const isAdmin = user && user.rol === "admin";
+  const [listMenuView, setListMenuView] = useState(false);
+
+  const changeListMenuView = () => {
+    setListMenuView((prev) => !prev);
+    setUserMenuView(false);
+  };
+  const [userMenuView, setUserMenuView] = useState(false);
+  const changeUserMenuView = () => {
+    setUserMenuView((prev) => !prev);
+    setListMenuView(false);
+  };
+
+const resetMenuView = () => {
+  setListMenuView(false);
+  setUserMenuView(false);
+}
+
+const logOff = () => {
+  logout();
+  resetMenuView();
+}
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if ((listMenuView || userMenuView) && menuRef.current && !menuRef.current.contains(event.target)) {
+        resetMenuView();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [listMenuView, userMenuView]);
+
 
   return (
-    <nav className="hidden md:grid grid-rows-[2fr_1fr] grow">
+    <nav className="hidden md:grid grid-rows-[2fr_1fr] grow" ref={menuRef}>
       <SearchbarContainer />
       <ul className="flex justify-evenly items-center border-t border-gray-400 text-xs">
-        <li className="flex items-center w-18">
+
+        {/* MENU HOME */}
+        <li className="flex items-center w-20">
           <Link
+            onClick={resetMenuView}
             to={"/"}
             className={`grow text-center ${location.pathname === "/" ? "text-blue-600" : "text-gray-600"}`}
           >
             HOME
           </Link>
         </li>
-        <li className="flex items-center flex-col group relative w-18">
-          <Link
-            to={"/products"}
-            className={`grow text-center ${location.pathname === "/products" ? "text-blue-600" : "text-gray-600"}`}
-          >
-            PRODUCTS
-          </Link>
-          <NavbarProdCategContent />
+
+
+        {/* MENU PRODUCTS */}
+        <li className="flex items-center w-20">
+          <div className="flex items-center relative group">
+            <Link
+              onClick={resetMenuView}
+              to={"/products"}
+              className={`grow text-center ${location.pathname.includes("/products") ? "text-blue-600" : "text-gray-600"}`}
+            >
+              PRODUCTS
+            </Link>
+            <Button
+              className={`grow text-center ${location.pathname === "/products" ? "text-blue-600" : "text-gray-600"}`}
+              variant="cristal"
+              onClick={changeListMenuView}
+            >
+              <ChevronDownIcon
+                className={`w-4 h-4 transition-transform duration-300 relative ${listMenuView ? "rotate-180 text-blue-600" : "text-gray-600"}`}
+              />
+            </Button>
+            <NavbarProdCategContent
+              listMenuView={listMenuView}
+              resetMenuView={resetMenuView}
+            />
+          </div>
         </li>
-        <li className="flex items-center w-18">
+
+
+        {/* MENU SERVICES */}
+        <li className="flex items-center w-20">
           <Link
+            onClick={resetMenuView}
             to={"/services"}
             className={`grow text-center ${location.pathname === "/services" ? "text-blue-600" : "text-gray-600"}`}
           >
             SERVICES
           </Link>
         </li>
-        <li className="flex items-center w-18">
+
+
+        {/* MENU ABOUT US */}
+        <li className="flex justify-between items-center w-20">
           <Link
+            onClick={resetMenuView}
             to={"/aboutUs"}
             className={`grow text-center ${location.pathname === "/aboutUs" ? "text-blue-600" : "text-gray-600"}`}
           >
             ABOUT US
           </Link>
         </li>
-        <li className="flex items-center w-18">
+
+
+        {/* MENU CONTACT */}
+        <li className="flex items-center w-20">
           <Link
+            onClick={resetMenuView}
             to={"/contact"}
             className={`grow text-center ${location.pathname === "/contact" ? "text-blue-600" : "text-gray-600"}`}
           >
             CONTACT
           </Link>
         </li>
-        {/* <li className="flex items-center">
-          <Button
-            variant="secondary"
-            className="px-1"
-            onClick={migrateCatalogToFirebase}
-          >
-            LOCAL TO DB
-          </Button>
-        </li>
-         <li className="flex items-center">
-          <Button
-            variant="secondary"
-            className="px-1"
-            onClick={exportCatalogToJson}
-          >
-            DB TO LOCAL
-          </Button>
-        </li> */}
-        <li
-          className={`${!currentUser ? "flex items-center w-18" : "hidden"}`}
-        >
+
+
+        {/* MENU LOGIN (VISIBLE CUANDO NO SE ESTÁ CON USUARIO E INVISIBLE CUANDO USER ESTÁ LOGUEADO) */}
+        <li className={`${!currentUser ? "flex items-center w-20" : "hidden"}`}>
           <Link
+            onClick={resetMenuView}
             to={"/login"}
             className={`grow text-center ${location.pathname === "/login" ? "text-blue-600" : "text-gray-600"}`}
           >
             LOGIN
           </Link>
         </li>
-        <li
-          className={`${!currentUser ? "hidden" : "group relative cursor-pointer w-18"}`}
-        >
-          <div className={`grow text-center overflow-hidden ${isAdmin ? "text-blue-600" : "text-gray-600"}`}>{displayUser}</div>
-          <ul className="hidden group-hover:flex absolute flex-col gap-2 top-full bg-slate-200 shadow-md border border-gray-400 p-2 min-w-30 z-50 rounded-xl">
-            <li className="text-blue-600 italic p-0.5">{displayUserEmail}</li>
-            <li className="flex items-center">
-              <Link
-                to={"/favorites"}
-                className={`grow text-center ${location.pathname === "/favorites" ? "text-blue-600" : "text-gray-600"}`}
-              >
-                <div className="flex gap-0.5">
-                  <FavoriteIcon className="w-5 h-5" />
-                  <span className="border border-gray-400 rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center font-semibold text-xxs bg-gray-200">
-                    {getFavoriteQuantity()}
-                  </span>
-                </div>
-              </Link>
-            </li>
-            <li className="flex items-center">
-              <Link
-                to={"/cart"}
-                className={`${location.pathname === "/cart" ? "text-blue-600" : "text-gray-600"}`}
-              >
-                <div className="flex gap-0.5">
-                  <CartIcon className="w-5 h-5" />
-                  <span className="border border-gray-400 rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center font-semibold text-xxs bg-gray-200">
-                    {getCartQuantity()}
-                  </span>
-                </div>
-              </Link>
-            </li>
-            <li className="p-0.5">
-              <Button
-                onClick={logout}
-                variant="primary"
-                className="rounded-sm p-1 text-xxs"
-              >
-                Logout
-              </Button>
-            </li>
-          </ul>
+
+
+        {/* MENU USER (VISIBLE CUANDO SE ESTÁ CON USUARIO LOGUEADO E INVISIBLE CUANDO NO SE ESTÁ LOGUEADO) */}
+        <li className={`${!currentUser ? "hidden" : "items-center w-20"}`}>
+          <div className="flex items-center relative group" ref={menuRef}>
+            <div
+              className={`grow text-center overflow-hidden ${isAdmin ? "text-blue-600" : "text-gray-600"}`}
+            >
+              {displayUser}
+            </div>
+            <Button
+              className={`grow text-center ${location.pathname === "/products" ? "text-blue-600" : "text-gray-600"}`}
+              variant="cristal"
+              onClick={changeUserMenuView}
+            >
+              <ChevronDownIcon
+                className={`w-4 h-4 transition-transform duration-300 relative ${userMenuView ? "rotate-180 text-blue-600" : "text-gray-600"}`}
+              />
+            </Button>
+            <ul className={`${userMenuView ? "flex absolute flex-col gap-2 top-full left-0 bg-slate-200 shadow-md border border-gray-400 p-2 min-w-30 z-50 rounded-xl" : "hidden"}`}>
+              <li className="text-blue-600 italic p-0.5">{displayUserEmail}</li>
+              <li className="flex items-center">
+                <Link
+                  onClick={resetMenuView}
+                  to={"/favorites"}
+                  className={`grow text-center ${location.pathname === "/favorites" ? "text-blue-600" : "text-gray-600"}`}
+                >
+                  <div className="flex gap-0.5">
+                    <FavoriteIcon className="w-5 h-5" />
+                    <span className="border border-gray-400 rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center font-semibold text-xxs bg-gray-200">
+                      {getFavoriteQuantity()}
+                    </span>
+                  </div>
+                </Link>
+              </li>
+              <li className="flex items-center">
+                <Link
+                  onClick={resetMenuView}
+                  to={"/cart"}
+                  className={`${location.pathname === "/cart" ? "text-blue-600" : "text-gray-600"}`}
+                >
+                  <div className="flex gap-0.5">
+                    <CartIcon className="w-5 h-5" />
+                    <span className="border border-gray-400 rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center font-semibold text-xxs bg-gray-200">
+                      {getCartQuantity()}
+                    </span>
+                  </div>
+                </Link>
+              </li>
+              <li className="p-0.5">
+                <Button
+                  onClick={logOff}
+                  variant="primary"
+                  className="rounded-sm p-1 text-xxs"
+                >
+                  Logout
+                </Button>
+              </li>
+            </ul>
+          </div>
         </li>
-        <li
-          className={`${!currentUser ? "flex items-center w-18" : "hidden"}`}
-        >
+
+
+        {/* MENU REGISTER (VISIBLE CUANDO NO SE ESTÁ CON USUARIO E INVISIBLE CUANDO SE ESTÁ LOGUEADO) */}
+        <li className={`${!currentUser ? "flex items-center w-20" : "hidden"}`}>
           <Link
+            onClick={resetMenuView}
             to={"/register"}
             className={`grow text-center ${location.pathname === "/register" ? "text-blue-600" : "text-gray-600"}`}
           >
             REGISTER
           </Link>
         </li>
+
+
+        {/* MENU DASHBOARD (VISIBLE CUANDO ADMIN ESTÁ LOGUEADO E INVISIBLE PARA TODOS LOS OTROS CASOS) */}
         <li className={`${typeUser !== "admin" && "hidden"}`}>
           <Link
             to={"/dashboard"}
@@ -159,23 +232,14 @@ export const Navbar = () => {
             DASHBOARD
           </Link>
         </li>
-        {/* <li className="flex items-center">
-          <Link
-            to={"/favorites"}
-            className={`${location.pathname === "/favorites" ? "text-blue-600" : "text-gray-600"}`}
-          >
-            <div className="flex gap-0.5">
-              <FavoriteIcon className="w-5 h-5" />
-              <span className="border border-gray-400 rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center font-semibold text-xxs bg-gray-200">
-                {getFavoriteQuantity()}
-              </span>
-            </div>
-          </Link>
-        </li> */}
+
+
+        {/* MENU CART (VISIBLE CON USUARIO LOGUEADO E INVISIBLE CUANDO NO SE ESTÁ LOGUEADO) */}
         <li
-          className={`${displayUserEmail && typeUser !== "admin" ? "flex items-center w-18" : "hidden"}`}
+          className={`${displayUserEmail && typeUser !== "admin" ? "flex items-center w-20" : "hidden"}`}
         >
           <Link
+            onClick={resetMenuView}
             to={"/cart"}
             className={`grow text-center ${location.pathname === "/cart" ? "text-blue-600" : "text-gray-600"}`}
           >
@@ -187,6 +251,8 @@ export const Navbar = () => {
             </div>
           </Link>
         </li>
+
+
       </ul>
     </nav>
   );

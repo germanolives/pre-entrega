@@ -94,3 +94,63 @@ export const Navbar = () => {
     </nav>
   );
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { useSource } from "../..//context/SourceContext";
+
+        {/* <li className="flex items-center">
+          <Button
+            variant="secondary"
+            className="px-1"
+            onClick={migrateCatalogToFirebase}
+          >
+            LOCAL TO DB
+          </Button>
+        </li>
+         <li className="flex items-center">
+          <Button
+            variant="secondary"
+            className="px-1"
+            onClick={exportCatalogToJson}
+          >
+            DB TO LOCAL
+          </Button>
+        </li> */}
+
+
+        // import { migrateCatalogToFirebase } from "../../services/migrator";
+// import { exportCatalogToJson } from "../../services/exporter";

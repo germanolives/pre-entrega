@@ -185,3 +185,17 @@ export const DeleteCrossIcon = ({ className }) => (
     <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
   </svg>
 );
+
+// En tu archivo de Icons/index.js
+export const ChevronDownIcon = ({ className }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none" // Cambiamos a 'none' para que el stroke sea el protagonista
+    stroke="currentColor" // Esto es lo que permite que cambie de color con Tailwind
+    strokeWidth="2.5"
+    className={className}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M19 9l-7 7-7-7" />
+  </svg>
+);
