@@ -1,5 +1,4 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { Spinner } from "../components/common/Spinner";
 import {
   onAuthStateChanged,
   signOut,
@@ -54,6 +53,7 @@ export const AuthProvider = ({ children }) => {
         return;
       }
 
+      setLoading(true);
       try {
         const userDocRef = doc(db, "users", currentUser.uid);
         const userDocSnap = await getDoc(userDocRef);
@@ -65,6 +65,7 @@ export const AuthProvider = ({ children }) => {
         }
       } catch (err) {
         console.error("Error cargando rol:", err);
+        setUser({ ...currentUser, rol: "user" });
       } finally {
         setLoading(false);
       }
@@ -83,15 +84,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {/* Si el loading es true, mostramos el spinner.
-         Si es false, renderizamos la app (children).
-      */}
-      {loading ? (
-        // <div className="flex justify-center items-center h-screen">Cargando...</div>
-        <Spinner />
-      ) : (
-        children
-      )}
+      {children}
     </AuthContext.Provider>
   );
 };

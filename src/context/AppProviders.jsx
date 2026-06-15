@@ -4,6 +4,7 @@ import { FavoriteProvider } from "./FavoriteContext";
 import { SearchProvider } from "./SearchContext";
 import { ProductsProvider } from "./ProductsContext";
 import { AuthProvider } from "./AuthContext";
+import { ModalProvider } from "./ModalContext";
 
 export const AppProviders = ({ children }) => {
   return (
@@ -12,7 +13,9 @@ export const AppProviders = ({ children }) => {
         <ProductsProvider>
           <SearchProvider>
             <CartProvider>
-              <FavoriteProvider>{children}</FavoriteProvider>
+              <FavoriteProvider>
+                <ModalProvider>{children}</ModalProvider>
+              </FavoriteProvider>
             </CartProvider>
           </SearchProvider>
         </ProductsProvider>

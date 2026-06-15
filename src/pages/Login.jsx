@@ -1,19 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Button } from "../components/common/Button"; // Usando tu botón genérico
+import { Button } from "../components/common/Button";
 import { validateLocalEmail } from "../utils/validateLocalEmail";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState(""); // 🌟 Estado local para mostrar errores en pantalla (sin alerts molestos)
-  const [isSubmitting, setIsSubmitting] = useState(false); // Evita doble clicks asincrónicos
+  const [errorMsg, setErrorMsg] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [pendingNav, setPendingNav] = useState(null);
 
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || "/";
-  const { login } = useAuth();
+  const { login, user, loading } = useAuth();
+
+  useEffect(() => {
+    if (pendingNav && user && !loading) {
+      navigate(pendingNav, { replace: true });
+      setPendingNav(null);
+    }
+  }, [pendingNav, user, loading, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,21 +29,17 @@ export const Login = () => {
     setIsSubmitting(true);
 
     if (!validateLocalEmail(email)) {
-      setError("LOCAL: EL FORMATO DEL CORREO ELECTRÓNICO NO ES VÁLIDO.");
+      setErrorMsg("LOCAL: EL FORMATO DEL CORREO ELECTRÓNICO NO ES VÁLIDO.");
+      setIsSubmitting(false);
       return;
     }
-    setIsSubmitting(true);
-    try {
-      // 🚀 Ejecutamos el login a través de tu contexto centralizado
-      await login(email, password);
 
-      // Si el contexto resuelve con éxito, el observador cambia el estado 'user' global
-      // y nos manda derecho al panel principal o al Home.
-      navigate(from, { replace: true });
+    try {
+      await login(email, password);
+      setPendingNav(from);
     } catch (error) {
       console.error("Error capturado en componente Login:", error.code);
 
-      // 🛡️ Mapeo semántico de errores (Adaptado a Firebase v10+)
       if (
         error.code === "auth/invalid-credential" ||
         error.code === "auth/wrong-password" ||
@@ -82,7 +86,6 @@ export const Login = () => {
             className="border border-gray-400 p-2 rounded-sm text-xs focus:outline-cyan-600 bg-gray-50"
           />
 
-          {/* ⚠️ Alerta de error visual estilizada */}
           {errorMsg && (
             <p className="text-red-600 text-xxs font-mono bg-red-50 p-2 border border-red-200 rounded-sm">
               {errorMsg.toUpperCase()}

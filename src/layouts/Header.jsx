@@ -43,27 +43,6 @@ export const Header = () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // import { useState } from "react";
 // import { Link } from "react-router-dom";
 // import { logo } from "../data/brand/logo";

@@ -155,16 +155,19 @@ export const DashboardNewItemContainer = () => {
   };
 
   return (
-    <DashboardItemDetail
-      dataForm={dataForm}
-      imagePreview={imagePreview}
-      handleSubmit={handleSubmit}
-      handleChange={handleChange}
-      handleRatingChange={handleRatingChange}
-      handlePriceChange={handlePriceChange}
-      handleStockChange={handleStockChange}
-      handleOfferToggle={handleOfferToggle}
-      handleImageChange={handleImageChange}
-    />
+    <section className={`mx-15 border-2 border-gray-300 rounded-xl p-8 flex justify-center items-center`}>
+
+      <DashboardItemDetail
+        dataForm={dataForm}
+        imagePreview={imagePreview}
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        handleRatingChange={handleRatingChange}
+        handlePriceChange={handlePriceChange}
+        handleStockChange={handleStockChange}
+        handleOfferToggle={handleOfferToggle}
+        handleImageChange={handleImageChange}
+      />
+    </section>
   );
 };
