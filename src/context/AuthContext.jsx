@@ -1,4 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
+import { Spinner } from "../components/common/Spinner";
 import {
   onAuthStateChanged,
   signOut,
@@ -86,7 +87,8 @@ export const AuthProvider = ({ children }) => {
          Si es false, renderizamos la app (children).
       */}
       {loading ? (
-        <div className="flex justify-center items-center h-screen">Cargando...</div>
+        // <div className="flex justify-center items-center h-screen">Cargando...</div>
+        <Spinner />
       ) : (
         children
       )}
