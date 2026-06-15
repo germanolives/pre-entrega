@@ -1,15 +1,12 @@
 import { createContext, useState, useContext, useEffect } from "react";
-// 🌟 CORREGIDO: Imports específicos y limpios de Firebase Auth
 import {
   onAuthStateChanged,
   signOut,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-
-// 🌟 CORREGIDO: Separamos e importamos los métodos nativos de Firestore
-import { doc, getDoc, setDoc } from "firebase/firestore"; // 🌟 Agregamos 'setDoc'
-import { auth, db } from "../config/firebase"; // 💡 NOTA: Idealmente traelos de tu archivo de config centralizado
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { auth, db } from "../config/firebase";
 
 export const AuthContext = createContext();
 
@@ -25,61 +22,49 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Funciones del ABM de Autenticación
+  // Funciones de Auth
   const signup = async (email, password) => {
-    // 1. Creamos el usuario en Firebase Auth primero
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password,
-    );
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const newAuthUser = userCredential.user;
-
-    // 2. Apuntamos a la colección "usuarios", nombrando al documento EXACTAMENTE como el uid de Auth
     const userDocRef = doc(db, "users", newAuthUser.uid);
 
-    // 3. Guardamos los metadatos iniciales y el rol por defecto
     await setDoc(userDocRef, {
       email: newAuthUser.email,
-      rol: "user", // 👮‍♂️ Todos nacen como usuario regular. Si querés un admin, lo cambiás a mano en la consola.
+      rol: "user",
       createdAt: new Date().toISOString(),
     });
 
     return userCredential;
   };
+
   const login = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   const logout = () => {
-    return signOut(auth); // 🌟 Retornamos la promesa del signOut por si querés usar un .then() en la UI
+    return signOut(auth);
   };
 
   useEffect(() => {
-    // onAuthStateChanged es el observador en tiempo real de Firebase
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      try {
-        if (currentUser) {
-          // Si hay un usuario, vamos a buscar su rol asignado en Firestore
-          const userDocRef = doc(db, "users", currentUser.uid);
-          const userDocSnap = await getDoc(userDocRef);
+      if (!currentUser) {
+        setUser(null);
+        setLoading(false);
+        return;
+      }
 
-          if (userDocSnap.exists()) {
-            const userData = userDocSnap.data();
-            // Inyectamos todas las propiedades del documento (incluido el rol) junto al usuario de Auth
-            setUser({ ...currentUser, ...userData });
-          } else {
-            // Si el documento no existe por defecto le asignamos rol regular
-            setUser({ ...currentUser, rol: "user" });
-          }
+      try {
+        const userDocRef = doc(db, "users", currentUser.uid);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+          setUser({ ...currentUser, ...userDocSnap.data() });
         } else {
-          setUser(null);
+          setUser({ ...currentUser, rol: "user" });
         }
       } catch (err) {
-        console.error("Error crítico al recuperar el rol del usuario:", err);
-        setUser(null);
+        console.error("Error cargando rol:", err);
       } finally {
-        // Garantizamos que el estado de carga termine pase lo que pase
         setLoading(false);
       }
     });
@@ -97,8 +82,14 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {children}{" "}
-      {/* 🌟 Dejamos que renderice libre, el loading lo maneja el router o las pantallas */}
+      {/* Si el loading es true, mostramos el spinner.
+         Si es false, renderizamos la app (children).
+      */}
+      {loading ? (
+        <div className="flex justify-center items-center h-screen">Cargando...</div>
+      ) : (
+        children
+      )}
     </AuthContext.Provider>
   );
 };
