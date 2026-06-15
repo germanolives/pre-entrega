@@ -7,7 +7,7 @@ import { logo } from "../../data/brand/logo";
 import { Button } from "../common/Button";
 import { MenuIcon } from "../Icons/index";
 import { SearchbarContainer } from "./SearchbarContainer";
-import { SearchFilter } from "../Searchbar/SearchFilter";
+import { SearchFilter } from "./SearchFilter";
 import { useProducts } from "../../context/ProductsContext";
 
 export const Header = () => {
@@ -28,9 +28,11 @@ export const Header = () => {
             loading="eager"
           />
         </Link>
-        <div className="grow">
-          <SearchbarContainer />
-          <SearchFilter />
+        <div className="flex flex-col grow gap-1">
+          <div>
+            <SearchbarContainer />
+            <SearchFilter />
+          </div>
           <Navbar />
           <div className="flex justify-end text-xxs mr-1 md:hidden">
             <span

@@ -1,85 +1,79 @@
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { DatabaseIcon } from "../Icons/index";
-import { useSource } from "../..//context/SourceContext";
+import { useSource } from "../../context/SourceContext";
 import { Button } from "../common/Button";
+import { DatabaseIcon } from "../Icons/index";
 
 export const MovilNavbar = ({ menuChange }) => {
   const location = useLocation();
   const { nameSource, changeSource } = useSource();
+
+  const handleAction = (actionFn) => {
+    actionFn();
+    menuChange();
+  };
+
   return (
-    <nav className="grow nav:hidden">
-      <ul className="p-2 border border-gray-400 rounded-sm m-2 text-sm">
-        <li className="m-1" onClick={menuChange}>
+    <nav className="grow md:hidden px-2">
+      <ul className="p-2 border border-gray-400 rounded-sm m-2 text-sm flex flex-col gap-2">
+        
+        {/* MENU HOME */}
+        <li className="flex items-center w-full">
           <Link
+            onClick={menuChange}
             to={"/"}
-            className={`${location.pathname === "/" ? "text-blue-600" : "text-gray-600"}`}
+            className={`block w-full py-2 text-left pl-4 ${location.pathname === "/" ? "text-blue-600" : "text-gray-600"}`}
           >
             HOME
           </Link>
         </li>
-        <li className="m-1" onClick={menuChange}>
+
+        {/* MENU DASHBOARD */}
+        <li className="flex items-center w-full">
           <Link
+            onClick={menuChange}
             to={"/dashboard"}
-            className={`${location.pathname.startsWith("/dashboard") ? "text-blue-600" : "text-gray-600"}`}
+            className={`block w-full py-2 text-left pl-4 ${location.pathname.startsWith("/dashboard") ? "text-blue-600" : "text-gray-600"}`}
           >
             DASHBOARD
           </Link>
         </li>
-        <li className="m-1" onClick={menuChange}>
-          <Link to={"/dashboard/add-product"} className="text-gray-600">
+
+        {/* MENU ADD PRODUCT */}
+        <li className="flex items-center w-full">
+          <Link
+            onClick={menuChange}
+            to={"/dashboard/add-product"}
+            className={`block w-full py-2 text-left pl-4 ${location.pathname === "/dashboard/add-product" ? "text-blue-600" : "text-gray-600"}`}
+          >
             ADD PRODUCT
           </Link>
         </li>
-        <li className="m-1">
-          <Button
-            className={`flex gap-0.5 cursor-pointer font-normal ${nameSource === "LOCAL" ? "text-blue-600" : "text-gray-600"}`}
-            variant="cristal"
-            onClick={() => {
-              changeSource("local");
-              menuChange();
-            }}
-          >
-            <DatabaseIcon className="w-5 h-5" />
-            <span className="border border-gray-400 rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center font-semibold text-xxs bg-gray-200">
-              LOCAL
-            </span>
-          </Button>
+
+        {/* MENU SOURCE*/}
+        <li className="w-full mt-2 border-t border-gray-200 pt-2">
+          <span className="block text-gray-400 text-xs pl-4 mb-2">DATA SOURCE:</span>
+          <div className="flex flex-col gap-1">
+            {["LOCAL", "DB", "API"].map((source) => (
+              <Button
+                key={source}
+                className={`flex items-center gap-3 w-full py-2 pl-4 text-left font-normal ${nameSource === source ? "text-blue-600" : "text-gray-600"}`}
+                variant="cristal"
+                onClick={() => handleAction(() => changeSource(source.toLowerCase()))}
+              >
+                <DatabaseIcon className="w-5 h-5" />
+                <span>{source}</span>
+              </Button>
+            ))}
+          </div>
         </li>
-        <li className="m-1">
-          <Button
-            className={`flex gap-0.5 cursor-pointer font-normal ${nameSource === "DB" ? "text-blue-600" : "text-gray-600"}`}
-            variant="cristal"
-            onClick={() => {
-              changeSource("db");
-              menuChange();
-            }}
-          >
-            <DatabaseIcon className="w-5 h-5" />
-            <span className="border border-gray-400 rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center font-semibold text-xxs bg-gray-200">
-              DB
-            </span>
-          </Button>
-        </li>
-        <li className="m-1">
-          <Button
-            className={`flex gap-0.5 cursor-pointer font-normal ${nameSource === "API" ? "text-blue-600" : "text-gray-600"}`}
-            variant="cristal"
-            onClick={() => {
-              changeSource("api");
-              menuChange();
-            }}
-          >
-            <DatabaseIcon className="w-5 h-5" />
-            <span className="border border-gray-400 rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center font-semibold text-xxs bg-gray-200">
-              API
-            </span>
-          </Button>
-        </li>
-        <li className="m-1" onClick={menuChange}>
+
+        {/* LOGOUT */}
+        <li className="flex items-center w-full mt-2 border-t border-gray-200 pt-2">
           <Link
+            onClick={menuChange}
             to={"/"}
-            className={`${location.pathname === "/" ? "text-blue-600" : "text-gray-600"}`}
+            className="block w-full py-2 text-left pl-4 text-gray-600"
           >
             LOGOUT
           </Link>

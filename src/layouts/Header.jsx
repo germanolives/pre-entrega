@@ -23,7 +23,7 @@ export const Header = () => {
             loading="eager"
           />
         </Link>
-        <div className="flex flex-col grow gap-3">
+        <div className="flex flex-col grow gap-5">
           <SearchbarContainer />
           <Navbar />
         </div>
