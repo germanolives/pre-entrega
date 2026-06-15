@@ -19,9 +19,9 @@ export const Header = () => {
   return (
     <header className="sticky top-0 left-0 mx-4 z-50 rounded-xl bg-slate-300 mb-4">
       <div className="flex justify-between items-center">
-        <Link to={"/dashboard"} className="w-15 md:w-25 shrink-0">
+        <Link to={"/dashboard"} className="w-20 md:w-25 shrink-0">
           <img
-            className={"rounded-2xl border border-gray-400 p-1 w-15 md:w-25"}
+            className={"rounded-2xl border border-gray-400 p-1 w-20 md:w-25"}
             src={logo[1].image}
             alt={logo[1].title}
             fetchPriority="high"
@@ -34,7 +34,7 @@ export const Header = () => {
             <SearchFilter />
           </div>
           <Navbar />
-          <div className="flex justify-end text-xxs mr-1 md:hidden">
+          <div className="flex justify-end text-xxs border border-gray-400 rounded-sm mx-2 md:hidden">
             <span
               className={`text-right ${location.pathname === "/dashboard" ? "text-blue-600" : location.pathname.startsWith("/dashboard/edit") ? "text-green-600" : "text-blue-600"}`}
             >

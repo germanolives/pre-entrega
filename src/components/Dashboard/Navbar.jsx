@@ -38,14 +38,14 @@ export const Navbar = () => {
             HOME
           </Link>
         </li>
-
-        {/* MENU INVENTORY */}
+        {/* MENU DASHBOARD */}
         <li className="flex items-center">
-          <span
-            className={`w-50 text-right ${location.pathname === "/dashboard" ? "text-blue-600" : location.pathname.startsWith("/dashboard/edit") ? "text-green-600" : "text-blue-600"}`}
+          <Link
+            to={"/dashboard"}
+            className={`${location.pathname.startsWith("/dashboard") ? "text-blue-600" : "text-gray-600"}`}
           >
-            {`${location.pathname === "/dashboard" ? `[ ${getProductsQuantity()} PRODS - ${getTotalStock()} UNITS ]` : location.pathname.startsWith("/dashboard/edit") ? "[ EDITING PRODUCT ]" : "[ ADDING PRODUCT ]"}`}
-          </span>
+            DASHBOARD
+          </Link>
         </li>
 
         {/* MENU ADD PRODUCT */}
@@ -93,15 +93,13 @@ export const Navbar = () => {
             LOGOUT
           </Link>
         </li>
-
-        {/* MENU DASHBOARD */}
+        {/* MENU INVENTORY */}
         <li className="flex items-center">
-          <Link
-            to={"/dashboard"}
-            className={`${location.pathname.startsWith("/dashboard") ? "text-blue-600" : "text-gray-600"}`}
+          <span
+            className={`w-50 text-right ${location.pathname === "/dashboard" ? "text-blue-600" : location.pathname.startsWith("/dashboard/edit") ? "text-green-600" : "text-blue-600"}`}
           >
-            DASHBOARD
-          </Link>
+            {`${location.pathname === "/dashboard" ? `[ ${getProductsQuantity()} PRODS - ${getTotalStock()} UNITS ]` : location.pathname.startsWith("/dashboard/edit") ? "[ EDITING PRODUCT ]" : "[ ADDING PRODUCT ]"}`}
+          </span>
         </li>
       </ul>
     </nav>
