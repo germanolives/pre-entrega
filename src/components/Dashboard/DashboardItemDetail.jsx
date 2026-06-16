@@ -33,7 +33,6 @@ export const DashboardItemDetail = ({
     slug: formatSlug(cat),
   }));
 
-  const { closeModal } = useModal();
 
   
 

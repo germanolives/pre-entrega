@@ -2,6 +2,7 @@ import { useState } from "react";
 import { formatSlug } from "../../utils/formatSlug";
 import { useProducts } from "../../context/ProductsContext";
 import { DashboardItemDetail } from "./DashboardItemDetail";
+import { ModalBox } from "../common/ModalBox";
 
 export const DashboardItemContainer = ({ data }) => {
   const [dataForm, setDataForm] = useState({
