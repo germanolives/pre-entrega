@@ -6,6 +6,8 @@ import { DatabaseIcon } from "../Icons/index";
 import { useProducts } from "../../context/ProductsContext";
 import { useAuth } from "../../context/AuthContext";
 import { useState, useRef, useEffect } from "react";
+import { ModalBox } from "../../components/common/ModalBox";
+
 
 export const Navbar = () => {
   const location = useLocation();
@@ -29,20 +31,39 @@ export const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [sourceMenuView]);
 
+  const handleLogout = async () => {
+    try {
+      await logout(); // Esperamos a que Firebase confirme la salida
+    } catch (error) {
+      console.error("Error al cerrar sesión", error);
+    }
+  };
+  
+  const logOff = () => {
+    setSourceMenuView(false);
+    handleLogout();
+  };
+
   return (
     <nav className="hidden md:block px-2" ref={menuRef}>
       <ul className="flex justify-evenly items-center rounded-sm border border-gray-400 text-xs">
         {/* MENU HOME */}
         <li className="flex items-center">
-          <Link to={"/"} className="text-gray-600">
+          <Link
+            to={"/"}
+            className="text-gray-600"
+            onClick={() => setSourceMenuView(false)}
+          >
             HOME
           </Link>
         </li>
+
         {/* MENU DASHBOARD */}
         <li className="flex items-center">
           <Link
             to={"/dashboard"}
             className={`${location.pathname.startsWith("/dashboard") ? "text-blue-600" : "text-gray-600"}`}
+            onClick={() => setSourceMenuView(false)}
           >
             DASHBOARD
           </Link>
@@ -50,7 +71,11 @@ export const Navbar = () => {
 
         {/* MENU ADD PRODUCT */}
         <li className="flex items-center">
-          <Link to={"/dashboard/add-product"} className="text-gray-600">
+          <Link
+            to={"/dashboard/add-product"}
+            className="text-gray-600"
+            onClick={() => setSourceMenuView(false)}
+          >
             ADD PRODUCT
           </Link>
         </li>
@@ -66,33 +91,38 @@ export const Navbar = () => {
               {nameSource}
             </span>
           </div>
-
-          <ul
-            className={`${sourceMenuView ? "flex" : "hidden"} absolute top-full mt-2 bg-slate-200 shadow-md border border-gray-400 p-2 min-w-30 z-50 rounded-xl flex-col`}
-          >
-            {["LOCAL", "DB", "API"].map((source) => (
-              <li key={source} className="p-0.5">
-                <Button
-                  className={`cursor-pointer font-normal ${nameSource === source ? "text-blue-600" : "text-gray-600"}`}
-                  variant="cristal"
-                  onClick={() => {
-                    changeSource(source.toLowerCase());
-                    setSourceMenuView(false);
-                  }}
-                >
-                  {source}
-                </Button>
-              </li>
-            ))}
-          </ul>
+          {sourceMenuView && (
+            <ul className="flex absolute top-full mt-2 bg-slate-200 shadow-md border border-gray-400 p-2 min-w-30 z-50 rounded-xl flex-col">
+              {["LOCAL", "DB", "API"].map((source) => (
+                <li key={source} className="p-0.5">
+                  <Button
+                    className={`cursor-pointer font-normal ${nameSource === source ? "text-blue-600" : "text-gray-600"}`}
+                    variant="cristal"
+                    onClick={() => {
+                      changeSource(source.toLowerCase());
+                      setSourceMenuView(false);
+                    }}
+                  >
+                    {source}
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          )}
         </li>
 
         {/* MENU LOGOUT */}
-        <li className="flex items-center">
-          <Link to={"/"} className="text-gray-600" onClick={logout}>
+        < li className="flex items-center">
+          <ModalBox
+            operationType="Logout"
+            onConfirm={logOff}
+            classNameButton="text-xs text-gray-600 font-normal cursor-pointer"
+            prevActionButton={()=>setSourceMenuView(false)}
+          >
             LOGOUT
-          </Link>
+          </ModalBox>
         </li>
+
         {/* MENU INVENTORY */}
         <li className="flex items-center">
           <span

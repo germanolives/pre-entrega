@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { useModal } from "../../context/ModalContext";
+import { Button } from "./Button";
 
 export const Modal = () => {
   const { isOpen, closeModal, modalContent } = useModal();
 
+  
   // Gestión profesional del scroll
   useEffect(() => {
     if (isOpen) {
@@ -13,13 +15,13 @@ export const Modal = () => {
       // Restauramos el scroll al cerrar
       document.body.style.overflow = "unset";
     }
-
+    
     // Limpieza: aseguramos que el scroll se desbloquee al desmontar
     return () => {
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
-
+  
   if (!isOpen) return null;
 
   return (
@@ -34,13 +36,14 @@ export const Modal = () => {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Botón de cierre */}
-        <button
+        <Button
+        variant="ghost"
           onClick={closeModal}
-          className="absolute top-2 right-4 text-gray-500 hover:text-red-500 text-2xl font-bold transition-colors"
-          aria-label="Cerrar modal"
+          className="absolute top-2 right-4 text-gray-500 hover:text-red-500 text-2xl pb-0.5 px-2  font-bold transition-colors"
+          aria-label="Close modal"
         >
           &times;
-        </button>
+        </Button>
 
         {/* Contenido dinámico */}
         <div className="mt-2">

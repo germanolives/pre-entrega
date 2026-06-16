@@ -8,12 +8,11 @@ import { useAuth } from "../../context/AuthContext";
 import { Button } from "../common/Button";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { ChevronDownIcon } from "../Icons/index";
-import { useModal } from "../../context/ModalContext";
+import { ModalBox } from "../common/ModalBox";
 
 export const Navbar = () => {
   const menuRef = useRef(null);
   const location = useLocation();
-  const { openModal, closeModal } = useModal();
   const { getCartQuantity } = useCart();
   const { getFavoriteQuantity } = useFavorite();
   const { user, loading, logout } = useAuth();
@@ -63,34 +62,17 @@ export const Navbar = () => {
     setListMenuView(false);
   };
 
-  const logOff = () => {
-    logout();
-    resetMenuView();
+  const handleLogout = async () => {
+    try {
+      await logout(); // Esperamos a que Firebase confirme la salida
+    } catch (error) {
+      console.error("Error al cerrar sesión", error);
+    }
   };
 
-  const triggerLogout = () => {
-    openModal(
-      <div className="text-center">
-        <h3 className="text-lg font-bold mb-4">Confirm Logout?</h3>
-        <div className="flex gap-4 justify-center">
-          <button
-            onClick={closeModal}
-            className="px-4 py-2 bg-gray-200 rounded"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={() => {
-              logOff();
-              closeModal();
-            }}
-            className="px-4 py-2 bg-red-600 text-white rounded"
-          >
-            Logout
-          </button>
-        </div>
-      </div>,
-    );
+  const logOff = () => {
+    resetMenuView(false);
+    handleLogout();
   };
 
   
@@ -233,13 +215,15 @@ export const Navbar = () => {
                   </Link>
                 </li>
                 <li className="p-0.5">
-                  <Button
-                    onClick={triggerLogout}
-                    variant="primary"
-                    className="rounded-sm p-1 text-xxs"
+                  <ModalBox
+                    onConfirm={logOff}
+                    variantButton="primary"
+                    classNameButton="rounded-sm p-1 text-xxs"
+                    prevActionButton={resetMenuView}
+                    operationType="Logout"
                   >
                     Logout
-                  </Button>
+                  </ModalBox>
                 </li>
               </ul>
             </div>
@@ -260,7 +244,6 @@ export const Navbar = () => {
         )}
 
         {/* MENU DASHBOARD (VISIBLE CUANDO ADMIN ESTÁ LOGUEADO E INVISIBLE PARA TODOS LOS OTROS CASOS) */}
-
         {typeUser === "admin" && (
           <li className="flex items-center w-20">
             <Link
@@ -273,17 +256,8 @@ export const Navbar = () => {
           </li>
         )}
 
-        {/* <li className={`${typeUser !== "admin" && "hidden"}`}>
-          <Link
-            to={"/dashboard"}
-            className={`${location.pathname === "/dashboard" ? "text-blue-600" : "text-gray-600"}`}
-          >
-            DASHBOARD
-          </Link>
-        </li> */}
 
         {/* MENU CART (VISIBLE CON USUARIO LOGUEADO E INVISIBLE CUANDO NO SE ESTÁ LOGUEADO) */}
-
         {displayUserEmail && typeUser !== "admin" && (
           <li className="flex items-center w-20">
             <Link

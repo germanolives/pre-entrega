@@ -4,11 +4,20 @@ import { useSource } from "../../context/SourceContext";
 import { Button } from "../common/Button";
 import { DatabaseIcon } from "../Icons/index";
 import { useAuth } from "../../context/AuthContext";
+import { ModalBox } from "../common/ModalBox";
 
 export const MovilNavbar = ({ menuChange }) => {
   const location = useLocation();
   const { nameSource, changeSource } = useSource();
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout(); // Esperamos a que Firebase confirme la salida
+    } catch (error) {
+      console.error("Error al cerrar sesión", error);
+    }
+  };
 
   const handleAction = (actionFn) => {
     actionFn();
@@ -75,12 +84,14 @@ export const MovilNavbar = ({ menuChange }) => {
 
         {/* LOGOUT */}
         <li className="flex items-center w-full mt-2 border-t border-gray-200 pt-2">
-          <button
-            onClick={() => handleAction(async () => await logout())}
-            className="block w-full py-2 text-left pl-4 text-gray-600 hover:text-blue-600 transition-colors"
+          <ModalBox
+            onConfirm={handleLogout}
+            prevActionButton={menuChange} 
+            classNameButton="block w-full py-2 text-left pl-4 text-gray-600 hover:text-blue-600 transition-colors"
+            operationType="Logout"
           >
             LOGOUT
-          </button>
+          </ModalBox>
         </li>
       </ul>
     </nav>

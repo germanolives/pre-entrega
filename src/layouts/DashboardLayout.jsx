@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import { Navbar } from "../components/Dashboard/Navbar";
 import { MovilNavbar } from "../components/Dashboard/MovilNavbar";
 import { SearchbarContainer } from "../components/Dashboard/SearchbarContainer";
+import { Modal } from "../components/common/Modal";
 
 export const DashboardLayout = () => {
   return (
@@ -15,6 +16,7 @@ export const DashboardLayout = () => {
       <main className="grow">
         <Outlet />
       </main>
+      <Modal />
     </>
   );
 };
