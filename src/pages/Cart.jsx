@@ -22,27 +22,27 @@ export const Cart = () => {
   }, [data, loading]);
 
   const checkOutOn = async () => {
-  setIsCheckingOut(true);
-  try {
-    // Simulamos un poco de tiempo para que el usuario lea "Procesando..."
-    await Promise.all([
-      refetch(),
-      new Promise(resolve => setTimeout(resolve, 500)) 
-    ]);
-  } catch (e) {
-    console.error(e);
-  } finally {
-    setIsCheckingOut(false);
-    // El navigate se ejecutará desde el ConfirmPurchase después de esto
-  }
-};
+    setIsCheckingOut(true);
+    try {
+      // Simulamos un poco de tiempo para que el usuario lea "Procesando..."
+      await Promise.all([
+        refetch(),
+        new Promise((resolve) => setTimeout(resolve, 500)),
+      ]);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsCheckingOut(false);
+      // El navigate se ejecutará desde el ConfirmPurchase después de esto
+    }
+  };
 
   return (
     <section
       className={`flex flex-col gap-4 md:grid grid-cols-2 mx-4 border-2 border-gray-300 rounded-xl p-4`}
     >
       <RenderContent data={data} loading={loading} error={error}>
-        {cart.length > 0 ? (
+        {Array.isArray(cart) && cart.length > 0 ? (
           <>
             <CartList data={cart} />
           </>
@@ -50,11 +50,16 @@ export const Cart = () => {
           <EmptyCart />
         )}
       </RenderContent>
-      <div className="flex justify-end">
-        <aside className="w-full md:w-80 sticky top-30 right-8 self-start">
-          <ConfirmPurchase checkOutOn={checkOutOn} isProcessing={isCheckingOut} />
-        </aside>
-      </div>
+      {Array.isArray(cart) && cart.length > 0 && (
+        <div className="flex justify-end">
+          <aside className="w-full md:w-80 sticky top-30 right-8 self-start">
+            <ConfirmPurchase
+              checkOutOn={checkOutOn}
+              isProcessing={isCheckingOut}
+            />
+          </aside>
+        </div>
+      )}
     </section>
   );
 };
