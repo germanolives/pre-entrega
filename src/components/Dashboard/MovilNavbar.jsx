@@ -5,11 +5,13 @@ import { Button } from "../common/Button";
 import { DatabaseIcon } from "../Icons/index";
 import { useAuth } from "../../context/AuthContext";
 import { ModalBox } from "../common/ModalBox";
+import { useMenu } from "../../context/MenuContext";
 
-export const MovilNavbar = ({ menuChange }) => {
+export const MovilNavbar = () => {
   const location = useLocation();
   const { nameSource, changeSource } = useSource();
   const { logout } = useAuth();
+  const { menuChange } = useMenu();
 
   const handleLogout = async () => {
     try {

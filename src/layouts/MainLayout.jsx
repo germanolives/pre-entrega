@@ -10,9 +10,9 @@ export const MainLayout = () => {
   return (
     <>
       <Header
-        renderNavbar={() => <Navbar />}
-        renderSearchbarContainer={() => <SearchbarContainer />}
-        renderMovilNavbar={(menuFn) => <MovilNavbar menuChange={menuFn} />}
+        navbar={<Navbar />}
+        searchbarContainer={<SearchbarContainer />}
+        movilNavbar={<MovilNavbar />}
       />
       <main className="grow">
         <Outlet />
@@ -22,26 +22,3 @@ export const MainLayout = () => {
     </>
   );
 };
-
-
-
-
-
-
-
-
-// import { Header } from "./Header";
-// import { Footer } from "./Footer";
-// import { Outlet } from "react-router-dom";
-
-// export const MainLayout = () => {
-//   return (
-//     <>
-//       <Header />
-//       <main className="grow">
-//         <Outlet />
-//       </main>
-//       <Footer />
-//     </>
-//   );
-// };

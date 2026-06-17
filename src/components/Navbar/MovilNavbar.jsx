@@ -4,10 +4,10 @@ import { useCart } from "../../context/CartContext";
 import { useFavorite } from "../../context/FavoriteContext";
 import { CartIcon, FavoriteIcon } from "../Icons/index";
 import { useAuth } from "../../context/AuthContext";
-import { Button } from "../common/Button";
 import { ModalBox } from "../common/ModalBox";
+import { useMenu } from "../../context/MenuContext";
 
-export const MovilNavbar = ({ menuChange }) => {
+export const MovilNavbar = () => {
   const location = useLocation();
   const { getCartQuantity } = useCart();
   const { getFavoriteQuantity } = useFavorite();
@@ -16,7 +16,7 @@ export const MovilNavbar = ({ menuChange }) => {
   const currentUser = user ? user.uid : null;
   const displayUserEmail = user?.email ? user.email : "";
   const typeUser = user && user.rol;
-  const isAdmin = user && user.rol === "admin";
+  const { menuChange } = useMenu();
 
   const resetMenuView = () => {
     menuChange();
