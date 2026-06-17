@@ -1,15 +1,26 @@
 import { useCart } from "../../context/CartContext";
 import { Button } from "../common/Button";
 import { TrashIcon } from "../Icons/index";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export const ConfirmPurchase = ({ checkOutOn }) => {
+export const ConfirmPurchase = ({ checkOutOn, isProcessing }) => {
   const { clearCart, getCartTotal, getCartQuantity } = useCart();
   const countryPrice = new Intl.NumberFormat("en-GB", {
     style: "currency",
     currency: "EUR",
   });
   const formattedTotalPrice = countryPrice.format(getCartTotal());
+  const navigate = useNavigate();
+
+  const generateOrderReview = async () => {
+    try {
+      await checkOutOn();
+      navigate("/");
+    } catch (error) {
+      console.error("Fallo en la compra:", error);
+      alert("No pudimos procesar tu compra. Por favor, intenta de nuevo.");
+    }
+  };
 
   return (
     <div className="bg-green-300 flex flex-col justify-center items-center p-2 border border-gray-200 rounded-xl shadow-md ">
@@ -36,9 +47,10 @@ export const ConfirmPurchase = ({ checkOutOn }) => {
       <Button
         className="px-4 py-2 rounded-xl"
         variant="primary"
-        onClick={checkOutOn}
+        onClick={generateOrderReview}
+        disabled={isProcessing}
       >
-        <Link>Proceed to checkout</Link>
+        {isProcessing ? "Processing..." : "Proceed to checkout"}
       </Button>
     </div>
   );

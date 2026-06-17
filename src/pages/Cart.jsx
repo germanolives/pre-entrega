@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useCart } from "../context/CartContext";
 import { useProducts } from "../context/ProductsContext";
 import { RenderContent } from "../components/common/RenderContent";
@@ -9,6 +9,7 @@ import { ConfirmPurchase } from "../components/Cart/ConfirmPuchase";
 export const Cart = () => {
   const { cart, checkCart } = useCart();
   const { data, loading, error, refetch } = useProducts();
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   useEffect(() => {
     refetch();
@@ -20,26 +21,40 @@ export const Cart = () => {
     }
   }, [data, loading]);
 
-  const checkOutOn = () => {
-    refetch();
-  };
+  const checkOutOn = async () => {
+  setIsCheckingOut(true);
+  try {
+    // Simulamos un poco de tiempo para que el usuario lea "Procesando..."
+    await Promise.all([
+      refetch(),
+      new Promise(resolve => setTimeout(resolve, 500)) 
+    ]);
+  } catch (e) {
+    console.error(e);
+  } finally {
+    setIsCheckingOut(false);
+    // El navigate se ejecutará desde el ConfirmPurchase después de esto
+  }
+};
 
   return (
     <section
-      className={`flex flex-col gap-4 md:flex-row mx-4 border-2 border-gray-300 rounded-xl p-4 justify-between`}
+      className={`flex flex-col gap-4 md:grid grid-cols-2 mx-4 border-2 border-gray-300 rounded-xl p-4`}
     >
       <RenderContent data={data} loading={loading} error={error}>
         {cart.length > 0 ? (
           <>
             <CartList data={cart} />
-            <aside className="w-full md:w-80 sticky top-30 right-8 self-start">
-              <ConfirmPurchase checkOutOn={checkOutOn} />
-            </aside>
           </>
         ) : (
           <EmptyCart />
         )}
       </RenderContent>
+      <div className="flex justify-end">
+        <aside className="w-full md:w-80 sticky top-30 right-8 self-start">
+          <ConfirmPurchase checkOutOn={checkOutOn} isProcessing={isCheckingOut} />
+        </aside>
+      </div>
     </section>
   );
 };
