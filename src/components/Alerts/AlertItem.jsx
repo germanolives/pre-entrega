@@ -1,16 +1,19 @@
 export const AlertItem = ({ item }) => {
   const alertStyles = {
-    success: "bg-green-100 text-green-800 border-l-4 border-green-500",
-    error: "bg-red-100 text-red-800 border-l-4 border-red-500",
-    info: "bg-blue-100 text-blue-800 border-l-4 border-blue-500",
+    success: "bg-white border-green-500 text-green-800",
+    error: "bg-white border-red-500 text-red-800",
+    info: "bg-white border-blue-500 text-blue-800",
   };
 
   return (
     <div
-      className={`p-4 rounded-lg shadow-lg pointer-events-auto animate-in slide-in-from-right-4 ${alertStyles[item.type] || alertStyles.info}`}
+      className={`
+        p-4 rounded-xl shadow-lg border-l-8 
+        ${alertStyles[item.type] || alertStyles.info}
+        flex items-center gap-3 animate-in slide-in-from-right-4
+      `}
     >
-      {" "}
-      {item.message}
+      <span className="font-medium">{item.message}</span>
     </div>
   );
 };
