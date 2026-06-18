@@ -5,6 +5,7 @@ import { MovilNavbar } from "../components/Dashboard/MovilNavbar";
 import { SearchbarContainer } from "../components/Dashboard/SearchbarContainer";
 import { SearchFilter } from "../components/Dashboard/SearchFilter";
 import { Modal } from "../components/common/Modal";
+import { AlertContainer } from "../components/Alerts/AlertContainer";
 
 export const DashboardLayout = () => {
   return (
@@ -20,6 +21,7 @@ export const DashboardLayout = () => {
         <Outlet />
       </main>
       <Modal />
+      <AlertContainer />
     </>
   );
 };

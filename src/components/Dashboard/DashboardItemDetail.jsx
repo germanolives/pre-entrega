@@ -40,7 +40,7 @@ export const DashboardItemDetail = ({
     <form
       id="product-form"
       onSubmit={handleSubmit}
-      className="grid grid-cols-1 md:grid-cols-2 w-full md:w-2/3 mx-auto gap-4"
+      className="grid grid-cols-1 md:grid-cols-2 w-full md:full mx-auto gap-4"
     >
       {/* COLUMNA IZQUIERDA */}
       <div className="flex flex-col bg-gray-200 p-4 shadow-2xl border border-gray-300 h-full rounded-sm gap-2">

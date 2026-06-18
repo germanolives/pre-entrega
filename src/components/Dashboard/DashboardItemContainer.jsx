@@ -2,7 +2,8 @@ import { useState } from "react";
 import { formatSlug } from "../../utils/formatSlug";
 import { useProducts } from "../../context/ProductsContext";
 import { DashboardItemDetail } from "./DashboardItemDetail";
-import { ModalBox } from "../common/ModalBox";
+import { useAlert } from "../../context/AlertContext";
+
 
 export const DashboardItemContainer = ({ data }) => {
   const [dataForm, setDataForm] = useState({
@@ -14,6 +15,7 @@ export const DashboardItemContainer = ({ data }) => {
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const { updateProduct } = useProducts();
+  const { addAlert } = useAlert();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -87,7 +89,7 @@ export const DashboardItemContainer = ({ data }) => {
       if (!imageFile) {
         if (!dataForm.image) {
           // Si no tiene imagen previa ni nueva, es un error
-          alert("Por favor, selecciona una imagen para el producto.");
+          addAlert("SELECT_PRODUCT_IMAGE");
           return;
         }
 
@@ -95,7 +97,7 @@ export const DashboardItemContainer = ({ data }) => {
           "Sincronizando cambios de texto (mantiene la imagen actual)...",
         );
         const res = await updateProduct(dataForm);
-        if (res?.success) alert("¡Producto modificado con éxito!");
+        if (res?.success) addAlert("PRODUCT_UPDATED_SUCCESS");
         return; // Frenamos la ejecución acá de forma segura
       }
 
@@ -132,15 +134,16 @@ export const DashboardItemContainer = ({ data }) => {
         const res = await updateProduct(finalProduct);
 
         if (res?.success) {
-          alert("¡Producto e imagen guardados con éxito!");
+          addAlert("PRODUCT_AND_IMAGE_UPDATED_SUCCESS")
           setImageFile(null); // Limpiamos el binario para futuros envíos
         }
       } else {
+        addAlert("ERROR_FILE_UPLOAD_IMGBB")
         throw new Error("La API de ImgBB rechazó la subida del archivo.");
       }
     } catch (error) {
       console.error("Error crítico en el proceso de envío:", error);
-      alert("Hubo un fallo al intentar procesar el formulario.");
+      addAlert("ERROR_PROCESS_FORM");
     }
   };
 

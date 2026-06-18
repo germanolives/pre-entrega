@@ -5,6 +5,7 @@ import { Navbar } from "../components/Navbar/Navbar";
 import { MovilNavbar } from "../components/Navbar/MovilNavbar";
 import { SearchbarContainer } from "../components/Searchbar/SearchbarContainer";
 import { Modal } from "../components/common/Modal";
+import { AlertContainer } from "../components/Alerts/AlertContainer";
 
 export const MainLayout = () => {
   return (
@@ -19,6 +20,7 @@ export const MainLayout = () => {
       </main>
       <Footer />
       <Modal />
+      <AlertContainer />
     </>
   );
 };
