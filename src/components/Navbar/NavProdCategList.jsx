@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
 import { formatSlug } from "../../utils/formatSlug";
 import { useLocation } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 export const NavProdCategList = ({ data, listMenuView, resetMenuView }) => {
   const sortedData = [...data].sort((a, b) => a.localeCompare(b));
   const location = useLocation();
+  const { user } = useAuth();
+  const isAdmin = user?.rol === 'admin';
 
   return (
     <ul

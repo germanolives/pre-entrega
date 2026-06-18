@@ -180,8 +180,8 @@ export const Navbar = () => {
                   className={`w-4 h-4 transition-transform duration-300 relative ${userMenuView ? "rotate-180 text-blue-600" : "text-gray-600"}`}
                 />
               </Button>
-              <ul
-                className={`${userMenuView ? "flex absolute flex-col gap-2 top-full left-0 bg-slate-200 shadow-md border border-gray-400 p-2 min-w-30 z-50 rounded-xl" : "hidden"}`}
+              { userMenuView && (<ul
+                className={`flex absolute flex-col gap-2 top-full left-0 shadow-md border border-gray-400 p-2 min-w-30 z-50 rounded-xl ${isAdmin ? "bg-green-200" : "bg-slate-200"}`}
               >
                 <li className="text-blue-600 italic p-0.5">
                   {displayUserEmail}
@@ -225,7 +225,7 @@ export const Navbar = () => {
                     Logout
                   </ModalBox>
                 </li>
-              </ul>
+              </ul>)}
             </div>
           </li>
         )}
