@@ -15,7 +15,7 @@ export const Dashboard = () => {
 
   return (
     <section
-      className={` md:mx-15 border-2 border-gray-300 rounded-xl p-8 ${loading ? "flex justify-center items-center" : "grid grid-cols-1 gap-4"}`}
+      className={` mx-4 md:mx-15 border-2 border-gray-300 rounded-xl p-8 ${loading ? "flex justify-center items-center" : "grid grid-cols-1 gap-4"}`}
     >
       <RenderContent data={data} loading={loading} error={error}>
         <div className="sticky top-15 flex flex-row flex-wrap  md:grid grid-cols-[minmax(120px,200px)_minmax(100px,200px)_minmax(100px,200px)_minmax(75px,100px)_minmax(50px,100px)_25px_25px] p-3 bg-cyan-300 border border-gray-300 gap-3 rounded-sm text-xs justify-center md:top-25 items-start">

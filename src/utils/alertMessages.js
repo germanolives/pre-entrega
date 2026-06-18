@@ -35,12 +35,8 @@ export const ALERT_MESSAGES = {
     message: "The ImgBB API rejected the file upload.",
     type: "error",
   },
-
-
-
-  
-
-
-
-  
+  ERROR_CREATE_PRODUCT: {
+    message: "Failure to register new product.",
+    type: "error",
+  },
 };

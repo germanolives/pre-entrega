@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { EditIcon, TrashIcon } from "../Icons/index";
 import { Button } from "../common/Button";
 import { ModalBox } from "../common/ModalBox";
+import { useAlert } from "../../context/AlertContext";
 
 
 export const ProductItem = ({ item }) => {
@@ -14,6 +15,17 @@ export const ProductItem = ({ item }) => {
   });
   const formattedPrice = countryPrice.format(item.price);
 
+const { addAlert } = useAlert();
+
+const handleDelete = async () => {
+  const result = await deleteProduct(item.id);
+  
+  if (result.success) {
+     addAlert("DELETE_CONFIRMATION");
+  } else {
+     addAlert("ERROR_GENERIC");
+  }
+};
 
   return (
     <div className="grid grid-cols-1  md:grid-cols-[minmax(120px,200px)_minmax(100px,200px)_minmax(100px,200px)_minmax(75px,100px)_minmax(50px,100px)_25px_25px] p-2 bg-cyan-200 border border-gray-300 gap-3 rounded-sm text-xs justify-center">
@@ -45,7 +57,7 @@ export const ProductItem = ({ item }) => {
       </Button>
       <ModalBox
         classNameButton="bg-cyan-100 border border-gray-300 rounded-sm flex items-center justify-center"
-        onConfirm={() => deleteProduct(item.id)}
+        onConfirm={handleDelete}
         operationType="Delete"
       >
         <TrashIcon className="text-red-400 w-4 h-4" />

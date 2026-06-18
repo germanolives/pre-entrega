@@ -2,11 +2,12 @@ import { useState } from "react";
 import { formatSlug } from "../utils/formatSlug";
 import { useProducts } from "../context/ProductsContext";
 import { DashboardItemDetail } from "../components/Dashboard/DashboardItemDetail";
+import { useAlert } from "../context/AlertContext";
 
 export const DashboardNewItemContainer = () => {
   const { addProduct } = useProducts();
   const [imageFile, setImageFile] = useState(null);
-  
+  const { addAlert } = useAlert();
   const [imagePreview, setImagePreview] = useState("");
 
   const [dataForm, setDataForm] = useState({
@@ -84,7 +85,7 @@ export const DashboardNewItemContainer = () => {
     if (file) {
       setImageFile(file);
       setImagePreview(URL.createObjectURL(file));
-      console.log("Archivo binario listo para ImgBB:", file);
+      console.log("Binary file ready for ImgBB:", file);
     }
   };
 
@@ -92,7 +93,7 @@ export const DashboardNewItemContainer = () => {
     e.preventDefault();
 
     if (!imageFile) {
-      alert("Por favor, selecciona una imagen para poder crear el nuevo producto.");
+      addAlert("SELECT_PRODUCT_IMAGE");
       return;
     }
 
@@ -126,7 +127,7 @@ export const DashboardNewItemContainer = () => {
         const res = await addProduct(finalProduct);
 
         if (res?.success) {
-          alert("¡Nuevo repuesto creado y sincronizado con éxito!");
+          addAlert("PRODUCT_CREATED_SUCCESS");
           
           setImageFile(null);
           setImagePreview("");
@@ -150,12 +151,12 @@ export const DashboardNewItemContainer = () => {
       }
     } catch (error) {
       console.error("Error crítico en el proceso de alta:", error);
-      alert("Hubo un fallo al intentar registrar el nuevo producto.");
+      addAlert("ERROR_CREATE_PRODUCT");
     }
   };
 
   return (
-    <section className={`mx-15 border-2 border-gray-300 rounded-xl p-8 flex justify-center items-center`}>
+    <section className={`mx-4 md:mx-15 border-2 border-gray-300 rounded-xl p-8 flex justify-center items-center`}>
 
       <DashboardItemDetail
         dataForm={dataForm}

@@ -115,7 +115,6 @@ export const ProductsProvider = ({ children }) => {
     try {
       const productRef = doc(db, "products", id);
       await deleteDoc(productRef);
-
       setData((prevProducts) => prevProducts.filter((prod) => prod.id !== id));
       return { success: true };
     } catch (err) {

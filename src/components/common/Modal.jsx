@@ -32,7 +32,7 @@ export const Modal = () => {
     >
       {/* Contenedor del contenido - stopPropagation evita que se cierre al hacer clic adentro */}
       <div
-        className="bg-white p-6 rounded-xl shadow-2xl w-full max-w-md relative animate-in fade-in zoom-in duration-200"
+        className="bg-gray-200 p-6 rounded-xl shadow-2xl w-full max-w-md relative animate-in fade-in zoom-in duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Botón de cierre */}
