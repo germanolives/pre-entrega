@@ -1,10 +1,11 @@
-import { useState } from "react";
 import { useCart } from "../../context/CartContext";
 import { Button } from "../common/Button";
 import { TrashIcon } from "../Icons/index";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { idGenerator } from "../../utils/idGenerator";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../config/firebase";
 
 export const ConfirmPurchase = ({ checkOutOn, isProcessing }) => {
   const { clearCart, getCartTotal, getCartQuantity, cart } = useCart();
@@ -30,10 +31,12 @@ export const ConfirmPurchase = ({ checkOutOn, isProcessing }) => {
           products: cart,
           total: getCartTotal(), // Agregamos el total para tenerlo disponible
         };
-
+        await setDoc(doc(db, "orders", purchaseOrder.id), purchaseOrder);
         // PASO CLAVE: Pasamos la orden como estado en la navegación
         clearCart();
-        navigate("/order-confirmation", { state: { order: purchaseOrder } });
+        navigate(`/order-confirmation/${purchaseOrder.id}`, {
+          state: { order: purchaseOrder },
+        });
       } else {
         alert(
           "Los precios o existencias han cambiado. Por favor, revisa tu carrito.",

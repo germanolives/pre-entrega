@@ -39,7 +39,7 @@ export const App = () => {
           <Route element={<ProtectedLayout />}>
             <Route path="favorites" element={<Favorites />} />
             <Route path="cart" element={<Cart />} />
-            <Route path="order-confirmation" element={<OrderConfirmation />} />
+            <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
           </Route>
           <Route path="contact" element={<Contact />} />
           <Route
