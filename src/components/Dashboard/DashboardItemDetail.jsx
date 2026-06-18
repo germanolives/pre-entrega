@@ -38,6 +38,7 @@ export const DashboardItemDetail = ({
 
   return (
     <form
+      id="product-form"
       onSubmit={handleSubmit}
       className="grid grid-cols-1 md:grid-cols-2 w-full md:w-2/3 mx-auto gap-4"
     >
@@ -244,13 +245,15 @@ export const DashboardItemDetail = ({
             </div>
           </div>
 
-          <Button
-            variant="primary"
-            type="submit"
-            className="rounded-md py-2 uppercase mt-2 w-full font-bold tracking-wider"
+          <ModalBox
+            variantButton="primary"
+            operationType="Save Changes"
+            // type="submit"
+            classNameButton="rounded-md py-2 uppercase mt-2 w-full font-bold tracking-wider"
+            onConfirm={() => document.getElementById('product-form').requestSubmit()}
           >
             Confirm and Save Changes
-          </Button>
+          </ModalBox>
         </div>
       </div>
     </form>
