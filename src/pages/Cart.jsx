@@ -27,7 +27,7 @@ export const Cart = () => {
       // Simulamos un poco de tiempo para que el usuario lea "Procesando..."
       await Promise.all([
         refetch(),
-        new Promise((resolve) => setTimeout(resolve, 500)),
+        new Promise((resolve) => setTimeout(resolve, 1500)),
       ]);
     } catch (e) {
       console.error(e);
@@ -41,14 +41,13 @@ export const Cart = () => {
     <section
       className={`flex flex-col gap-4 md:grid grid-cols-2 mx-4 border-2 border-gray-300 rounded-xl p-4`}
     >
-      <RenderContent data={data} loading={loading} error={error}>
-        {Array.isArray(cart) && cart.length > 0 ? (
-          <>
-            <CartList data={cart} />
-          </>
-        ) : (
-          <EmptyCart />
-        )}
+      <RenderContent
+        data={data}
+        loading={loading || isCheckingOut}
+        error={error}
+        time={isCheckingOut ? 1500 : 0} // Si está en checkout, esperamos 1.5s, si no, 0s
+      >
+        {Array.isArray(cart) && cart.length > 0 ? <CartList data={cart} /> : <EmptyCart />}
       </RenderContent>
       {Array.isArray(cart) && cart.length > 0 && (
         <div className="flex justify-end">

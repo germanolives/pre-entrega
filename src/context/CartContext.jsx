@@ -19,7 +19,20 @@ export const CartProvider = ({ children }) => {
 
   useEffect(() => {
     const localData = localStorage.getItem(userCart);
-    setCart(localData ? JSON.parse(localData) : []);
+    if (localData) {
+      try {
+        const parsed = JSON.parse(localData);
+        // Sanitizamos al cargar para asegurar que todo sea numérico
+        const sanitized = parsed.map((item) => ({
+          ...item,
+          quantity: Number(item.quantity),
+          price: Number(item.price),
+        }));
+        setCart(sanitized);
+      } catch (e) {
+        setCart([]);
+      }
+    }
   }, [userCart]);
 
   useEffect(() => {
@@ -29,13 +42,7 @@ export const CartProvider = ({ children }) => {
   }, [userCart, cart]);
 
   const addToCart = (product, quantity) => {
-    if (
-      !product ||
-      !product.id ||
-      !quantity ||
-      quantity <= 0 ||
-      !currentUser
-    )
+    if (!product || !product.id || !quantity || quantity <= 0 || !currentUser)
       return;
     const itemInCart = cart.find(
       (item) => String(item.id) === String(product.id),
@@ -78,9 +85,11 @@ export const CartProvider = ({ children }) => {
       const searchProd = cart.find(
         (item) => String(item.id) === String(product.id),
       );
-      return searchProd ? searchProd.quantity : 0;
+      // Forzamos Number aquí
+      return searchProd ? Number(searchProd.quantity) : 0;
     } else {
-      return cart.reduce((acc, item) => acc + item.quantity, 0);
+      // Forzamos Number en el reduce
+      return cart.reduce((acc, item) => acc + Number(item.quantity), 0);
     }
   };
 
@@ -92,21 +101,25 @@ export const CartProvider = ({ children }) => {
       );
       if (searchProd) {
         const appliedOffers = searchProd.offers.find(
-          (o) => searchProd.quantity >= o.qty,
+          (o) => Number(searchProd.quantity) >= Number(o.qty),
         );
-        const discount = appliedOffers ? appliedOffers.discount : 0;
+        const discount = appliedOffers ? Number(appliedOffers.discount) : 0;
         const finalPrice =
-          searchProd.price - (discount / 100) * searchProd.price;
-        return searchProd.quantity * finalPrice;
+          Number(searchProd.price) -
+          (discount / 100) * Number(searchProd.price);
+        return Number(searchProd.quantity) * finalPrice;
       } else {
         return 0;
       }
     } else {
       return cart.reduce((acc, item) => {
-        const appliedOffers = item.offers.find((o) => item.quantity >= o.qty);
-        const discount = appliedOffers ? appliedOffers.discount : 0;
-        const finalPrice = item.price - (discount / 100) * item.price;
-        return acc + item.quantity * finalPrice;
+        const appliedOffers = item.offers.find(
+          (o) => Number(item.quantity) >= Number(o.qty),
+        );
+        const discount = appliedOffers ? Number(appliedOffers.discount) : 0;
+        const finalPrice =
+          Number(item.price) - (discount / 100) * Number(item.price);
+        return acc + Number(item.quantity) * finalPrice;
       }, 0);
     }
   };

@@ -1,21 +1,44 @@
+import { useState } from "react";
 import { useCart } from "../../context/CartContext";
 import { Button } from "../common/Button";
 import { TrashIcon } from "../Icons/index";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { idGenerator } from "../../utils/idGenerator";
 
 export const ConfirmPurchase = ({ checkOutOn, isProcessing }) => {
-  const { clearCart, getCartTotal, getCartQuantity } = useCart();
+  const { clearCart, getCartTotal, getCartQuantity, cart } = useCart();
   const countryPrice = new Intl.NumberFormat("en-GB", {
     style: "currency",
     currency: "EUR",
   });
   const formattedTotalPrice = countryPrice.format(getCartTotal());
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const generateOrderReview = async () => {
+    const previewCartTotal = getCartTotal();
     try {
       await checkOutOn();
-      navigate("/");
+
+      // Comparamos los valores
+      if (previewCartTotal === getCartTotal()) {
+        const purchaseOrder = {
+          id: idGenerator(),
+          date: Date.now(),
+          buyer: user.email,
+          products: cart,
+          total: getCartTotal(), // Agregamos el total para tenerlo disponible
+        };
+
+        // PASO CLAVE: Pasamos la orden como estado en la navegación
+        clearCart();
+        navigate("/order-confirmation", { state: { order: purchaseOrder } });
+      } else {
+        alert(
+          "Los precios o existencias han cambiado. Por favor, revisa tu carrito.",
+        );
+      }
     } catch (error) {
       console.error("Fallo en la compra:", error);
       alert("No pudimos procesar tu compra. Por favor, intenta de nuevo.");
@@ -45,7 +68,7 @@ export const ConfirmPurchase = ({ checkOutOn, isProcessing }) => {
         </div>
       </div>
       <Button
-        className="px-4 py-2 rounded-xl"
+        className="px-4 py-2 rounded-xl w-50"
         variant="primary"
         onClick={generateOrderReview}
         disabled={isProcessing}

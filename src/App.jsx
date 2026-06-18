@@ -21,6 +21,7 @@ import { FiltredDashboard } from "./pages/FiltredDashboard";
 import { DashboardDetail } from "./pages/DashboardDetail";
 import { DashboardNewItemContainer } from "./pages/DashboardNewItemContainer";
 import { ProtectedLayout } from "./layouts/ProtectedLayout";
+import { OrderConfirmation } from "./pages/OrderConfirmation";
 
 export const App = () => {
   return (
@@ -38,6 +39,7 @@ export const App = () => {
           <Route element={<ProtectedLayout />}>
             <Route path="favorites" element={<Favorites />} />
             <Route path="cart" element={<Cart />} />
+            <Route path="order-confirmation" element={<OrderConfirmation />} />
           </Route>
           <Route path="contact" element={<Contact />} />
           <Route
