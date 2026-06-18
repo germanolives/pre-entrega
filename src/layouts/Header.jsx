@@ -12,14 +12,14 @@ export const Header = ({
   searchbarContainer,
   movilNavbar,
   searchFilter,
-  isAdmin=false,
+  isAdmin,
 }) => {
   const { getProductsQuantity, getTotalStock } = useProducts();
   const location = useLocation();
   const { menu, menuChange } = useMenu()
 
   return (
-    <header className="sticky top-0 left-0 mx-4 z-50 rounded-xl bg-slate-300 mb-4">
+    <header className={`sticky top-0 left-0 mx-4 z-50 rounded-xl mb-4 ${isAdmin ? "bg-green-300"  : "bg-slate-300"}`}>
       <div className="flex justify-between items-center">
         <Link to={`${isAdmin ? "/dashboard" : "/"}`} className="w-20 md:w-25 shrink-0">
           <img

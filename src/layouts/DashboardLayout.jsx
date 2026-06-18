@@ -6,8 +6,11 @@ import { SearchbarContainer } from "../components/Dashboard/SearchbarContainer";
 import { SearchFilter } from "../components/Dashboard/SearchFilter";
 import { Modal } from "../components/common/Modal";
 import { AlertContainer } from "../components/Alerts/AlertContainer";
+import { useAuth } from "../context/AuthContext";
 
 export const DashboardLayout = () => {
+  const { user } = useAuth();
+  const isAdmin = user ? user.rol === "admin" : false;
   return (
     <>
       <Header
@@ -15,7 +18,7 @@ export const DashboardLayout = () => {
         searchbarContainer={<SearchbarContainer />}
         searchFilter={<SearchFilter />}
         movilNavbar={<MovilNavbar />}
-        isAdmin={true}
+        isAdmin={isAdmin}
       />
       <main className="grow">
         <Outlet />
