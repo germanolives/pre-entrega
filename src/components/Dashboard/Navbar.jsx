@@ -87,12 +87,12 @@ export const Navbar = () => {
             onClick={() => setSourceMenuView(!sourceMenuView)}
           >
             <DatabaseIcon className="w-4 h-4" />
-            <span className="border border-gray-400 rounded-full h-4 w-10 px-1.5 flex items-center justify-center font-semibold text-xxs bg-gray-200">
+            <span className="border border-gray-400 rounded-full h-4 w-10 px-1.5 flex items-center justify-center font-semibold text-xxs bg-green-200">
               {nameSource}
             </span>
           </div>
           {sourceMenuView && (
-            <ul className="flex absolute top-full mt-2 bg-slate-200 shadow-md border border-gray-400 p-2 min-w-30 z-50 rounded-xl flex-col">
+            <ul className="flex absolute top-full mt-2 bg-green-200 shadow-md border border-gray-400 p-2 min-w-30 z-50 rounded-xl flex-col">
               {["LOCAL", "DB", "API"].map((source) => (
                 <li key={source} className="p-0.5">
                   <Button
