@@ -43,15 +43,18 @@ export const Navbar = () => {
   }, [listMenuView, userMenuView, resetMenuView]);
 
   if (loading) {
-    return <nav className="mx-2 h-4.5 border border-gray-400 rounded-sm animate-pulse bg-slate-300" />;
+    return (
+      <nav className="hidden md:block mx-2 h-4.5 border border-gray-400 rounded-sm animate-pulse bg-slate-300" />
+    );
   }
+
   const currentUser = user ? user.uid : null;
   const displayUser = user?.email
     ? user.email.split("@")[0].toUpperCase()
     : "GUEST";
   const displayUserEmail = user?.email ? user.email : "";
   const typeUser = user && user.rol;
-  const isAdmin = user?.rol === 'admin';
+  const isAdmin = user?.rol === "admin";
 
   const changeListMenuView = () => {
     setListMenuView((prev) => !prev);
@@ -75,7 +78,6 @@ export const Navbar = () => {
     handleLogout();
   };
 
-  
   return (
     <nav className="hidden md:block px-2" ref={menuRef}>
       <ul className="flex justify-evenly items-center rounded-sm border border-gray-400 text-xs">
@@ -180,52 +182,54 @@ export const Navbar = () => {
                   className={`w-4 h-4 transition-transform duration-300 relative ${userMenuView ? "rotate-180 text-blue-600" : "text-gray-600"}`}
                 />
               </Button>
-              { userMenuView && (<ul
-                className={`flex absolute flex-col gap-2 top-full left-0 shadow-md border border-gray-400 p-2 min-w-30 z-50 rounded-xl ${isAdmin ? "bg-green-200" : "bg-slate-200"}`}
-              >
-                <li className="text-blue-600 italic p-0.5">
-                  {displayUserEmail}
-                </li>
-                <li className="flex items-center">
-                  <Link
-                    onClick={resetMenuView}
-                    to={"/favorites"}
-                    className={`grow text-center ${location.pathname === "/favorites" ? "text-blue-600" : "text-gray-600"}`}
-                  >
-                    <div className="flex gap-0.5">
-                      <FavoriteIcon className="w-5 h-5" />
-                      <span className="border border-gray-400 rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center font-semibold text-xxs bg-gray-200">
-                        {getFavoriteQuantity()}
-                      </span>
-                    </div>
-                  </Link>
-                </li>
-                <li className="flex items-center">
-                  <Link
-                    onClick={resetMenuView}
-                    to={"/cart"}
-                    className={`${location.pathname === "/cart" ? "text-blue-600" : "text-gray-600"}`}
-                  >
-                    <div className="flex gap-0.5">
-                      <CartIcon className="w-5 h-5" />
-                      <span className="border border-gray-400 rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center font-semibold text-xxs bg-gray-200">
-                        {getCartQuantity()}
-                      </span>
-                    </div>
-                  </Link>
-                </li>
-                <li className="p-0.5">
-                  <ModalBox
-                    onConfirm={logOff}
-                    variantButton="primary"
-                    classNameButton="rounded-sm p-1 text-xxs"
-                    prevActionButton={resetMenuView}
-                    operationType="Logout"
-                  >
-                    Logout
-                  </ModalBox>
-                </li>
-              </ul>)}
+              {userMenuView && (
+                <ul
+                  className={`flex absolute flex-col gap-2 top-full left-0 shadow-md border border-gray-400 p-2 min-w-30 z-50 rounded-xl ${isAdmin ? "bg-green-200" : "bg-slate-200"}`}
+                >
+                  <li className="text-blue-600 italic p-0.5">
+                    {displayUserEmail}
+                  </li>
+                  <li className="flex items-center">
+                    <Link
+                      onClick={resetMenuView}
+                      to={"/favorites"}
+                      className={`grow text-center ${location.pathname === "/favorites" ? "text-blue-600" : "text-gray-600"}`}
+                    >
+                      <div className="flex gap-0.5">
+                        <FavoriteIcon className="w-5 h-5" />
+                        <span className="border border-gray-400 rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center font-semibold text-xxs bg-gray-200">
+                          {getFavoriteQuantity()}
+                        </span>
+                      </div>
+                    </Link>
+                  </li>
+                  <li className="flex items-center">
+                    <Link
+                      onClick={resetMenuView}
+                      to={"/cart"}
+                      className={`${location.pathname === "/cart" ? "text-blue-600" : "text-gray-600"}`}
+                    >
+                      <div className="flex gap-0.5">
+                        <CartIcon className="w-5 h-5" />
+                        <span className="border border-gray-400 rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center font-semibold text-xxs bg-gray-200">
+                          {getCartQuantity()}
+                        </span>
+                      </div>
+                    </Link>
+                  </li>
+                  <li className="p-0.5">
+                    <ModalBox
+                      onConfirm={logOff}
+                      variantButton="primary"
+                      classNameButton="rounded-sm p-1 text-xxs"
+                      prevActionButton={resetMenuView}
+                      operationType="Logout"
+                    >
+                      Logout
+                    </ModalBox>
+                  </li>
+                </ul>
+              )}
             </div>
           </li>
         )}
@@ -255,7 +259,6 @@ export const Navbar = () => {
             </Link>
           </li>
         )}
-
 
         {/* MENU CART (VISIBLE CON USUARIO LOGUEADO E INVISIBLE CUANDO NO SE ESTÁ LOGUEADO) */}
         {displayUserEmail && typeUser !== "admin" && (

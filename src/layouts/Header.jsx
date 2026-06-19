@@ -38,7 +38,7 @@ export const Header = ({
             {isDashboard && searchFilter}
           </div>
           {navbar}
-          {isAdmin && (<div className="flex justify-end text-xxs border border-gray-400 rounded-sm mx-2 md:hidden">
+          {isDashboard && (<div className="flex justify-end text-xxs border border-gray-400 rounded-sm mx-2 md:hidden">
             <span
               className={`text-right ${location.pathname === "/dashboard" ? "text-blue-600" : location.pathname.startsWith("/dashboard/edit") ? "text-green-600" : "text-blue-600"}`}
             >
