@@ -13,6 +13,7 @@ export const Header = ({
   movilNavbar,
   searchFilter,
   isAdmin,
+  isDashboard,
 }) => {
   const { getProductsQuantity, getTotalStock } = useProducts();
   const location = useLocation();
@@ -31,10 +32,10 @@ export const Header = ({
           />
         </Link>
 
-        <div className={`flex flex-col grow ${isAdmin ? "gap-1" : "gap-5"}`}>
+        <div className={`flex flex-col grow ${isDashboard ? "gap-1" : "gap-5"}`}>
           <div>
             {searchbarContainer}
-            {isAdmin && searchFilter}
+            {isDashboard && searchFilter}
           </div>
           {navbar}
           {isAdmin && (<div className="flex justify-end text-xxs border border-gray-400 rounded-sm mx-2 md:hidden">

@@ -4,6 +4,7 @@ import { Button } from "../common/Button";
 import { SearchbarList } from "./SearchbarList";
 import { useProducts } from "../../context/ProductsContext";
 import { SearchIcon } from "../Icons/index";
+import { useAuth } from "../../context/AuthContext";
 
 export const SearchbarContainer = () => {
   const [dataIn, setDataIn] = useState({
@@ -11,6 +12,8 @@ export const SearchbarContainer = () => {
   });
   const { data, loading, error } = useProducts();
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const isAdmin = user ? user.rol === "admin" : false;
 
   const manageChange = (event) => {
     const { name, value } = event.target;
@@ -32,7 +35,10 @@ export const SearchbarContainer = () => {
 
   return (
     <div className="w-full">
-      <form className="flex px-2  items-center w-full" onSubmit={manageShipment}>
+      <form
+        className="flex px-2  items-center w-full"
+        onSubmit={manageShipment}
+      >
         <div className="flex grow relative min-w-0">
           <input
             name="name"
@@ -50,12 +56,16 @@ export const SearchbarContainer = () => {
             </div>
           )}
           {!loading && !error && query && matches.length === 0 && (
-            <div className="z-50 absolute block w-full top-full left-0 bg-slate-200 rounded-b-sm border border-t-0 px-4 py-1 shadow-xl text-sm italic">
+            <div
+              className={`z-50 absolute block w-full top-full left-0 ${isAdmin ? " bg-green-200" : "bg-slate-200"} rounded-b-sm border border-t-0 px-4 py-1 shadow-xl text-sm italic`}
+            >
               No products found with "{query}"
             </div>
           )}
           {!error && !loading && query && matches.length > 0 && (
-            <div className="z-50 absolute block w-full top-full left-0 bg-slate-300 rounded-b-sm border border-t-0 px-4 py-1 shadow-xl text-sm">
+            <div
+              className={`z-50 absolute block w-full top-full left-0 ${isAdmin ? "bg-green-300" : "bg-slate-300"} rounded-b-sm border border-t-0 px-4 py-1 shadow-xl text-sm`}
+            >
               <SearchbarList data={matches} reset={setDataIn} />
             </div>
           )}

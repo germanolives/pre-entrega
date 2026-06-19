@@ -21,7 +21,9 @@ export const SearchbarContainer = () => {
   const manageShipment = (event) => {
     event.preventDefault();
     if (matches.length > 0) {
-      navigate(`/dashboard/search/${selectedField.field}/${dataIn.name.trim().toLowerCase()}`);
+      navigate(
+        `/dashboard/search/${selectedField.field}/${dataIn.name.trim().toLowerCase()}`,
+      );
       setDataIn({ name: "" });
     }
   };
@@ -29,7 +31,9 @@ export const SearchbarContainer = () => {
   const query = dataIn.name.trim().toLocaleLowerCase();
   const matches =
     query && data
-      ? data.filter((item) => item[selectedField.field].toLowerCase().includes(query))
+      ? data.filter((item) =>
+          item[selectedField.field].toLowerCase().includes(query),
+        )
       : [];
 
   return (
@@ -52,12 +56,16 @@ export const SearchbarContainer = () => {
             </div>
           )}
           {!loading && !error && query && matches.length === 0 && (
-            <div className="z-50 absolute block w-full top-full left-0 bg-slate-200 rounded-b-sm border border-t-0 px-4 py-1 shadow-xl text-sm italic">
+            <div
+              className={`z-50 absolute block w-full top-full left-0 bg-green-200 rounded-b-sm border border-t-0 px-4 py-1 shadow-xl text-sm italic`}
+            >
               No products found with "{query}"
             </div>
           )}
           {!error && !loading && query && matches.length > 0 && (
-            <div className="z-50 absolute block w-full top-full left-0 bg-slate-300 rounded-b-sm border border-t-0 px-4 py-1 shadow-xl text-sm">
+            <div
+              className={`z-50 absolute block w-full top-full left-0 bg-green-300 rounded-b-sm border border-t-0 px-4 py-1 shadow-xl text-sm`}
+            >
               <SearchbarList data={matches} reset={setDataIn} />
             </div>
           )}

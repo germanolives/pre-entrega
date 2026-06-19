@@ -19,6 +19,8 @@ export const DashboardLayout = () => {
         searchFilter={<SearchFilter />}
         movilNavbar={<MovilNavbar />}
         isAdmin={isAdmin}
+        isDashboard={true}
+
       />
       <main className="grow">
         <Outlet />
