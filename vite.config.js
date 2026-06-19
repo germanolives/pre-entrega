@@ -10,4 +10,20 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] }),
     tailwindcss(),
   ],
+  build: {
+    // 1. Ajuste del límite de advertencia (1000kb = 1MB)
+    chunkSizeWarningLimit: 1000,
+    
+    // 2. Estrategia de optimización de archivos (Code Splitting)
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // Separa las librerías grandes (node_modules) en un archivo separado
+          if (id.includes("node_modules")) {
+            return "vendor";
+          }
+        },
+      },
+    },
+  },
 });
