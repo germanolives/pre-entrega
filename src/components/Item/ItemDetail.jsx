@@ -54,17 +54,30 @@ export const ItemDetail = ({ data }) => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 w-full md:w-2/3 mx-auto">
+      <Helmet key={title || "loading"}>
+        <title>
+          {title
+            ? `${title} | Tienda S.A.U.`
+            : "Loading product | Tienda S.A.U."}
+        </title>
 
-      <Helmet>
-        <title>{title} | Tienda S.A.U.</title>
-        <meta name="description" content={description} />
-        {/* Metaetiquetas para redes sociales (Open Graph) */}
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:image" content={image} />
+        <meta
+          name="description"
+          content={description || "Explore our products at Tienda S.A.U."}
+        />
+
+        {/* Metaetiquetas Open Graph */}
+        <meta property="og:title" content={title || "Tienda S.A.U."} />
+        <meta
+          property="og:description"
+          content={description || "Premium quality products."}
+        />
+        <meta
+          property="og:image"
+          content={image || "URL_DE_TU_LOGO_POR_DEFECTO"}
+        />
         <meta property="og:type" content="product" />
       </Helmet>
-
       <article className="grid grid-rows-[auto_1fr_auto_auto] bg-gray-200 p-4 shadow-2xl border border-gray-300 h-full rounded-sm">
         <div className="flex flex-row justify-between">
           <h1 className="text-xl font-bold text-blue-800 mt-auto capitalize line-clamp-3 leading-tight px-2 min-h-15 overflow-hidden">

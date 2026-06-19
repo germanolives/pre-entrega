@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { ProductList } from "../components/Dashboard/ProductList";
 import { Button } from "../components/common/Button";
 import { Helmet } from "react-helmet-async";
+import { capitalize } from "../utils/capitalize";
 
 export const FiltredDashboard = () => {
   const { fieldSlug, filterSlug } = useParams();
@@ -16,6 +17,7 @@ export const FiltredDashboard = () => {
 
   const cleanField = fieldSlug ? fieldSlug.trim() : "";
   const cleanFilter = filterSlug ? filterSlug.toLowerCase().trim() : "";
+  const displayFilter = capitalize(cleanFilter);
 
   const searchedProds =
     data && cleanFilter && cleanField
@@ -31,8 +33,16 @@ export const FiltredDashboard = () => {
     <section
       className={` md:mx-15 border-2 border-gray-300 rounded-xl p-8 ${loading ? "flex justify-center items-center" : "grid grid-cols-1 gap-4"}`}
     >
-      <Helmet>
-        <title>Filter Products | Inventory | Tienda S.A.U.</title>
+      <Helmet key={displayFilter}>
+        <title>
+          {displayFilter
+            ? `Search Results for: "${displayFilter}" | Tienda S.A.U.`
+            : "Searching... | Tienda S.A.U."}
+        </title>
+        <meta
+          name="description"
+          content={`Discover our products matching your search for ${displayFilter || "productos"}.Find the best deals at Tienda S.A.U.`}
+        />
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       <RenderContent data={data} loading={loading} error={error}>
