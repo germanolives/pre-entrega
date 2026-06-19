@@ -46,7 +46,7 @@ export const Navbar = () => {
 
   return (
     <nav className="hidden md:block px-2" ref={menuRef}>
-      <ul className="flex justify-evenly items-center rounded-sm border border-gray-400 text-xs">
+      <ul className="flex justify-evenly items-center rounded-sm border border-gray-400 text-xs h-4.5">
         {/* MENU HOME */}
         <li className="flex items-center">
           <Link
