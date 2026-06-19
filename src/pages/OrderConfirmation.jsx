@@ -11,6 +11,9 @@ export const OrderConfirmation = () => {
   const [order, setOrder] = useState(state?.order || null);
   const [loading, setLoading] = useState(!state?.order);
 
+  const date = (new Date(order.date)).toLocaleString();
+
+
   useEffect(() => {
     if (order) return;
 
@@ -32,16 +35,18 @@ export const OrderConfirmation = () => {
     if (orderId) fetchOrder();
   }, [order, orderId]);
 
-  if (loading) return <p className="text-center p-10">Cargando detalles de tu compra...</p>;
-  if (!order) return <p className="text-center p-10">No se encontró la orden. ¿Quizás el ID es incorrecto?</p>;
+  if (loading) return <p className="text-center p-10">Loading your purchase details...</p>;
+  if (!order) return <p className="text-center p-10">The order was not found. Perhaps the ID is incorrect?</p>;
 
   return (
-    <div className="p-8 max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">¡Gracias por tu compra!</h1>
-      <p className="text-gray-600">ID de tu orden: <span className="font-mono bg-gray-100 px-2 rounded">{order.id}</span></p>
+    <div className="p-8 max-w-2xl mx-auto border rounded-2xl border-gray-300">
+      <h1 className="text-3xl font-bold mb-4">Thank you for your order.!</h1>
+      <p className="text-gray-600">Buyer: <span className="font-mono bg-gray-100 px-2 rounded">{order.buyer}</span></p>
+      <p className="text-gray-600">Order Nº: <span className="font-mono bg-gray-100 px-2 rounded">{order.id}</span></p>
+      <p className="text-gray-600">Date: <span className="font-mono bg-gray-100 px-2 rounded">{date}</span></p>
 
       <div className="mt-8 border-t pt-6">
-        <h3 className="font-bold text-xl mb-4">Detalle de productos:</h3>
+        <h3 className="font-bold text-xl mb-4">Product details:</h3>
         <ul className="space-y-2">
           {order.products?.map((product) => (
             <li key={product.id} className="flex justify-between border-b pb-2">
@@ -51,7 +56,7 @@ export const OrderConfirmation = () => {
           ))}
         </ul>
         <div className="mt-6 flex justify-between items-center text-2xl font-bold">
-          <span>Total pagado:</span>
+          <span>Total amount to pay:</span>
           <span>€{order.total?.toFixed(2)}</span>
         </div>
       </div>
