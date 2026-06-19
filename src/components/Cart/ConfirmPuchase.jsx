@@ -29,7 +29,8 @@ export const ConfirmPurchase = ({ checkOutOn, isProcessing }) => {
           date: Date.now(),
           buyer: user.email,
           products: cart,
-          total: getCartTotal(), // Agregamos el total para tenerlo disponible
+          total: getCartTotal(),
+          buyerUid: user.uid,
         };
         await setDoc(doc(db, "orders", purchaseOrder.id), purchaseOrder);
         // PASO CLAVE: Pasamos la orden como estado en la navegación
