@@ -4,12 +4,12 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth"; // 🌟 1. IMPORTAMOS EL MÓDULO DE AUTENTICACIÓN
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBPkHYkWpduM6bOW3sYTWzWtWeXe4dMciU",
-  authDomain: "talento-tech-react-5645e.firebaseapp.com",
-  projectId: "talento-tech-react-5645e",
-  storageBucket: "talento-tech-react-5645e.firebasestorage.app",
-  messagingSenderId: "292547743567",
-  appId: "1:292547743567:web:cc5a5e094c87cc2b483f3a",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
