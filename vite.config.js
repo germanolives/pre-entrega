@@ -6,13 +6,10 @@ import tailwindcss from "@tailwindcss/vite";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    react({
-      // React Compiler ya está integrado en el plugin de react,
-      // pero puedes asegurarte de que babel solo toque lo necesario
-    }),
+    react(),
     babel({
-      // 1. Limita el filtro solo a tus archivos de código fuente
-      filter: /\.(jsx|tsx)$/,
+      // Cambiamos 'filter' por 'include' (usa un array para archivos jsx/tsx)
+      include: [/\.(jsx|tsx)$/],
       presets: [reactCompilerPreset()],
     }),
     tailwindcss(),
