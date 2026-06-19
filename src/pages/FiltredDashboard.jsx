@@ -4,6 +4,7 @@ import { useProducts } from "../context/ProductsContext";
 import { useParams } from "react-router-dom";
 import { ProductList } from "../components/Dashboard/ProductList";
 import { Button } from "../components/common/Button";
+import { Helmet } from "react-helmet-async";
 
 export const FiltredDashboard = () => {
   const { fieldSlug, filterSlug } = useParams();
@@ -19,7 +20,8 @@ export const FiltredDashboard = () => {
   const searchedProds =
     data && cleanFilter && cleanField
       ? data.filter((item) => {
-          if (item[cleanField] === undefined || item[cleanField] === null) return false;
+          if (item[cleanField] === undefined || item[cleanField] === null)
+            return false;
           const valueAsString = String(item[cleanField]).toLowerCase();
           return valueAsString.includes(cleanFilter);
         })
@@ -29,6 +31,10 @@ export const FiltredDashboard = () => {
     <section
       className={` md:mx-15 border-2 border-gray-300 rounded-xl p-8 ${loading ? "flex justify-center items-center" : "grid grid-cols-1 gap-4"}`}
     >
+      <Helmet>
+        <title>Filter Products | Inventory | Tienda S.A.U.</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <RenderContent data={data} loading={loading} error={error}>
         <div className="flex flex-row flex-wrap  md:grid grid-cols-[minmax(120px,200px)_minmax(100px,200px)_minmax(100px,200px)_minmax(75px,100px)_minmax(50px,100px)_25px_25px] p-3 bg-cyan-300 border border-gray-300 gap-3 rounded-sm text-xs justify-center md:sticky top-25 items-start">
           <Button
@@ -96,8 +102,12 @@ export const FiltredDashboard = () => {
           >
             STO
           </Button>
-          <span className="hidden md:flex items-center justify-center rounded-sm text-white font-semibold bg-green-500 px-1">EDT</span>
-          <span className="hidden md:flex items-center justify-center rounded-sm text-white font-semibold bg-red-400 px-1">DEL</span>
+          <span className="hidden md:flex items-center justify-center rounded-sm text-white font-semibold bg-green-500 px-1">
+            EDT
+          </span>
+          <span className="hidden md:flex items-center justify-center rounded-sm text-white font-semibold bg-red-400 px-1">
+            DEL
+          </span>
         </div>
         <ProductList select={fieldOrder} data={searchedProds} />
       </RenderContent>
