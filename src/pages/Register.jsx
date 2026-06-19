@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Button } from "../components/common/Button";
 import { validateLocalEmail } from "../utils/validateLocalEmail";
+import { Helmet } from "react-helmet-async";
 
 export const Register = () => {
   const [email, setEmail] = useState("");
@@ -54,7 +55,9 @@ export const Register = () => {
       } else if (err.code === "auth/invalid-email") {
         setError("EL FORMATO DEL CORREO ELECTRÓNICO NO ES VÁLIDO.");
       } else {
-        setError("OCURRIÓ UN ERROR AL REGISTRAR EL USUARIO. INTENTE NUEVAMENTE.");
+        setError(
+          "OCURRIÓ UN ERROR AL REGISTRAR EL USUARIO. INTENTE NUEVAMENTE.",
+        );
       }
     } finally {
       setIsSubmitting(false);
@@ -63,6 +66,13 @@ export const Register = () => {
 
   return (
     <section className="flex flex-col mx-4 justify-center items-center border-2 border-gray-300 rounded-xl p-8">
+      <Helmet>
+        <title>Register | Tienda S.A.U.</title>
+        <meta
+          name="description"
+          content="Create your Tienda S.A.U. account today. Join our community to get exclusive offers, fast checkout, and updates on the latest fashion and electronics."
+        />
+      </Helmet>
       <div className="w-full max-w-sm p-6 bg-green-200 border border-gray-300 rounded-sm shadow-md">
         <h2 className="text-sm font-bold text-gray-900 uppercase font-mono mb-4 text-center">
           Create a new account
@@ -70,7 +80,9 @@ export const Register = () => {
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <div className="flex flex-col gap-1">
-            <label className="text-gray-500 text-xxs font-mono uppercase">Email</label>
+            <label className="text-gray-500 text-xxs font-mono uppercase">
+              Email
+            </label>
             <input
               type="email"
               value={email}
@@ -81,7 +93,9 @@ export const Register = () => {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-gray-500 text-xxs font-mono uppercase">Password</label>
+            <label className="text-gray-500 text-xxs font-mono uppercase">
+              Password
+            </label>
             <input
               type="password"
               value={passwordOne} // 🌟 CORREGIDO: Enlazado a passwordOne
@@ -93,7 +107,9 @@ export const Register = () => {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-gray-500 text-xxs font-mono uppercase">Repeat Password</label>
+            <label className="text-gray-500 text-xxs font-mono uppercase">
+              Repeat Password
+            </label>
             <input
               type="password"
               value={passwordTwo} // 🌟 CORREGIDO: Enlazado a passwordTwo

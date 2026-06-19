@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Button } from "../components/common/Button";
 import { validateLocalEmail } from "../utils/validateLocalEmail";
+import { Helmet } from "react-helmet-async";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -62,6 +63,13 @@ export const Login = () => {
 
   return (
     <section className="flex flex-col mx-4 justify-center items-center border-2 border-gray-300 rounded-xl p-8">
+      <Helmet>
+        <title>Login | Tienda S.A.U.</title>
+        <meta
+          name="description"
+          content="Access your Tienda S.A.U. account to track orders, manage your profile, and enjoy a personalized shopping experience. Sign in securely."
+        />
+      </Helmet>
       <div className="w-full max-w-sm p-6 bg-blue-100 border border-gray-300 rounded-sm shadow-sm">
         <h2 className="text-sm font-bold text-gray-900 uppercase font-mono mb-4 text-center">
           My Account

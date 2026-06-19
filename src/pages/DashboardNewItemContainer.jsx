@@ -3,6 +3,7 @@ import { formatSlug } from "../utils/formatSlug";
 import { useProducts } from "../context/ProductsContext";
 import { DashboardItemDetail } from "../components/Dashboard/DashboardItemDetail";
 import { useAlert } from "../context/AlertContext";
+import { Helmet } from "react-helmet-async";
 
 export const DashboardNewItemContainer = () => {
   const { addProduct } = useProducts();
@@ -22,7 +23,7 @@ export const DashboardNewItemContainer = () => {
     image: "",
     rating: {
       rate: "0",
-      count: "0"
+      count: "0",
     },
     offers: [],
     stock: "",
@@ -108,7 +109,7 @@ export const DashboardNewItemContainer = () => {
         {
           method: "POST",
           body: formData,
-        }
+        },
       );
 
       const imgbbData = await imgbbResp.json();
@@ -123,12 +124,12 @@ export const DashboardNewItemContainer = () => {
         };
 
         console.log("Guardando nuevo registro en Firestore:", finalProduct);
-        
+
         const res = await addProduct(finalProduct);
 
         if (res?.success) {
           addAlert("PRODUCT_CREATED_SUCCESS");
-          
+
           setImageFile(null);
           setImagePreview("");
           setDataForm({
@@ -156,8 +157,17 @@ export const DashboardNewItemContainer = () => {
   };
 
   return (
-    <section className={`mx-4 md:mx-15 border-2 border-gray-300 rounded-xl p-8 flex justify-center items-center`}>
-
+    <section
+      className={`mx-4 md:mx-15 border-2 border-gray-300 rounded-xl p-8 flex justify-center items-center`}
+    >
+      <Helmet>
+        <title>Add New Product | Inventory | Tienda S.A.U.</title>
+        <meta
+          name="description"
+          content="Add new items to the catalog. Define product details, pricing, and stock levels for inventory management."
+        />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <DashboardItemDetail
         dataForm={dataForm}
         imagePreview={imagePreview}

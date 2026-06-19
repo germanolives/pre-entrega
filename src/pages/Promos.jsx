@@ -3,6 +3,7 @@ import { PromoList } from "../components/Promos/PromoList";
 import { RenderContent } from "../components/common/RenderContent";
 import { useProducts } from "../context/ProductsContext";
 import { blackFridayPromos } from "../data/offers/blackFridayPromos";
+import { Helmet } from "react-helmet-async";
 
 export const Promos = () => {
   const { data, loading, error } = useProducts();
@@ -16,18 +17,31 @@ export const Promos = () => {
     ? promoProds.appliesTo.map((item) => String(item))
     : [];
 
-  const promoData = data && promoProdsWithStringId.length > 0
-    ? data.filter((item) => promoProdsWithStringId.includes(String(item.id)))
-    : [];
+  const promoData =
+    data && promoProdsWithStringId.length > 0
+      ? data.filter((item) => promoProdsWithStringId.includes(String(item.id)))
+      : [];
 
   return (
     <section
       className={`mx-4 border-2 border-gray-300 rounded-xl p-8 ${
-        loading ? "flex justify-center items-center" : "grid grid-cols-1 gap-4 md:grid-cols-4"
+        loading
+          ? "flex justify-center items-center"
+          : "grid grid-cols-1 gap-4 md:grid-cols-4"
       }`}
     >
+      <Helmet>
+        <title>Special Offers | Tienda S.A.U.</title>
+        <meta
+          name="description"
+          content="Don't miss our exclusive deals! Shop the latest discounts on clothing and electronics at Tienda S.A.U. Limited time offers available."
+        />
+      </Helmet>
       <RenderContent loading={loading} error={error} data={promoData}>
-        <PromoList data={promoData} promo={promoProds || { title: "Promoción" }} />
+        <PromoList
+          data={promoData}
+          promo={promoProds || { title: "Promoción" }}
+        />
       </RenderContent>
     </section>
   );

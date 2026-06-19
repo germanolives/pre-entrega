@@ -5,6 +5,7 @@ import { RenderContent } from "../components/common/RenderContent";
 import { CartList } from "../components/Cart/CartList";
 import { EmptyCart } from "../components/Cart/EmptyCart";
 import { ConfirmPurchase } from "../components/Cart/ConfirmPuchase";
+import { Helmet } from "react-helmet-async";
 
 export const Cart = () => {
   const { cart, checkCart } = useCart();
@@ -41,13 +42,25 @@ export const Cart = () => {
     <section
       className={`flex flex-col gap-4 md:grid grid-cols-2 mx-4 border-2 border-gray-300 rounded-xl p-4`}
     >
+      <Helmet>
+        <title>Your Shopping Cart | Tienda S.A.U.</title>
+        <meta
+          name="description"
+          content="Review your selected items in your shopping cart. Secure checkout and fast shipping on all your orders."
+        />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <RenderContent
         data={data}
         loading={loading || isCheckingOut}
         error={error}
         time={isCheckingOut ? 1500 : 0} // Si está en checkout, esperamos 1.5s, si no, 0s
       >
-        {Array.isArray(cart) && cart.length > 0 ? <CartList data={cart} /> : <EmptyCart />}
+        {Array.isArray(cart) && cart.length > 0 ? (
+          <CartList data={cart} />
+        ) : (
+          <EmptyCart />
+        )}
       </RenderContent>
       {Array.isArray(cart) && cart.length > 0 && (
         <div className="flex justify-end">

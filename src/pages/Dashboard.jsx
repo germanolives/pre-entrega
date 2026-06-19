@@ -3,6 +3,7 @@ import { useProducts } from "../context/ProductsContext";
 import { RenderContent } from "../components/common/RenderContent";
 import { ProductList } from "../components/Dashboard/ProductList";
 import { Button } from "../components/common/Button";
+import { Helmet } from "react-helmet-async";
 
 export const Dashboard = () => {
   const { data, loading, error } = useProducts();
@@ -15,6 +16,14 @@ export const Dashboard = () => {
     <section
       className={` mx-4 md:mx-15 border-2 border-gray-300 rounded-xl p-8 ${loading ? "flex justify-center items-center" : "grid grid-cols-1 gap-4"}`}
     >
+      <Helmet>
+        <title>Dashboard | Tienda S.A.U.</title>
+        <meta
+          name="description"
+          content="Administrative control panel for Tienda S.A.U. Manage your catalog, inventory, and user roles securely."
+        />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <RenderContent data={data} loading={loading} error={error}>
         <div className="sticky top-15 flex flex-row flex-wrap  md:grid grid-cols-[minmax(120px,200px)_minmax(100px,200px)_minmax(100px,200px)_minmax(75px,100px)_minmax(50px,100px)_25px_25px] p-3 bg-cyan-300 border border-gray-300 gap-3 rounded-sm text-xs justify-center md:top-25 items-start">
           <Button
@@ -82,8 +91,12 @@ export const Dashboard = () => {
           >
             STO
           </Button>
-          <span className="hidden md:flex items-center justify-center rounded-sm text-white font-semibold bg-green-500 px-1">EDT</span>
-          <span className="hidden md:flex items-center justify-center rounded-sm text-white font-semibold bg-red-400 px-1">DEL</span>
+          <span className="hidden md:flex items-center justify-center rounded-sm text-white font-semibold bg-green-500 px-1">
+            EDT
+          </span>
+          <span className="hidden md:flex items-center justify-center rounded-sm text-white font-semibold bg-red-400 px-1">
+            DEL
+          </span>
         </div>
         <ProductList select={fieldOrder} data={data} />
       </RenderContent>

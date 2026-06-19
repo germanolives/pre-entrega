@@ -3,7 +3,7 @@ import { formatSlug } from "../../utils/formatSlug";
 import { useProducts } from "../../context/ProductsContext";
 import { DashboardItemDetail } from "./DashboardItemDetail";
 import { useAlert } from "../../context/AlertContext";
-
+import { Helmet } from "react-helmet-async";
 
 export const DashboardItemContainer = ({ data }) => {
   const [dataForm, setDataForm] = useState({
@@ -134,11 +134,11 @@ export const DashboardItemContainer = ({ data }) => {
         const res = await updateProduct(finalProduct);
 
         if (res?.success) {
-          addAlert("PRODUCT_AND_IMAGE_UPDATED_SUCCESS")
+          addAlert("PRODUCT_AND_IMAGE_UPDATED_SUCCESS");
           setImageFile(null); // Limpiamos el binario para futuros envíos
         }
       } else {
-        addAlert("ERROR_FILE_UPLOAD_IMGBB")
+        addAlert("ERROR_FILE_UPLOAD_IMGBB");
         throw new Error("La API de ImgBB rechazó la subida del archivo.");
       }
     } catch (error) {
@@ -148,16 +148,26 @@ export const DashboardItemContainer = ({ data }) => {
   };
 
   return (
-    <DashboardItemDetail
-      dataForm={dataForm}
-      handleSubmit={handleSubmit}
-      handleChange={handleChange}
-      handleRatingChange={handleRatingChange}
-      handlePriceChange={handlePriceChange}
-      handleStockChange={handleStockChange}
-      handleOfferToggle={handleOfferToggle}
-      handleImageChange={handleImageChange}
-      imagePreview={imagePreview}
-    />
+    <>
+      <Helmet>
+        <title>Manage Inventory | Dashboard | Tienda S.A.U.</title>
+        <meta
+          name="description"
+          content="Update product listings, edit prices, and manage stock levels for your electronics and clothing catalog."
+        />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+      <DashboardItemDetail
+        dataForm={dataForm}
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        handleRatingChange={handleRatingChange}
+        handlePriceChange={handlePriceChange}
+        handleStockChange={handleStockChange}
+        handleOfferToggle={handleOfferToggle}
+        handleImageChange={handleImageChange}
+        imagePreview={imagePreview}
+      />
+    </>
   );
 };
