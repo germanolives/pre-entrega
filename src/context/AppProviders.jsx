@@ -7,25 +7,28 @@ import { AuthProvider } from "./AuthContext";
 import { ModalProvider } from "./ModalContext";
 import { MenuProvider } from "./MenuContext";
 import { AlertProvider } from "./AlertContext";
+import { HelmetProvider } from "react-helmet-async";
 
 export const AppProviders = ({ children }) => {
   return (
-    <SourceProvider>
-      <AuthProvider>
-        <ProductsProvider>
-          <SearchProvider>
-            <CartProvider>
-              <FavoriteProvider>
-                <MenuProvider>
-                  <AlertProvider>
-                    <ModalProvider>{children}</ModalProvider>
-                  </AlertProvider>
-                </MenuProvider>
-              </FavoriteProvider>
-            </CartProvider>
-          </SearchProvider>
-        </ProductsProvider>
-      </AuthProvider>
-    </SourceProvider>
+    <HelmetProvider>
+      <SourceProvider>
+        <AuthProvider>
+          <ProductsProvider>
+            <SearchProvider>
+              <CartProvider>
+                <FavoriteProvider>
+                  <MenuProvider>
+                    <AlertProvider>
+                      <ModalProvider>{children}</ModalProvider>
+                    </AlertProvider>
+                  </MenuProvider>
+                </FavoriteProvider>
+              </CartProvider>
+            </SearchProvider>
+          </ProductsProvider>
+        </AuthProvider>
+      </SourceProvider>
+    </HelmetProvider>
   );
 };
