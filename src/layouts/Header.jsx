@@ -22,7 +22,7 @@ export const Header = ({
   return (
     <header className={`sticky top-0 left-0 mx-4 z-50 rounded-xl mb-4 ${isAdmin ? "bg-green-300"  : "bg-slate-300"}`}>
       <div className="flex justify-between items-center">
-        <Link to={`${isAdmin ? "/dashboard" : "/"}`} className="w-20 md:w-25 shrink-0">
+        <Link to={`${isDashboard ? "/dashboard" : "/"}`} className="w-20 md:w-25 shrink-0">
           <img
             className={"rounded-2xl border border-gray-400 p-1 w-20 md:w-25"}
             src={logo[1].image}
