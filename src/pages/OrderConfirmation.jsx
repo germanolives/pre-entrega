@@ -43,7 +43,7 @@ export const OrderConfirmation = () => {
   const date = new Date(order.date).toLocaleString();
 
   return (
-    <div className="p-8 max-w-2xl mx-auto border rounded-2xl border-gray-300">
+    <div className="p-8 max-w-2xl mx-auto border rounded-2xl border-gray-300 bg-blue-50">
       <Helmet>
         <title>Order Confirmation | Tienda S.A.U.</title>
         <meta
