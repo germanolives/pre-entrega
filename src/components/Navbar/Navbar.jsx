@@ -49,8 +49,8 @@ export const Navbar = () => {
   }
 
   const currentUser = user ? user.uid : null;
-  const displayUser = user?.email
-    ? user.email.split("@")[0].toUpperCase()
+  const displayUser = user?.firstName
+    ? user.firstName.toUpperCase()
     : "GUEST";
   const displayUserEmail = user?.email ? user.email : "";
   const typeUser = user && user.rol;
@@ -169,7 +169,7 @@ export const Navbar = () => {
           <li className="flex items-center w-20">
             <div className="flex items-center relative group">
               <div
-                className={`grow text-center overflow-hidden ${isAdmin ? "text-blue-600" : "text-gray-600"}`}
+                className={`grow text-center overflow-hidden ${isAdmin ? "text-orange-600" : "text-blue-600"}`}
               >
                 {displayUser}
               </div>

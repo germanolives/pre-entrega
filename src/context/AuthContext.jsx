@@ -23,12 +23,18 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   // Funciones de Auth
-  const signup = async (email, password) => {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  const signup = async (firstName, surname, email, password) => {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
     const newAuthUser = userCredential.user;
     const userDocRef = doc(db, "users", newAuthUser.uid);
 
     await setDoc(userDocRef, {
+      firstName: firstName.trim(), // 🌟 Usamos las variables locales que vinieron del form
+      surname: surname.trim(),
       email: newAuthUser.email,
       rol: "user",
       createdAt: new Date().toISOString(),
@@ -82,9 +88,5 @@ export const AuthProvider = ({ children }) => {
     logout,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

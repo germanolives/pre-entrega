@@ -6,9 +6,11 @@ import { validateLocalEmail } from "../utils/validateLocalEmail";
 import { Helmet } from "react-helmet-async";
 
 export const Register = () => {
+  const [firstName, setFirstName] = useState("");
+  const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
-  const [passwordOne, setPasswordOne] = useState(""); // 🌟 Estado para la primera clave
-  const [passwordTwo, setPasswordTwo] = useState(""); // 🌟 Estado para la repetición
+  const [passwordOne, setPasswordOne] = useState("");
+  const [passwordTwo, setPasswordTwo] = useState("");
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showLoginRedirect, setShowLoginRedirect] = useState(false);
@@ -42,7 +44,7 @@ export const Register = () => {
 
     try {
       // 🚀 Ahora sí, enviamos 'passwordOne' que está validada y limpia
-      await signup(email.trim(), passwordOne);
+      await signup(firstName.trim(), surname.trim(), email.trim(), passwordOne);
       navigate("/");
     } catch (err) {
       console.error("Error capturado en el registro:", err.code, err.message);
@@ -79,6 +81,30 @@ export const Register = () => {
         </h2>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+          <div className="flex flex-col gap-1">
+            <label className="text-gray-500 text-xxs font-mono uppercase">
+              First name
+            </label>
+            <input
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+              className="border border-gray-400 p-2 rounded-sm text-xs focus:outline-cyan-600 bg-gray-50"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label className="text-gray-500 text-xxs font-mono uppercase">
+              Surname
+            </label>
+            <input
+              type="text"
+              value={surname}
+              onChange={(e) => setSurname(e.target.value)}
+              required
+              className="border border-gray-400 p-2 rounded-sm text-xs focus:outline-cyan-600 bg-gray-50"
+            />
+          </div>
           <div className="flex flex-col gap-1">
             <label className="text-gray-500 text-xxs font-mono uppercase">
               Email

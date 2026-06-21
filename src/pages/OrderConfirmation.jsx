@@ -4,14 +4,11 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { Helmet } from "react-helmet-async";
 
-
 export const OrderConfirmation = () => {
   const { state } = useLocation();
   const { orderId } = useParams();
   const [order, setOrder] = useState(state?.order || null);
   const [loading, setLoading] = useState(!state?.order);
-
-  const date = new Date(order.date).toLocaleString();
 
   useEffect(() => {
     if (order) return;
@@ -43,6 +40,8 @@ export const OrderConfirmation = () => {
       </p>
     );
 
+  const date = new Date(order.date).toLocaleString();
+
   return (
     <div className="p-8 max-w-2xl mx-auto border rounded-2xl border-gray-300">
       <Helmet>
@@ -53,16 +52,24 @@ export const OrderConfirmation = () => {
         />
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
-      <h1 className="text-3xl font-bold mb-4">Thank you for your order.!</h1>
+      <h1 className="text-3xl font-bold mb-4">Thank you for your order!</h1>
       <p className="text-gray-600">
         Buyer:{" "}
         <span className="font-mono bg-gray-100 px-2 rounded">
-          {order.buyer}
+          {order.buyerFirstName} {order.buyerSurname}
+        </span>
+      </p>
+      <p className="text-gray-600">
+        Email:{" "}
+        <span className="font-mono bg-gray-100 px-2 rounded">
+          {order.buyerEmail}
         </span>
       </p>
       <p className="text-gray-600">
         Order Nº:{" "}
-        <span className="font-mono bg-gray-100 px-2 rounded">{order.id}</span>
+        <span className="font-mono bg-gray-100 px-2 rounded">
+          {orderId || order.id}
+        </span>
       </p>
       <p className="text-gray-600">
         Date: <span className="font-mono bg-gray-100 px-2 rounded">{date}</span>

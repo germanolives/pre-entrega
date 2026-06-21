@@ -27,7 +27,9 @@ export const ConfirmPurchase = ({ checkOutOn, isProcessing }) => {
         const purchaseOrder = {
           id: idGenerator(),
           date: Date.now(),
-          buyer: user.email,
+          buyerFirstName: user.firstName,
+          buyerSurname: user.surname,
+          buyerEmail: user.email,
           products: cart,
           total: getCartTotal(),
           buyerUid: user.uid,
