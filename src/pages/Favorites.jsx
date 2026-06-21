@@ -5,6 +5,7 @@ import { useProducts } from "../context/ProductsContext";
 import { EmptyFavorites } from "../components/Favorites/EmptyFavorites";
 import { RenderContent } from "../components/common/RenderContent";
 import { Helmet } from "react-helmet-async";
+import { Pagination } from "../components/common/Pagination";
 
 export const Favorites = () => {
   const { favorite, checkFavorite } = useFavorite();
@@ -18,7 +19,8 @@ export const Favorites = () => {
 
   return (
     <section
-      className={`mx-4 border-2 border-gray-300 rounded-xl p-4 grid grid-cols-1 gap-4 md:${favorite.length > 0 ? "grid-cols-4" : "flex"}`}
+      // className={`mx-4 border-2 border-gray-300 rounded-xl p-4 grid grid-cols-1 gap-4 md:${favorite.length > 0 ? "grid-cols-4" : "flex"}`}
+      className={`mx-4 border-2 border-gray-300 rounded-xl p-4 md:${favorite.length <= 0 && "flex"}`}
     >
       <Helmet>
         <title>My Favorites | Tienda S.A.U.</title>
@@ -30,7 +32,13 @@ export const Favorites = () => {
       </Helmet>
       <RenderContent data={data} loading={loading} error={error}>
         {favorite.length > 0 ? (
-          <FavoritesList data={favorite} />
+          <Pagination searchedProds={favorite} itemsPerPage={4}>
+            {(paginatedProds) => (
+              <div className="grid grid--cols-1 gap-4 md:grid-cols-4">
+                <FavoritesList data={paginatedProds} />
+              </div>
+            )}
+          </Pagination>
         ) : (
           <EmptyFavorites />
         )}

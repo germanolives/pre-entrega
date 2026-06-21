@@ -1,5 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { Button } from "./Button";
+import { useEffect } from "react";
 
 export const Pagination = ({ searchedProds, itemsPerPage = 3, children }) => {
   // 🌟 1. Control de Query Parameters (?page=1)
@@ -22,6 +23,12 @@ export const Pagination = ({ searchedProds, itemsPerPage = 3, children }) => {
       setSearchParams({ page: newPage });
     }
   };
+
+useEffect(()=>{
+  if (paginatedProds.length === 0 && currentPage > 1){
+    setSearchParams( {page: (currentPage-1)})
+  }
+}, [paginatedProds.length, currentPage, setSearchParams]);
 
   return (
     <>
