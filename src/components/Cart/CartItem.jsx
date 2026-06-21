@@ -7,7 +7,7 @@ import { TrashIcon } from "../Icons/index";
 
 export const CartItem = ({ item }) => {
   const {
-    addToCart,
+    updateCartQuantity,
     clearCart,
     getCartQuantity,
     getCartTotal,
@@ -79,7 +79,7 @@ export const CartItem = ({ item }) => {
                   variant="ghost"
                   className="text-xs rounded-xl min-w-4 transition-all"
                   disabled={currentQuantity <= 1}
-                  onClick={() => addToCart(item, -1)}
+                  onClick={() => updateCartQuantity(item, item.quantity - 1)}
                 >
                   ➖
                 </Button>
@@ -97,7 +97,7 @@ export const CartItem = ({ item }) => {
                   variant="ghost"
                   className="text-xs rounded-xl min-w-4 transition-all"
                   disabled={availableStock <= 0}
-                  onClick={() => addToCart(item, 1)}
+                  onClick={() => updateCartQuantity(item, item.quantity + 1)}
                 >
                   ➕
                 </Button>

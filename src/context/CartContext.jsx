@@ -17,12 +17,14 @@ export const CartProvider = ({ children }) => {
   const userCart = `cart.${currentUser}`;
   const [cart, setCart] = useState([]);
 
+  // 🌟 1. Corregido: Bloqueamos la lectura si Firebase aún no resolvió el usuario
   useEffect(() => {
+    if (!currentUser) return;
+
     const localData = localStorage.getItem(userCart);
     if (localData) {
       try {
         const parsed = JSON.parse(localData);
-        // Sanitizamos al cargar para asegurar que todo sea numérico
         const sanitized = parsed.map((item) => ({
           ...item,
           quantity: Number(item.quantity),
@@ -32,35 +34,65 @@ export const CartProvider = ({ children }) => {
       } catch (e) {
         setCart([]);
       }
+    } else {
+      setCart([]); // Si el usuario no tiene carrito previo, lo limpiamos del estado del usuario anterior
     }
-  }, [userCart]);
+  }, [userCart, currentUser]);
 
+  // 🌟 1. Corregido: Bloqueamos la escritura si no hay un usuario real logueado
   useEffect(() => {
-    if (currentUser) {
-      localStorage.setItem(userCart, JSON.stringify(cart));
-    }
-  }, [userCart, cart]);
+    if (!currentUser) return;
+    localStorage.setItem(userCart, JSON.stringify(cart));
+  }, [userCart, cart, currentUser]);
 
   const addToCart = (product, quantity) => {
     if (!product || !product.id || !quantity || quantity <= 0 || !currentUser)
       return;
-    const itemInCart = cart.find(
-      (item) => String(item.id) === String(product.id),
-    );
-    if (itemInCart) {
-      const updatedCart = cart.map((item) =>
+
+    setCart((prevCart) => {
+      const itemInCart = prevCart.find(
+        (item) => String(item.id) === String(product.id),
+      );
+      const maxStock = product.stock !== undefined ? product.stock : 999; // Fallback por seguridad
+
+      if (itemInCart) {
+        const potentialQuantity = itemInCart.quantity + quantity;
+        const finalQuantity =
+          potentialQuantity > maxStock ? maxStock : potentialQuantity;
+
+        return prevCart.map((item) =>
+          String(item.id) === String(product.id)
+            ? { ...item, quantity: finalQuantity }
+            : item,
+        );
+      }
+
+      const initialQuantity = quantity > maxStock ? maxStock : quantity;
+      return [...prevCart, { ...product, quantity: initialQuantity }];
+    });
+  };
+
+  const updateCartQuantity = (product, newQuantity) => {
+    if (!product || !product.id || !currentUser) return;
+
+    setCart((prevCart) => {
+      // Si la cantidad es 0 o menos, removemos el ítem por completo
+      if (newQuantity <= 0) {
+        return prevCart.filter(
+          (item) => String(item.id) !== String(product.id),
+        );
+      }
+
+      // Controlamos que no supere el stock
+      const finalQuantity =
+        newQuantity > product.stock ? product.stock : newQuantity;
+
+      return prevCart.map((item) =>
         String(item.id) === String(product.id)
-          ? {
-              ...item,
-              quantity:
-                item.quantity + quantity > 0 ? item.quantity + quantity : 1,
-            }
+          ? { ...item, quantity: finalQuantity }
           : item,
       );
-      setCart(updatedCart);
-    } else {
-      setCart((prevCart) => [...prevCart, { ...product, quantity }]);
-    }
+    });
   };
 
   const clearCart = (product = null) => {
@@ -85,14 +117,13 @@ export const CartProvider = ({ children }) => {
       const searchProd = cart.find(
         (item) => String(item.id) === String(product.id),
       );
-      // Forzamos Number aquí
       return searchProd ? Number(searchProd.quantity) : 0;
     } else {
-      // Forzamos Number en el reduce
       return cart.reduce((acc, item) => acc + Number(item.quantity), 0);
     }
   };
 
+  // 🌟 3. Optimizado: Agregado Optional Chaining (?.) para evitar que explote si un producto no tiene ofertas cargadas
   const getCartTotal = (product = null) => {
     if (!currentUser) return 0;
     if (product) {
@@ -100,9 +131,10 @@ export const CartProvider = ({ children }) => {
         (item) => String(item.id) === String(product.id),
       );
       if (searchProd) {
-        const appliedOffers = searchProd.offers.find(
-          (o) => Number(searchProd.quantity) >= Number(o.qty),
-        );
+        const appliedOffers =
+          searchProd.offers?.find(
+            (o) => Number(searchProd.quantity) >= Number(o.qty),
+          ) || null;
         const discount = appliedOffers ? Number(appliedOffers.discount) : 0;
         const finalPrice =
           Number(searchProd.price) -
@@ -113,9 +145,9 @@ export const CartProvider = ({ children }) => {
       }
     } else {
       return cart.reduce((acc, item) => {
-        const appliedOffers = item.offers.find(
-          (o) => Number(item.quantity) >= Number(o.qty),
-        );
+        const appliedOffers =
+          item.offers?.find((o) => Number(item.quantity) >= Number(o.qty)) ||
+          null;
         const discount = appliedOffers ? Number(appliedOffers.discount) : 0;
         const finalPrice =
           Number(item.price) - (discount / 100) * Number(item.price);
@@ -144,7 +176,7 @@ export const CartProvider = ({ children }) => {
           price: findedItem.price,
           quantity:
             item.quantity > findedItem.stock ? findedItem.stock : item.quantity,
-          offers: findedItem.offers,
+          offers: findedItem.offers || [],
           stock: findedItem.stock,
         };
       }
@@ -154,7 +186,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const isItemInCart = (product) => {
-    if (!currentUser) return;
+    if (!currentUser) return false;
     if (!product) return false;
     const searchProduct = cart.find(
       (item) => String(item.id) === String(product.id),
@@ -167,6 +199,7 @@ export const CartProvider = ({ children }) => {
       value={{
         cart,
         addToCart,
+        updateCartQuantity,
         clearCart,
         getCartQuantity,
         getCartTotal,
