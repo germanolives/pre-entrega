@@ -19,7 +19,7 @@ export const Favorites = () => {
 
   return (
     <section
-      className={`mx-4 border-2 border-gray-300 rounded-xl p-4 ${favorite.length <= 0 ? "md:flex justify-center items-center" : ""}`}
+      className={`mx-4 border-2 border-gray-300 rounded-xl p-4 ${favorite.length <= 0 ? "md:flex" : ""}`}
     >
       <Helmet>
         <title>My Favorites | Tienda S.A.U.</title>
