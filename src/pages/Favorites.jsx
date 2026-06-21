@@ -19,8 +19,7 @@ export const Favorites = () => {
 
   return (
     <section
-      // className={`mx-4 border-2 border-gray-300 rounded-xl p-4 grid grid-cols-1 gap-4 md:${favorite.length > 0 ? "grid-cols-4" : "flex"}`}
-      className={`mx-4 border-2 border-gray-300 rounded-xl p-4 md:${favorite.length <= 0 && "flex"}`}
+      className={`mx-4 border-2 border-gray-300 rounded-xl p-4 ${favorite.length <= 0 ? "md:flex justify-center items-center" : ""}`}
     >
       <Helmet>
         <title>My Favorites | Tienda S.A.U.</title>
@@ -34,7 +33,7 @@ export const Favorites = () => {
         {favorite.length > 0 ? (
           <Pagination searchedProds={favorite} itemsPerPage={4}>
             {(paginatedProds) => (
-              <div className="grid grid--cols-1 gap-4 md:grid-cols-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
                 <FavoritesList data={paginatedProds} />
               </div>
             )}
