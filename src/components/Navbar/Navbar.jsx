@@ -169,7 +169,7 @@ export const Navbar = () => {
           <li className="flex items-center w-20">
             <div className="flex items-center relative group">
               <div
-                className={`grow text-center overflow-hidden ${isAdmin ? "text-orange-600" : "text-blue-600"}`}
+                className={`grow text-center overflow-hidden text-blue-600`}
               >
                 {displayUser}
               </div>

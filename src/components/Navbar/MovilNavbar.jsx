@@ -6,6 +6,7 @@ import { CartIcon, FavoriteIcon } from "../Icons/index";
 import { useAuth } from "../../context/AuthContext";
 import { ModalBox } from "../common/ModalBox";
 import { useMenu } from "../../context/MenuContext";
+import { NavbarProdCategContent } from "./NavbarProdCategContent";
 
 export const MovilNavbar = () => {
   const location = useLocation();
@@ -16,6 +17,7 @@ export const MovilNavbar = () => {
   const currentUser = user ? user.uid : null;
   const displayUserEmail = user?.email ? user.email : "";
   const typeUser = user && user.rol;
+  const isAdmin = user?.rol === "admin";
   const { menuChange } = useMenu();
 
   const resetMenuView = () => {
@@ -58,6 +60,12 @@ export const MovilNavbar = () => {
           >
             PRODUCTS
           </Link>
+        </li>
+        <li className="px-1.5">
+          <NavbarProdCategContent
+            listMenuView={true}
+            resetMenuView={resetMenuView}
+          />
         </li>
 
         {/* MENU SERVICES */}
@@ -121,7 +129,8 @@ export const MovilNavbar = () => {
 
         {/* MENU USER (LOGUEADO) */}
         {currentUser && (
-          <li className="w-full bg-slate-100 border-l-4 border-blue-500 rounded-r-lg p-3">
+          // <li className="w-full bg-slate-100 border-l-4 border-blue-500 rounded-xl p-3">
+          <li className={`w-full border-l-4 border-blue-500 rounded-xl p-3 ${isAdmin ? "bg-green-200" : "bg-slate-200"}`}>
             <div className={`font-bold italic text-blue-600 mb-2 pl-2`}>
               {displayUserEmail}
             </div>
@@ -152,7 +161,7 @@ export const MovilNavbar = () => {
                   variantButton="primary"
                   classNameButton="w-full py-1 text-xs"
                   operationType="Logout"
-                  prevActionButton={menuChange}
+                  // prevActionButton={menuChange}
                 >
                   Logout
                 </ModalBox>
