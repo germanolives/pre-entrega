@@ -71,7 +71,7 @@ export const Login = () => {
         />
       </Helmet>
       <div className="w-full max-w-sm p-6 bg-blue-100 border border-gray-300 rounded-sm shadow-sm">
-        <h2 className="text-sm font-bold text-gray-900 uppercase font-mono mb-4 text-center">
+        <h2 className="text-sm font-bold text-gray-900 uppercase mb-4 text-center">
           My Account
         </h2>
 
@@ -95,7 +95,7 @@ export const Login = () => {
           />
 
           {errorMsg && (
-            <p className="text-red-600 text-xxs font-mono bg-red-50 p-2 border border-red-200 rounded-sm">
+            <p className="text-red-600 text-xxs bg-red-50 p-2 border border-red-200 rounded-sm">
               {errorMsg.toUpperCase()}
             </p>
           )}

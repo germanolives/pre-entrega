@@ -76,13 +76,13 @@ export const Register = () => {
         />
       </Helmet>
       <div className="w-full max-w-sm p-6 bg-green-200 border border-gray-300 rounded-sm shadow-md">
-        <h2 className="text-sm font-bold text-gray-900 uppercase font-mono mb-4 text-center">
+        <h2 className="text-sm font-bold text-gray-900 uppercase  mb-4 text-center">
           Create a new account
         </h2>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <div className="flex flex-col gap-1">
-            <label className="text-gray-500 text-xxs font-mono uppercase">
+            <label className="text-gray-500 text-xxs uppercase">
               First name
             </label>
             <input
@@ -94,7 +94,7 @@ export const Register = () => {
             />
           </div>
           <div className="flex flex-col gap-1">
-            <label className="text-gray-500 text-xxs font-mono uppercase">
+            <label className="text-gray-500 text-xxs uppercase">
               Surname
             </label>
             <input
@@ -106,7 +106,7 @@ export const Register = () => {
             />
           </div>
           <div className="flex flex-col gap-1">
-            <label className="text-gray-500 text-xxs font-mono uppercase">
+            <label className="text-gray-500 text-xxs uppercase">
               Email
             </label>
             <input
@@ -119,7 +119,7 @@ export const Register = () => {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-gray-500 text-xxs font-mono uppercase">
+            <label className="text-gray-500 text-xxs uppercase">
               Password
             </label>
             <input
@@ -133,7 +133,7 @@ export const Register = () => {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-gray-500 text-xxs font-mono uppercase">
+            <label className="text-gray-500 text-xxs uppercase">
               Repeat Password
             </label>
             <input
@@ -147,7 +147,7 @@ export const Register = () => {
           </div>
 
           {error && (
-            <div className="text-red-600 text-xxs font-mono bg-red-50 p-2 border border-red-200 rounded-sm flex flex-col gap-2">
+            <div className="text-red-600 text-xxs bg-red-50 p-2 border border-red-200 rounded-sm flex flex-col gap-2">
               <p>{error}</p>
 
               {showLoginRedirect && (
