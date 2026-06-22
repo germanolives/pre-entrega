@@ -2,13 +2,20 @@ import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { db } from "../config/firebase";
 import { collection, addDoc } from "firebase/firestore";
-// 🌟 IMPORTANTE: Importamos el SDK de EmailJS
 import emailjs from "@emailjs/browser";
+import { useAuth } from "../context/AuthContext";
+import { capitalize } from "../utils/capitalize";
 
 export const Contact = () => {
+  const { user } = useAuth();
+
+  // 🌟 Inicializamos el formulario. Si hay un usuario logueado, pre-cargamos sus datos de forma nativa
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
+    name:
+      user?.firstName && user?.surname
+        ? capitalize(`${user.firstName} ${user.surname}`)
+        : "",
+    email: user?.email ? user.email : "",
     subject: "",
     message: "",
   });
@@ -18,9 +25,29 @@ export const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
+  // Sincronizamos el formulario si el usuario se loguea o cambia el estado asincrónicamente
   useEffect(() => {
     setLoadTime(Date.now());
-  }, []);
+
+    if (user) {
+      // 🔐 Si el usuario inicia sesión, precargamos sus datos
+      setFormData((prev) => ({
+        ...prev,
+        name:
+          user.firstName && user.surname
+            ? capitalize(`${user.firstName} ${user.surname}`)
+            : prev.name,
+        email: user.email ? user.email : prev.email,
+      }));
+    } else {
+      // 🔓 Si el usuario se desloguea (user es null), limpiamos los campos Name y Email
+      setFormData((prev) => ({
+        ...prev,
+        name: "",
+        email: "",
+      }));
+    }
+  }, [user]); // 🌟 Al tener [user] en las dependencias, esto se ejecuta CADA vez que el estado de autenticación cambia
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,14 +58,12 @@ export const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // 1. 🍯 CONTROL HONEYPOT (Frenada silenciosa de bots)
     if (honeypot.length > 0) {
       setSubmitted(true);
       setIsSubmitting(false);
       return;
     }
 
-    // 2. ⏱️ CONTROL DE TIEMPO (Mínimo 4 segundos para humanos)
     const timeDifference = (Date.now() - loadTime) / 1000;
     if (timeDifference < 4) {
       setIsSubmitting(false);
@@ -46,15 +71,14 @@ export const Contact = () => {
     }
 
     try {
-      // --- OPERACIÓN A: Guardar en tu Firestore ---
       const messageData = {
         ...formData,
         createdAt: new Date().toISOString(),
+        userId: user?.uid || "GUEST", // 🚀 Súper útil: Guardamos también el UID en la BD para relacionarlo en tu Dashboard
       };
+
       await addDoc(collection(db, "messages"), messageData);
 
-      // --- OPERACIÓN B: Disparar la alerta a tu mail con EmailJS ---
-      // Reemplazá estos tres strings con tus credenciales reales de la consola de EmailJS:
       const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
       const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
       const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
@@ -71,9 +95,17 @@ export const Contact = () => {
         PUBLIC_KEY,
       );
 
-      // Si ambas cosas salieron bien, damos el éxito y limpiamos el formulario
       setSubmitted(true);
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      // Al limpiar, mantenemos los datos del usuario logueado para que no se le vacíe su nombre/mail si quiere mandar otro
+      setFormData({
+        name:
+          user?.firstName && user?.surname
+            ? capitalize(`${user.firstName} ${user.surname}`)
+            : "",
+        email: user?.email ? user.email : "",
+        subject: "",
+        message: "",
+      });
     } catch (err) {
       console.error("Error processing form transaction:", err);
     } finally {
@@ -93,7 +125,7 @@ export const Contact = () => {
 
       <section className="mx-4 border-2 border-gray-300 rounded-xl p-8 bg-white flex flex-col gap-10 text-gray-700">
         <div className="text-center max-w-xl mx-auto flex flex-col gap-2">
-          <span className="text-blue-700 text-xxs font-medium uppercase tracking-widest">
+          <span className="text-blue-700 text-xxs font-medium uppercase tracking-widest font-sans">
             Get In Touch
           </span>
           <h2 className="text-3xl font-bold text-gray-900 uppercase tracking-tight">
@@ -126,7 +158,7 @@ export const Contact = () => {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-                {/* 🍯 Campo Trampa Invisible */}
+                {/* 🍯 Honeypot */}
                 <div
                   className="absolute opacity-0 pointer-events-none -z-10"
                   aria-hidden="true"
@@ -152,7 +184,9 @@ export const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="border border-gray-400 p-2 rounded-sm text-xs focus:outline-blue-800 bg-white"
+                      readOnly={!!user}
+                      // 🎨 Mismo truco visual de Tailwind
+                      className={`border border-gray-400 p-2 rounded-sm text-xs focus:outline-blue-800 ${user ? "bg-gray-100 cursor-not-allowed" : "bg-white"}`}
                     />
                   </div>
                   <div className="flex flex-col gap-1">
@@ -165,7 +199,8 @@ export const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="border border-gray-400 p-2 rounded-sm text-xs focus:outline-blue-800 bg-white"
+                      readOnly={!!user}
+                      className={`border border-gray-400 p-2 rounded-sm text-xs focus:outline-blue-800 ${user ? "bg-gray-100 cursor-not-allowed" : "bg-white"}`}
                     />
                   </div>
                 </div>
@@ -209,6 +244,7 @@ export const Contact = () => {
             )}
           </div>
 
+          {/* Información lateral de contacto */}
           <div className="flex flex-col gap-4">
             <div className="border border-gray-300 rounded-xl p-6 bg-gray-50 shadow-sm flex flex-col gap-4">
               <h3 className="text-base font-bold text-blue-800 uppercase">
