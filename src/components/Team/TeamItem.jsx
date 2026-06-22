@@ -6,7 +6,7 @@ export const TeamItem = ({ image, name, lastname, role }) => {
         alt={`${name} ${lastname}`}
         className={"rounded-2xl border-2 w-15 h-auto"}
       />
-      <p className="text-xxs italic text-center">{`${name} ${lastname}`}</p>
+      <p className="text-xxs text-center">{`${name} ${lastname}`}</p>
       <p className="text-xxs text-center">{role}</p>
     </div>
   );

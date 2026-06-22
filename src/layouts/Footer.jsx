@@ -8,7 +8,7 @@ export const Footer = () => {
       <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_2fr_2fr_2fr] mx-8 gap-8 ">
         <div>
           <h5 className="mb-2">TIENDA S.A.U.</h5>
-          <p className="text-xs italic mb-2">
+          <p className="text-xs mb-2">
             Tienda is an international company headquartered in the province of
             Córdoba.
           </p>
@@ -16,7 +16,7 @@ export const Footer = () => {
         </div>
         <div>
           <h5 className="mb-2">Menu</h5>
-          <ul className="flex flex-col gap-1 text-xs italic">
+          <ul className="flex flex-col gap-1 text-xs">
             <li>
               <Link className="hover:text-blue-600" to={"/"}>
                 Home
@@ -56,7 +56,7 @@ export const Footer = () => {
         </div>
         <div>
           <h5 className="mb-2">Contact</h5>
-          <ul className="flex flex-col gap-1 text-xs italic">
+          <ul className="flex flex-col gap-1 text-xs">
             <li>
               <a
                 href="tel:+543575654321"
@@ -109,7 +109,7 @@ export const Footer = () => {
         </div>
         <div>
           <h5 className="mb-2">Social networks</h5>
-          <ul className="flex flex-col gap-1 text-xs italic">
+          <ul className="flex flex-col gap-1 text-xs">
             <li>
               <a href="#" className="flex items-center gap-2 group">
                 <Icons.FacebookIcon className="w-4 h-4 text-blue-700" />
@@ -139,7 +139,7 @@ export const Footer = () => {
 
         <div>
           <h5 className="mb-2">Location</h5>
-          <ul className="text-xs italic">
+          <ul className="text-xs">
             <li className="mb-2">
               Address:{" "}
               <a

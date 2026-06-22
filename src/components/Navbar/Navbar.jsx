@@ -186,7 +186,7 @@ export const Navbar = () => {
                 <ul
                   className={`flex absolute flex-col gap-2 top-full left-0 shadow-md border border-gray-400 p-2 min-w-30 z-50 rounded-xl ${isAdmin ? "bg-green-200" : "bg-slate-200"}`}
                 >
-                  <li className="text-blue-600 italic p-0.5">
+                  <li className="text-blue-600 font-bold p-0.5">
                     {displayUserEmail}
                   </li>
                   <li className="flex items-center">

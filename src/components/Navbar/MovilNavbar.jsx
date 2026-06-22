@@ -131,7 +131,7 @@ export const MovilNavbar = () => {
         {currentUser && (
           // <li className="w-full bg-slate-100 border-l-4 border-blue-500 rounded-xl p-3">
           <li className={`w-full border-l-4 border-blue-500 rounded-xl p-3 ${isAdmin ? "bg-green-200" : "bg-slate-200"}`}>
-            <div className={`font-bold italic text-blue-600 mb-2 pl-2`}>
+            <div className={`font-bold text-blue-600 mb-2 pl-2`}>
               {displayUserEmail}
             </div>
             <ul className="flex flex-col gap-3">
