@@ -1,9 +1,6 @@
-import { useState } from "react";
 import { ImgWithSkeleton } from "../common/ImgWithSkeleton";
-import { Button } from "../common/Button";
 import TextareaAutosize from "react-textarea-autosize";
 import { formatSlug } from "../../utils/formatSlug";
-import { useModal } from "../../context/ModalContext";
 import { ModalBox } from "../common/ModalBox";
 import { offers as ALL_AVAILABLE_OFFERS } from "../../data/offers/offers";
 
