@@ -91,7 +91,7 @@ export const useQuery = (categorySlug = null, titleSlug = null, id = null) => {
       }
     };
     getData();
-  }, [categorySlug, titleSlug, id, reload]); // 🚀 Removido 'source' de las dependencias
+  }, [categorySlug, titleSlug, id, reload]);
 
   const refetch = () => {
     setReload((prev) => !prev);
