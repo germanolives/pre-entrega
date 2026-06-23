@@ -2,7 +2,6 @@ import { useState, useEffect, useContext, createContext, useMemo } from "react";
 import { useQuery } from "../hooks/useQuery";
 import { db } from "../config/firebase";
 import { doc, updateDoc, setDoc, deleteDoc } from "firebase/firestore";
-import { useSource } from "../context/SourceContext";
 
 export const ProductsContext = createContext();
 
@@ -18,25 +17,20 @@ export const useProducts = (
 
   const { data: allData, loading, error, ...actions } = context;
 
-  // 🌟 useMemo blinda las operaciones de filtrado evitando re-renders infinitos en la UI
   const filteredData = useMemo(() => {
     if (loading || error || !Array.isArray(allData)) return allData;
 
-    // Caso A: Búsqueda de un repuesto específico por ID (Detalle del producto)
     if (categorySlug && titleSlug && id) {
       return allData.find((item) => item.id === id) || null;
     }
 
-    // Caso B: Filtrado de catálogo por categoría (Filtros de navegación)
     if (categorySlug) {
       return allData.filter((item) => item.categorySlug === categorySlug);
     }
 
-    // Caso C: Retorna el catálogo completo
     return allData;
   }, [allData, loading, error, categorySlug, titleSlug, id]);
 
-  // Si está cargando o da error, retorna el estado base del contexto sin romper la app
   if (loading || error) return context;
 
   return {
@@ -50,7 +44,6 @@ export const useProducts = (
 export const ProductsProvider = ({ children }) => {
   const { data: products, loading, error, refetch } = useQuery();
   const [data, setData] = useState([]);
-  const { nameSource } = useSource();
 
   useEffect(() => {
     if (!loading && !error && Array.isArray(products)) {
@@ -58,18 +51,8 @@ export const ProductsProvider = ({ children }) => {
     }
   }, [products, loading, error]);
 
+  // 🚀 Métodos ABM lineales apuntando directo a Firestore sin condicionales de origen
   const updateProduct = async (item) => {
-    console.log("Origen actual en el ABM:", nameSource)
-    if (nameSource !== "DB") {
-      console.warn("Modo local: Modificando producto en memoria.");
-      setData((prevProducts) =>
-        prevProducts.map((prod) =>
-          prod.id === item.id ? { ...prod, ...item } : prod,
-        ),
-      );
-      return { success: true, local: true };
-    }
-
     try {
       const productRef = doc(db, "products", item.id);
       await updateDoc(productRef, item);
@@ -87,12 +70,6 @@ export const ProductsProvider = ({ children }) => {
   };
 
   const addProduct = async (item) => {
-    if (nameSource !== "DB") {
-      console.warn("Modo local: Insertando producto en memoria.");
-      setData((prevProducts) => [...prevProducts, item]);
-      return { success: true, local: true };
-    }
-
     try {
       const productRef = doc(db, "products", item.id);
       await setDoc(productRef, item);
@@ -106,15 +83,10 @@ export const ProductsProvider = ({ children }) => {
   };
 
   const deleteProduct = async (id) => {
-    if (nameSource !== "DB") {
-      console.warn("Modo local: Eliminando producto en memoria.");
-      setData((prevProducts) => prevProducts.filter((prod) => prod.id !== id));
-      return { success: true, local: true };
-    }
-
     try {
       const productRef = doc(db, "products", id);
       await deleteDoc(productRef);
+      
       setData((prevProducts) => prevProducts.filter((prod) => prod.id !== id));
       return { success: true };
     } catch (err) {
@@ -149,3 +121,4 @@ export const ProductsProvider = ({ children }) => {
     </ProductsContext.Provider>
   );
 };
+

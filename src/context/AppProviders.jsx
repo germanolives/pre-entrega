@@ -1,4 +1,3 @@
-import { SourceProvider } from "./SourceContext";
 import { CartProvider } from "./CartContext";
 import { FavoriteProvider } from "./FavoriteContext";
 import { SearchProvider } from "./SearchContext";
@@ -12,23 +11,21 @@ import { HelmetProvider } from "react-helmet-async";
 export const AppProviders = ({ children }) => {
   return (
     <HelmetProvider>
-      <SourceProvider>
-        <AuthProvider>
-          <ProductsProvider>
-            <SearchProvider>
-              <CartProvider>
-                <FavoriteProvider>
-                  <MenuProvider>
-                    <AlertProvider>
-                      <ModalProvider>{children}</ModalProvider>
-                    </AlertProvider>
-                  </MenuProvider>
-                </FavoriteProvider>
-              </CartProvider>
-            </SearchProvider>
-          </ProductsProvider>
-        </AuthProvider>
-      </SourceProvider>
+      <AuthProvider>
+        <ProductsProvider>
+          <SearchProvider>
+            <CartProvider>
+              <FavoriteProvider>
+                <MenuProvider>
+                  <AlertProvider>
+                    <ModalProvider>{children}</ModalProvider>
+                  </AlertProvider>
+                </MenuProvider>
+              </FavoriteProvider>
+            </CartProvider>
+          </SearchProvider>
+        </ProductsProvider>
+      </AuthProvider>
     </HelmetProvider>
   );
 };
