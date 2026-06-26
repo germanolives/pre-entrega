@@ -1,47 +1,59 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useCart } from "../context/CartContext";
-import { useProducts } from "../context/ProductsContext";
 import { RenderContent } from "../components/common/RenderContent";
 import { CartList } from "../components/Cart/CartList";
 import { EmptyCart } from "../components/Cart/EmptyCart";
+import { useQuery } from "../hooks/useQuery";
 import { ConfirmPurchase } from "../components/Cart/ConfirmPuchase";
 import { Helmet } from "react-helmet-async";
 
 export const Cart = () => {
-  const { cart, checkCart } = useCart();
-  const { data, loading, error, refetch } = useProducts();
+  const { cart, checkCart, idListCart } = useCart();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
-  useEffect(() => {
-    refetch();
-  }, []);
+  // 🚩 Bandera para que la sincronización del montaje ocurra una sola vez
+  const hasSyncedInitial = useRef(false);
 
+  const { data, loading, error, refetch } = useQuery(
+    null,
+    null,
+    null,
+    idListCart,
+  );
+
+  // 🔄 MOMENTO 1: Check automático al montar (apenas llega la data inicial de useQuery)
   useEffect(() => {
-    if (data && !loading && data.length > 0) {
+    if (data && !loading && data.length > 0 && !hasSyncedInitial.current) {
       checkCart(data);
+      hasSyncedInitial.current = true; // 🔒 Cerramos la compuerta para el resto de la sesión
     }
   }, [data, loading]);
 
+  // ⚡ MOMENTO 2: Check manual al presionar "Proceed to checkout" usando el nuevo refetch
   const checkOutOn = async () => {
+    if (idListCart.length === 0) return;
+
     setIsCheckingOut(true);
     try {
-      // Simulamos un poco de tiempo para que el usuario lea "Procesando..."
-      await Promise.all([
+      // 🚀 Al resolver la promesa, capturamos los productos actualizados directo de la red
+      const [freshProducts] = await Promise.all([
         refetch(),
-        new Promise((resolve) => setTimeout(resolve, 1500)),
+        new Promise((resolve) => setTimeout(resolve, 1500)), // Espera visual "Procesando..."
       ]);
+
+      // Sincronizamos el contexto inmediatamente con la data fresca, esquivando delays de estado
+      if (freshProducts && freshProducts.length > 0) {
+        checkCart(freshProducts);
+      }
     } catch (e) {
-      console.error(e);
+      console.error("Error en la validación del checkout:", e);
     } finally {
       setIsCheckingOut(false);
-      // El navigate se ejecutará desde el ConfirmPurchase después de esto
     }
   };
 
   return (
-    <section
-      className={`flex flex-col gap-4 md:grid grid-cols-2 mx-4 border-2 border-gray-300 rounded-xl p-4`}
-    >
+    <section className="flex flex-col gap-4 md:grid grid-cols-2 mx-4 border-2 border-gray-300 rounded-xl p-4">
       <Helmet>
         <title>Your Shopping Cart | Tienda S.A.U.</title>
         <meta
@@ -50,20 +62,18 @@ export const Cart = () => {
         />
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
-      <RenderContent
-        data={data}
-        loading={loading || isCheckingOut}
-        error={error}
-        time={isCheckingOut ? 1500 : 0} // Si está en checkout, esperamos 1.5s, si no, 0s
-      >
-        {Array.isArray(cart) && cart.length > 0 ? (
+
+      {Array.isArray(cart) && cart.length > 0 ? (
+        <>
+        <RenderContent
+          data={data}
+          loading={loading || isCheckingOut}
+          error={error}
+          time={isCheckingOut ? 1500 : 0}
+        >
           <CartList data={cart} />
-        ) : (
-          <EmptyCart />
-        )}
-      </RenderContent>
-      {Array.isArray(cart) && cart.length > 0 && (
-        <div className="flex justify-end">
+        </RenderContent>
+                <div className="flex justify-end">
           <aside className="w-full md:w-80 sticky top-30 right-8 self-start">
             <ConfirmPurchase
               checkOutOn={checkOutOn}
@@ -71,7 +81,11 @@ export const Cart = () => {
             />
           </aside>
         </div>
+        </>
+      ) : (
+        <EmptyCart />
       )}
+
     </section>
   );
 };

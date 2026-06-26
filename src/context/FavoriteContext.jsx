@@ -1,4 +1,4 @@
-import { useState, useContext, createContext, useEffect } from "react";
+import { useState, useContext, createContext, useEffect, useMemo } from "react";
 import { useAuth } from "./AuthContext";
 
 export const FavoriteContext = createContext();
@@ -47,6 +47,12 @@ export const FavoriteProvider = ({ children }) => {
     });
   };
 
+  const idListFavorites = useMemo(() => {
+    if (!favorite) return [];
+    return favorite.map((item) => String(item.id));
+  }, [favorite]); // Solo se recalcula si cambia el array de favoritos
+
+
   const isFavorite = (product) => {
     if (!product || !product.id) return false;
     return favorite.some(
@@ -88,6 +94,7 @@ export const FavoriteProvider = ({ children }) => {
       value={{
         favorite,
         toggleFavorite,
+        idListFavorites,
         isFavorite,
         getFavoriteQuantity,
         checkFavorite,

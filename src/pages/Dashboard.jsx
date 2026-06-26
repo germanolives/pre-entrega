@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { useProducts } from "../context/ProductsContext";
+import { useInventory } from "../context/InventoryContext";
 import { RenderContent } from "../components/common/RenderContent";
 import { ProductList } from "../components/Dashboard/ProductList";
 import { Button } from "../components/common/Button";
 import { Helmet } from "react-helmet-async";
 
 export const Dashboard = () => {
-  const { data, loading, error } = useProducts();
+  const { data, loading, error } = useInventory();
   const [fieldOrder, selectFieldOrder] = useState({
     name: "title",
     order: true,

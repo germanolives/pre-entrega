@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { formatSlug } from "../utils/formatSlug";
-import { useProducts } from "../context/ProductsContext";
+import { useInventory } from "../context/InventoryContext";
 import { DashboardItemDetail } from "../components/Dashboard/DashboardItemDetail";
 import { useAlert } from "../context/AlertContext";
 import { Helmet } from "react-helmet-async";
 
 export const DashboardNewItemContainer = () => {
-  const { addProduct } = useProducts();
+  const { addProduct } = useInventory();
   const [imageFile, setImageFile] = useState(null);
   const { addAlert } = useAlert();
   const [imagePreview, setImagePreview] = useState("");

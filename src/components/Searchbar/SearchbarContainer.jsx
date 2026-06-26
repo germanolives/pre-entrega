@@ -2,18 +2,20 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../common/Button";
 import { SearchbarList } from "./SearchbarList";
-import { useProducts } from "../../context/ProductsContext";
+import { useQueryFull } from "../../hooks/useQueryFull";
 import { SearchIcon } from "../Icons/index";
 import { useAuth } from "../../context/AuthContext";
+import { useSearchMatches } from "../../context/SearchMatchesContext";
 
 export const SearchbarContainer = () => {
   const [dataIn, setDataIn] = useState({
     name: "",
   });
-  const { data, loading, error } = useProducts();
+  const { data, loading, error } = useQueryFull();
   const navigate = useNavigate();
   const { user } = useAuth();
   const isAdmin = user ? user.rol === "admin" : false;
+  const { searchList, setSearchList } = useSearchMatches();
 
   const manageChange = (event) => {
     const { name, value } = event.target;
@@ -21,7 +23,9 @@ export const SearchbarContainer = () => {
   };
   const manageShipment = (event) => {
     event.preventDefault();
+
     if (matches.length > 0) {
+      setSearchList(matches);
       navigate(`/products/search/${dataIn.name.trim().toLowerCase()}`);
       setDataIn({ name: "" });
     }

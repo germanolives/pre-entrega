@@ -1,17 +1,16 @@
-import { useProducts } from "../../context/ProductsContext";
 import { NavProdCategList } from "./NavProdCategList";
+import { categories } from "../../data/config/categories";
 
 export const NavbarProdCategContent = ({ listMenuView, resetMenuView }) => {
-  const { data, loading, error } = useProducts();
-  const categories = data
-    ? [...new Set(data.map((item) => item.category))]
+  const showCategories = categories
+    ? [...new Set(categories.map((item) => item.category))]
     : [];
 
   return (
     <>
-      {!loading && !error && categories.length > 0 && (
+      {showCategories.length > 0 && (
         <NavProdCategList
-          data={categories}
+          data={showCategories}
           listMenuView={listMenuView}
           resetMenuView={resetMenuView}
         />

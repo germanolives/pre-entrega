@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { RenderContent } from "../components/common/RenderContent";
-import { useProducts } from "../context/ProductsContext";
+import { useInventory } from "../context/InventoryContext";
 import { useParams } from "react-router-dom";
 import { ProductList } from "../components/Dashboard/ProductList";
 import { Button } from "../components/common/Button";
@@ -9,7 +9,7 @@ import { capitalize } from "../utils/capitalize";
 
 export const FiltredDashboard = () => {
   const { fieldSlug, filterSlug } = useParams();
-  const { data, loading, error } = useProducts();
+  const { data, loading, error } = useInventory();
   const [fieldOrder, selectFieldOrder] = useState({
     name: "title",
     order: true,

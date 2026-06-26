@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext } from "react";
+import { useState, useEffect, createContext, useContext, useMemo } from "react";
 import { useAuth } from "./AuthContext";
 
 export const CartContext = createContext();
@@ -96,13 +96,14 @@ export const CartProvider = ({ children }) => {
   };
 
   const clearCart = (product = null) => {
-    if (!currentUser) return;
-    if (product) {
-      setCart(cart.filter((item) => String(item.id) !== String(product.id)));
-    } else {
-      setCart([]);
-    }
-  };
+  if (!currentUser) return;
+  
+  if (product) {
+    setCart((prevCart) => prevCart.filter((item) => String(item.id) !== String(product.id)));
+  } else {
+    setCart([]);
+  }
+};
 
   const resetProdQtyCart = (product) => {
     if (!product || !currentUser) return;
@@ -194,6 +195,12 @@ export const CartProvider = ({ children }) => {
     return searchProduct ? true : false;
   };
 
+  const idListCart = useMemo(() => {
+    if (!cart) return [];
+    return cart.map((item) => String(item.id));
+  }, [cart]); // Solo se recalcula si cambia el array de carrito
+
+
   return (
     <CartContext.Provider
       value={{
@@ -206,6 +213,7 @@ export const CartProvider = ({ children }) => {
         checkCart,
         resetProdQtyCart,
         isItemInCart,
+        idListCart,
       }}
     >
       {children}

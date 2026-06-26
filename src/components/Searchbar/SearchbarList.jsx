@@ -1,6 +1,8 @@
 import { LinkCustom } from "../common/LinkCustom";
 
 export const SearchbarList = ({ data, reset }) => {
+
+
   return (
     <ul className="max-h-27 overflow-scroll">
       {data.map((item) => (

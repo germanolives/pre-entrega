@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { formatSlug } from "../../utils/formatSlug";
-import { useProducts } from "../../context/ProductsContext";
+import { useInventory } from "../../context/InventoryContext";
 import { DashboardItemDetail } from "./DashboardItemDetail";
 import { useAlert } from "../../context/AlertContext";
 import { Helmet } from "react-helmet-async";
@@ -8,14 +8,26 @@ import { Helmet } from "react-helmet-async";
 export const DashboardItemContainer = ({ data }) => {
   const [dataForm, setDataForm] = useState({
     ...data,
-    titleSlug: data.titleSlug || formatSlug(data.title),
-    categorySlug: data.categorySlug || formatSlug(data.category),
-    offers: data.offers || [],
+    titleSlug: data?.titleSlug || formatSlug(data?.title || ""),
+    categorySlug: data?.categorySlug || formatSlug(data?.category || ""),
+    offers: data?.offers || [],
   });
+  
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
-  const { updateProduct } = useProducts();
+  const { updateProduct } = useInventory();
   const { addAlert } = useAlert();
+
+  // 🚀 Sincronización reactiva: si cambian las propiedades base, actualizamos el formulario
+  useEffect(() => {
+    if (data) {
+      setDataForm((prev) => ({
+        ...prev,
+        ...data,
+        offers: data.offers || prev.offers,
+      }));
+    }
+  }, [data]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

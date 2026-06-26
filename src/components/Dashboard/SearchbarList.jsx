@@ -1,8 +1,8 @@
 import { LinkCustom } from "../common/LinkCustom";
-import { useSearch } from "../../context/SearchContext";
+import { useSearchFields } from "../../context/SearchFieldsContext";
 
 export const SearchbarList = ({ data, reset }) => {
-  const { selectedField, unselectedFields } = useSearch();
+  const { selectedField, unselectedFields } = useSearchFields();
   return (
     <ul className="max-h-27 overflow-scroll">
       {data.map((item) => (

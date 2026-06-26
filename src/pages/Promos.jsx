@@ -1,27 +1,31 @@
 import { useParams } from "react-router-dom";
 import { PromoList } from "../components/Promos/PromoList";
 import { RenderContent } from "../components/common/RenderContent";
-import { useProducts } from "../context/ProductsContext";
 import { blackFridayPromos } from "../data/offers/blackFridayPromos";
 import { Helmet } from "react-helmet-async";
-import { Pagination } from "../components/common/Pagination";
+import { ClientPagination } from "../components/common/ClientPagination";
+import { useSearchParams } from "react-router-dom";
+import { useQuery } from "../hooks/useQuery";
 
 export const Promos = () => {
-  const { data, loading, error } = useProducts();
   const { id } = useParams();
-
+  const [searchParams] = useSearchParams();
+  const currentPage = parseInt(searchParams.get("page") || "1", 10);
   const promoProds = blackFridayPromos
     ? blackFridayPromos.find((item) => String(item.id) === id)
     : null;
-
-  const promoProdsWithStringId = promoProds?.appliesTo
+  const idList = promoProds?.appliesTo
     ? promoProds.appliesTo.map((item) => String(item))
     : [];
 
-  const promoData =
-    data && promoProdsWithStringId.length > 0
-      ? data.filter((item) => promoProdsWithStringId.includes(String(item.id)))
-      : [];
+  const { data, loading, error } = useQuery(
+    null,
+    null,
+    null,
+    idList,
+    currentPage,
+  );
+
 
   return (
     <section
@@ -34,17 +38,17 @@ export const Promos = () => {
           content="Don't miss our exclusive deals! Shop the latest discounts on clothing and electronics at Tienda S.A.U. Limited time offers available."
         />
       </Helmet>
-      <RenderContent loading={loading} error={error} data={promoData}>
-        <Pagination searchedProds={promoData} itemsPerPage={4}>
+      <RenderContent loading={loading} error={error} data={data}>
+        <ClientPagination searchedProds={data} itemsPerPage={4}>
           {(paginatedProds) => (
             <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
               <PromoList
                 data={paginatedProds}
-                promo={promoProds || { title: "Promoción" }}
+                promo={promoProds || { title: "Promo" }}
               />
             </div>
           )}
-        </Pagination>
+        </ClientPagination>
       </RenderContent>
     </section>
   );

@@ -2,17 +2,17 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/common/Button";
 import { SearchbarList } from "./SearchbarList";
-import { useProducts } from "../../context/ProductsContext";
+import { useInventory } from "../../context/InventoryContext";
 import { SearchIcon } from "../../components/Icons/index";
-import { useSearch } from "../../context/SearchContext";
+import { useSearchFields } from "../../context/SearchFieldsContext";
 
 export const SearchbarContainer = () => {
   const [dataIn, setDataIn] = useState({
     name: "",
   });
-  const { data, loading, error } = useProducts();
+  const { data, loading, error } = useInventory();
   const navigate = useNavigate();
-  const { selectedField } = useSearch();
+  const { selectedField } = useSearchFields();
 
   const manageChange = (event) => {
     const { name, value } = event.target;

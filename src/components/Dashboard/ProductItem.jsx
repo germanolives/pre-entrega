@@ -1,4 +1,4 @@
-import { useProducts } from "../../context/ProductsContext";
+import { useInventory } from "../../context/InventoryContext";
 import { useNavigate } from "react-router-dom";
 import { EditIcon, TrashIcon } from "../Icons/index";
 import { Button } from "../common/Button";
@@ -8,7 +8,7 @@ import { useAlert } from "../../context/AlertContext";
 
 export const ProductItem = ({ item }) => {
   const navigate = useNavigate();
-  const { deleteProduct } = useProducts();
+  const { deleteProduct } = useInventory();
   const countryPrice = new Intl.NumberFormat("en-GB", {
     style: "currency",
     currency: "EUR",

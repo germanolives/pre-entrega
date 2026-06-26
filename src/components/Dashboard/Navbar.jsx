@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { useProducts } from "../../context/ProductsContext";
+import { useInventory } from "../../context/InventoryContext";
 import { useAuth } from "../../context/AuthContext";
 import { ModalBox } from "../../components/common/ModalBox";
 
 export const Navbar = () => {
   const location = useLocation();
   const { logout } = useAuth();
-  const { getProductsQuantity, getTotalStock } = useProducts();
+  const { getProductsQuantity, getTotalStock } = useInventory();
 
   const handleLogout = async () => {
     try {

@@ -1,18 +1,18 @@
 import { useState, useContext, createContext, useEffect } from "react";
 
-export const SearchContext = createContext();
+export const SearchFieldsContext = createContext();
 
-export const useSearch = () => {
-  const context = useContext(SearchContext);
+export const useSearchFields = () => {
+  const context = useContext(SearchFieldsContext);
   if (!context) {
-    throw new Error("useSearch debe ser usado dentro de un SearchProvider");
+    throw new Error("useSearchFields debe ser usado dentro de un SearchFieldsProvider");
   }
   return context;
 };
 
-export const SearchProvider = ({ children }) => {
-  const [search, setSearch] = useState(() => {
-    const localData = localStorage.getItem("search");
+export const SearchFieldsProvider = ({ children }) => {
+  const [searchFields, setSearchFields] = useState(() => {
+    const localData = localStorage.getItem("searchFields");
 
     if (!localData) {
       return [
@@ -29,7 +29,7 @@ export const SearchProvider = ({ children }) => {
       console.warn(
         "Se detectó un almacenamiento de búsqueda corrupto. Limpiando...",
       );
-      localStorage.removeItem("search");
+      localStorage.removeItem("searchFields");
       return [
         { field: "code", active: true },
         { field: "title", active: false },
@@ -40,34 +40,34 @@ export const SearchProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    localStorage.setItem("search", JSON.stringify(search));
-  }, [search]);
+    localStorage.setItem("searchFields", JSON.stringify(searchFields));
+  }, [searchFields]);
 
-  const changeSearch = (option) => {
-    const newSearch = search.map((item) =>
+  const changeSearchField = (option) => {
+    const newSearchField = searchFields.map((item) =>
       item.field === String(option)
         ? { ...item, active: true }
         : { ...item, active: false },
     );
-    setSearch(newSearch);
+    setSearchFields(newSearchField);
   };
 
-  const selectedField = search.find((item) => item.active === true);
+  const selectedField = searchFields.find((item) => item.active === true);
   const excludedFields = ["description"];
-  const unselectedFields = search.filter(
+  const unselectedFields = searchFields.filter(
     (item) => item.active === false && !excludedFields.includes(item.field),
   );
 
   return (
-    <SearchContext.Provider
+    <SearchFieldsContext.Provider
       value={{
-        search,
+        searchFields,
         selectedField,
         unselectedFields,
-        changeSearch,
+        changeSearchField,
       }}
     >
       {children}
-    </SearchContext.Provider>
+    </SearchFieldsContext.Provider>
   );
 };

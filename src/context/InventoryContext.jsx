@@ -1,35 +1,24 @@
 import { useState, useEffect, useContext, createContext, useMemo } from "react";
-import { useQuery } from "../hooks/useQuery";
+import { useQueryFull } from "../hooks/useQueryFull";
 import { db } from "../config/firebase";
 import { doc, updateDoc, setDoc, deleteDoc } from "firebase/firestore";
 
-export const ProductsContext = createContext();
+export const InventoryContext = createContext();
 
-export const useProducts = (
-  categorySlug = null,
-  titleSlug = null,
-  id = null,
-) => {
-  const context = useContext(ProductsContext);
+export const useInventory = () => {
+  const context = useContext(InventoryContext);
   if (!context) {
-    throw new Error("useProducts debe ser usado dentro de un ProductsProvider");
+    throw new Error(
+      "useInventory debe ser usado dentro de un InventoryProvider",
+    );
   }
 
   const { data: allData, loading, error, ...actions } = context;
 
   const filteredData = useMemo(() => {
     if (loading || error || !Array.isArray(allData)) return allData;
-
-    if (categorySlug && titleSlug && id) {
-      return allData.find((item) => item.id === id) || null;
-    }
-
-    if (categorySlug) {
-      return allData.filter((item) => item.categorySlug === categorySlug);
-    }
-
     return allData;
-  }, [allData, loading, error, categorySlug, titleSlug, id]);
+  }, [allData, loading, error]);
 
   if (loading || error) return context;
 
@@ -41,8 +30,8 @@ export const useProducts = (
   };
 };
 
-export const ProductsProvider = ({ children }) => {
-  const { data: products, loading, error, refetch } = useQuery();
+export const InventoryProvider = ({ children }) => {
+  const { data: products, loading, error, refetch } = useQueryFull();
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -51,7 +40,6 @@ export const ProductsProvider = ({ children }) => {
     }
   }, [products, loading, error]);
 
-  // 🚀 Métodos ABM lineales apuntando directo a Firestore sin condicionales de origen
   const updateProduct = async (item) => {
     try {
       const productRef = doc(db, "products", item.id);
@@ -86,7 +74,7 @@ export const ProductsProvider = ({ children }) => {
     try {
       const productRef = doc(db, "products", id);
       await deleteDoc(productRef);
-      
+
       setData((prevProducts) => prevProducts.filter((prod) => prod.id !== id));
       return { success: true };
     } catch (err) {
@@ -104,7 +92,7 @@ export const ProductsProvider = ({ children }) => {
   };
 
   return (
-    <ProductsContext.Provider
+    <InventoryContext.Provider
       value={{
         data,
         loading,
@@ -118,7 +106,6 @@ export const ProductsProvider = ({ children }) => {
       }}
     >
       {children}
-    </ProductsContext.Provider>
+    </InventoryContext.Provider>
   );
 };
-

@@ -1,25 +1,27 @@
-import { useEffect } from "react";
 import { FavoritesList } from "../components/Favorites/FavoritesList";
 import { useFavorite } from "../context/FavoriteContext";
-import { useProducts } from "../context/ProductsContext";
+import { useQuery } from "../hooks/useQuery";
 import { EmptyFavorites } from "../components/Favorites/EmptyFavorites";
 import { RenderContent } from "../components/common/RenderContent";
 import { Helmet } from "react-helmet-async";
-import { Pagination } from "../components/common/Pagination";
+import { useSearchParams } from "react-router-dom";
+import { ClientPagination } from "../components/common/ClientPagination";
 
 export const Favorites = () => {
-  const { favorite, checkFavorite } = useFavorite();
-  const { data, loading, error } = useProducts();
-
-  useEffect(() => {
-    if (data && !loading && data.length > 0) {
-      checkFavorite(data);
-    }
-  }, [data, loading]);
+  const { idListFavorites } = useFavorite();
+  const [searchParams] = useSearchParams();
+  const currentPage = parseInt(searchParams.get("page") || "1", 10);
+  const { data, loading, error } = useQuery(
+    null,
+    null,
+    null,
+    idListFavorites,
+    currentPage,
+  );
 
   return (
     <section
-      className={`mx-4 border-2 border-gray-300 rounded-xl p-4 ${favorite.length <= 0 ? "md:flex" : ""}`}
+      className={`mx-4 border-2 border-gray-300 rounded-xl p-4 ${idListFavorites.length <= 0 ? "md:flex" : ""}`}
     >
       <Helmet>
         <title>My Favorites | Tienda S.A.U.</title>
@@ -29,19 +31,19 @@ export const Favorites = () => {
         />
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
-      <RenderContent data={data} loading={loading} error={error}>
-        {favorite.length > 0 ? (
-          <Pagination searchedProds={favorite} itemsPerPage={4}>
+      {idListFavorites.length > 0 ? (
+        <RenderContent data={data} loading={loading} error={error}>
+          <ClientPagination searchedProds={data} itemsPerPage={5}>
             {(paginatedProds) => (
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
                 <FavoritesList data={paginatedProds} />
               </div>
             )}
-          </Pagination>
-        ) : (
-          <EmptyFavorites />
-        )}
-      </RenderContent>
+          </ClientPagination>
+        </RenderContent>
+      ) : (
+        <EmptyFavorites />
+      )}
     </section>
   );
 };

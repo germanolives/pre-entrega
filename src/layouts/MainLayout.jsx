@@ -18,7 +18,6 @@ export const MainLayout = () => {
         searchbarContainer={<SearchbarContainer />}
         movilNavbar={<MovilNavbar />}
         isAdmin={isAdmin}
-        isDashboard={false}
       />
       <main className="grow">
         <Outlet />
