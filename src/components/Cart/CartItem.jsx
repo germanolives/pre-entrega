@@ -13,17 +13,27 @@ export const CartItem = ({ item }) => {
     getCartTotal,
     resetProdQtyCart,
   } = useCart();
+  
   const countryPrice = new Intl.NumberFormat("en-GB", {
     style: "currency",
     currency: "EUR",
   });
+
+  // 🔒 Centralización y sanitización de tipos numéricos (Firestore strings ➔ Numbers)
+  const numItemPrice = Number(item.price);
+  const numItemStock = Number(item.stock);
+  const numItemQuantity = Number(item.quantity); 
+
   const currentQuantity = getCartQuantity(item);
-  const availableStock = Math.max(0, item.stock - currentQuantity);
+  const availableStock = Math.max(0, numItemStock - currentQuantity);
   const formattedTotalPrice = countryPrice.format(getCartTotal(item));
-  const appliedOffers = item.offers?.find((o) => currentQuantity >= o.qty);
-  const discount = appliedOffers ? appliedOffers.discount : 0;
-  const unitPriceWithDiscount = item.price - (discount / 100) * item.price;
+  
+  // 🎯 Corrección: Aseguramos el casteo en el iterador de las ofertas por volumen
+  const appliedOffers = item.offers?.find((o) => currentQuantity >= Number(o.qty));
+  const discount = appliedOffers ? Number(appliedOffers.discount) : 0;
+  const unitPriceWithDiscount = numItemPrice - (discount / 100) * numItemPrice;
   const formattedUnitPrice = countryPrice.format(unitPriceWithDiscount);
+  
   const titleSlug = formatSlug(item.title);
   const categorySlug = formatSlug(item.category);
   const productPath = `/products/${categorySlug}/${titleSlug}/${item.id}`;
@@ -45,6 +55,7 @@ export const CartItem = ({ item }) => {
           <TrashIcon className="w-4 h-4 mb-3 text-gray-600 hover:text-blue-600" />
         </Button>
       </div>
+      
       <div className="flex flex-row justify-evenly mt-0">
         <div className="bg-cyan-50 flex flex-col border border-gray-300 rounded-sm rounded-t-none border-t-0">
           <Link to={categoryPath}>
@@ -62,28 +73,30 @@ export const CartItem = ({ item }) => {
             </span>
           </div>
           <div className="flex flex-col">
-            <p className="text-xxs text-gray-500 text-center">
-              Stock Available
-            </p>
+            <p className="text-xxs text-gray-500 text-center">Stock Available</p>
             <span className="flex px-2 border-t border-gray-300 text-xs justify-center items-center w-30 text-gray-500">
-              {availableStock}{" "}
+              {availableStock}
             </span>
           </div>
         </div>
+        
         <div className="flex flex-col-reverse justify-center gap-4 items-center">
           <div className="flex flex-col">
             <p className="text-xs text-gray-600 text-center mb-1">Quantity</p>
             <div className="flex border border-gray-300 rounded-sm text-base justify-between items-center w-40 bg-white">
+              
+              {/* ➖ Botón de Restar (Aritmética Segura) */}
               <div className="flex flex-col border-r border-gray-300 p-1">
                 <Button
                   variant="ghost"
                   className="text-xs rounded-xl min-w-4 transition-all"
                   disabled={currentQuantity <= 1}
-                  onClick={() => updateCartQuantity(item, item.quantity - 1)}
+                  onClick={() => updateCartQuantity(item, numItemQuantity - 1)}
                 >
                   ➖
                 </Button>
               </div>
+              
               <Button
                 className="text-xl px-2 font-bold text-blue-900 hover:text-blue-500"
                 variant="cristal"
@@ -92,18 +105,21 @@ export const CartItem = ({ item }) => {
                 {currentQuantity}
               </Button>
 
+              {/* ➕ Botón de Sumar (Evita Concatenación "2" + 1 = "21") */}
               <div className="flex flex-col border-l border-gray-300 p-1">
                 <Button
                   variant="ghost"
                   className="text-xs rounded-xl min-w-4 transition-all"
                   disabled={availableStock <= 0}
-                  onClick={() => updateCartQuantity(item, item.quantity + 1)}
+                  onClick={() => updateCartQuantity(item, numItemQuantity + 1)}
                 >
                   ➕
                 </Button>
               </div>
+              
             </div>
           </div>
+          
           <div className="flex flex-col">
             <p className="text-xs text-gray-600 text-center mb-1">Price</p>
             <span className="flex px-2 border border-gray-300 rounded-sm text-xl font-bold justify-center items-center w-40 bg-white text-blue-900">

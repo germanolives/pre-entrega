@@ -1,3 +1,4 @@
+import { useRef } from "react"; // 🚀 Importamos useRef
 import { ImgWithSkeleton } from "../common/ImgWithSkeleton";
 import TextareaAutosize from "react-textarea-autosize";
 import { formatSlug } from "../../utils/formatSlug";
@@ -6,7 +7,7 @@ import { offers as ALL_AVAILABLE_OFFERS } from "../../data/offers/offers";
 
 export const DashboardItemDetail = ({
   dataForm,
-  imagePreview, // 🌟 CORREGIDO: Ahora recibe el string blob temporal del contenedor
+  imagePreview, 
   handleSubmit,
   handleChange,
   handleRatingChange,
@@ -15,6 +16,7 @@ export const DashboardItemDetail = ({
   handleOfferToggle,
   handleImageChange,
 }) => {
+  const formRef = useRef(null); // 🔒 Creamos la referencia local del formulario
   const length = dataForm.title?.length || 0;
   const initialRows = length > 70 ? 3 : length > 35 ? 2 : 1;
 
@@ -35,7 +37,7 @@ export const DashboardItemDetail = ({
 
   return (
     <form
-      id="product-form"
+      ref={formRef}
       onSubmit={handleSubmit}
       className="grid grid-cols-1 md:grid-cols-2 w-full md:full mx-auto gap-4"
     >
@@ -247,7 +249,7 @@ export const DashboardItemDetail = ({
             operationType="Save Changes"
             // type="submit"
             classNameButton="rounded-md py-2 uppercase mt-2 w-full font-bold tracking-wider"
-            onConfirm={() => document.getElementById('product-form').requestSubmit()}
+            onConfirm={() => formRef.current?.requestSubmit()}
           >
             Confirm and Save Changes
           </ModalBox>

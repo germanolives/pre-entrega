@@ -17,7 +17,7 @@ export const CartProvider = ({ children }) => {
   const userCart = `cart.${currentUser}`;
   const [cart, setCart] = useState([]);
 
-  // 🌟 1. Corregido: Bloqueamos la lectura si Firebase aún no resolvió el usuario
+  // 🔒 1. Sanitización estricta al leer del almacenamiento local
   useEffect(() => {
     if (!currentUser) return;
 
@@ -27,65 +27,72 @@ export const CartProvider = ({ children }) => {
         const parsed = JSON.parse(localData);
         const sanitized = parsed.map((item) => ({
           ...item,
-          quantity: Number(item.quantity),
-          price: Number(item.price),
+          quantity: Number(item.quantity || 0),
+          price: Number(item.price || 0),
+          stock: Number(item.stock || 0) // 🚀 Aseguramos también el stock en memoria local
         }));
         setCart(sanitized);
       } catch (e) {
         setCart([]);
       }
     } else {
-      setCart([]); // Si el usuario no tiene carrito previo, lo limpiamos del estado del usuario anterior
+      setCart([]); 
     }
   }, [userCart, currentUser]);
 
-  // 🌟 1. Corregido: Bloqueamos la escritura si no hay un usuario real logueado
+  // Sincronización con almacenamiento local
   useEffect(() => {
     if (!currentUser) return;
     localStorage.setItem(userCart, JSON.stringify(cart));
   }, [userCart, cart, currentUser]);
 
+  // 🔒 2. Aritmética y control de inventario blindados al agregar
   const addToCart = (product, quantity) => {
     if (!product || !product.id || !quantity || quantity <= 0 || !currentUser)
       return;
+
+    const numInputQty = Number(quantity); // 🚀 Forzamos Number al input entrante
 
     setCart((prevCart) => {
       const itemInCart = prevCart.find(
         (item) => String(item.id) === String(product.id),
       );
-      const maxStock = product.stock !== undefined ? product.stock : 999; // Fallback por seguridad
+      
+      // 🔒 Aseguramos que el stock de control sea puramente numérico
+      const maxStock = product.stock !== undefined ? Number(product.stock) : 999; 
 
       if (itemInCart) {
-        const potentialQuantity = itemInCart.quantity + quantity;
-        const finalQuantity =
-          potentialQuantity > maxStock ? maxStock : potentialQuantity;
+        const potentialQuantity = Number(itemInCart.quantity) + numInputQty; // 🚀 Suma matemática garantizada (Evita el "1" + 1 = "11")
+        const finalQuantity = potentialQuantity > maxStock ? maxStock : potentialQuantity;
 
         return prevCart.map((item) =>
           String(item.id) === String(product.id)
-            ? { ...item, quantity: finalQuantity }
+            ? { ...item, quantity: finalQuantity, stock: maxStock }
             : item,
         );
       }
 
-      const initialQuantity = quantity > maxStock ? maxStock : quantity;
-      return [...prevCart, { ...product, quantity: initialQuantity }];
+      const initialQuantity = numInputQty > maxStock ? maxStock : numInputQty;
+      return [...prevCart, { ...product, quantity: initialQuantity, price: Number(product.price), stock: maxStock }];
     });
   };
 
+  // 🔒 3. Control estricto de tipos en la actualización manual de cantidades
   const updateCartQuantity = (product, newQuantity) => {
     if (!product || !product.id || !currentUser) return;
 
+    const numNewQty = Number(newQuantity);
+    const numStock = Number(product.stock !== undefined ? product.stock : 999);
+
     setCart((prevCart) => {
-      // Si la cantidad es 0 o menos, removemos el ítem por completo
-      if (newQuantity <= 0) {
+      if (numNewQty <= 0) {
         return prevCart.filter(
           (item) => String(item.id) !== String(product.id),
         );
       }
 
-      // Controlamos que no supere el stock
-      const finalQuantity =
-        newQuantity > product.stock ? product.stock : newQuantity;
+      // 🔒 Comparación de cotas numéricas reales
+      const finalQuantity = numNewQty > numStock ? numStock : numNewQty;
 
       return prevCart.map((item) =>
         String(item.id) === String(product.id)
@@ -96,14 +103,14 @@ export const CartProvider = ({ children }) => {
   };
 
   const clearCart = (product = null) => {
-  if (!currentUser) return;
-  
-  if (product) {
-    setCart((prevCart) => prevCart.filter((item) => String(item.id) !== String(product.id)));
-  } else {
-    setCart([]);
-  }
-};
+    if (!currentUser) return;
+    
+    if (product) {
+      setCart((prevCart) => prevCart.filter((item) => String(item.id) !== String(product.id)));
+    } else {
+      setCart([]);
+    }
+  };
 
   const resetProdQtyCart = (product) => {
     if (!product || !currentUser) return;
@@ -124,7 +131,6 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // 🌟 3. Optimizado: Agregado Optional Chaining (?.) para evitar que explote si un producto no tiene ofertas cargadas
   const getCartTotal = (product = null) => {
     if (!currentUser) return 0;
     if (product) {
@@ -132,6 +138,7 @@ export const CartProvider = ({ children }) => {
         (item) => String(item.id) === String(product.id),
       );
       if (searchProd) {
+        // 🔒 Aseguramos tipos numéricos en la resolución de ofertas del producto individual
         const appliedOffers =
           searchProd.offers?.find(
             (o) => Number(searchProd.quantity) >= Number(o.qty),
@@ -146,6 +153,7 @@ export const CartProvider = ({ children }) => {
       }
     } else {
       return cart.reduce((acc, item) => {
+        // 🔒 Aseguramos tipos numéricos en el acumulador general
         const appliedOffers =
           item.offers?.find((o) => Number(item.quantity) >= Number(o.qty)) ||
           null;
@@ -157,12 +165,13 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  // 🔒 4. Sincronización y normalización de tipos numéricos contra la DB fresca
   const checkCart = (data) => {
     if (!data || !currentUser) return;
     const newCart = cart.filter((cartItem) => {
       const matchingDataItem = data.find(
         (dataItem) =>
-          String(dataItem.id) === String(cartItem.id) && dataItem.stock > 0,
+          String(dataItem.id) === String(cartItem.id) && Number(dataItem.stock) > 0,
       );
       return matchingDataItem !== undefined;
     });
@@ -172,13 +181,15 @@ export const CartProvider = ({ children }) => {
         (dataItem) => String(dataItem.id) === String(item.id),
       );
       if (findedItem) {
+        const freshStock = Number(findedItem.stock || 0);
+        const currentQty = Number(item.quantity || 0);
+
         return {
           ...item,
-          price: findedItem.price,
-          quantity:
-            item.quantity > findedItem.stock ? findedItem.stock : item.quantity,
+          price: Number(findedItem.price || 0), // 🚀 Normalizamos a número
+          quantity: currentQty > freshStock ? freshStock : currentQty, // 🚀 Comparación numérica real
           offers: findedItem.offers || [],
-          stock: findedItem.stock,
+          stock: freshStock,
         };
       }
       return item;
@@ -198,7 +209,7 @@ export const CartProvider = ({ children }) => {
   const idListCart = useMemo(() => {
     if (!cart) return [];
     return cart.map((item) => String(item.id));
-  }, [cart]); // Solo se recalcula si cambia el array de carrito
+  }, [cart]);
 
 
   return (

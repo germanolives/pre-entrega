@@ -13,17 +13,22 @@ export const ConfirmPurchase = ({ checkOutOn, isProcessing }) => {
     style: "currency",
     currency: "EUR",
   });
-  const formattedTotalPrice = countryPrice.format(getCartTotal());
+  
+  // 🔒 Aseguramos que el total para la vista sea numérico
+  const totalAmount = Number(getCartTotal());
+  const formattedTotalPrice = countryPrice.format(totalAmount);
+  
   const navigate = useNavigate();
   const { user } = useAuth();
 
   const generateOrderReview = async () => {
-    const previewCartTotal = getCartTotal();
+    // 🔒 Forzamos tipo numérico en la captura previa
+    const previewCartTotal = Number(getCartTotal());
     try {
       await checkOutOn();
 
-      // Comparamos los valores
-      if (previewCartTotal === getCartTotal()) {
+      // 🔒 Sincronizamos la comparación como números puros
+      if (previewCartTotal === Number(getCartTotal())) {
         const purchaseOrder = {
           id: idGenerator(),
           date: Date.now(),
@@ -31,11 +36,11 @@ export const ConfirmPurchase = ({ checkOutOn, isProcessing }) => {
           buyerSurname: user.surname,
           buyerEmail: user.email,
           products: cart,
-          total: getCartTotal(),
+          total: previewCartTotal, // 🚀 Ya garantizado como Number puro para Firestore
           buyerUid: user.uid,
         };
+        
         await setDoc(doc(db, "orders", purchaseOrder.id), purchaseOrder);
-        // PASO CLAVE: Pasamos la orden como estado en la navegación
         clearCart();
         navigate(`/order-confirmation/${purchaseOrder.id}`, {
           state: { order: purchaseOrder },
@@ -63,7 +68,7 @@ export const ConfirmPurchase = ({ checkOutOn, isProcessing }) => {
         <div className="flex flex-col">
           <p className="text-xs text-gray-500">Products (Quantity)</p>
           <span className="flex px-2 border-t border-b border-gray-300 text-xl justify-center items-center w-30 text-black">
-            {getCartQuantity()}
+            {Number(getCartQuantity())} {/* 🚀 Asegurado visualmente */}
           </span>
         </div>
         <div>

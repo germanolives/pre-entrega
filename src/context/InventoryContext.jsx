@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, createContext, useMemo } from "react";
+import { useState, useEffect, createContext, useContext, useMemo } from "react";
 import { useQueryFull } from "../hooks/useQueryFull";
 import { db } from "../config/firebase";
 import { doc, updateDoc, setDoc, deleteDoc } from "firebase/firestore";
@@ -40,14 +40,30 @@ export const InventoryProvider = ({ children }) => {
     }
   }, [products, loading, error]);
 
+  // 🔒 Última línea de defensa: Sanitiza y fuerza tipos puros antes de escribir en la DB
+  const sanitizeProduct = (item) => {
+    return {
+      ...item,
+      price: item.price !== undefined ? Number(item.price) : 0,
+      stock: item.stock !== undefined ? Number(item.stock) : 0,
+      rating: {
+        rate: item.rating?.rate !== undefined ? Number(item.rating.rate) : 0,
+        count: item.rating?.count !== undefined ? Number(item.rating.count) : 0,
+      },
+    };
+  };
+
   const updateProduct = async (item) => {
     try {
-      const productRef = doc(db, "products", item.id);
-      await updateDoc(productRef, item);
+      // 🚀 Sanitizamos el payload antes de enviarlo a Firestore
+      const sanitizedItem = sanitizeProduct(item);
+      const productRef = doc(db, "products", sanitizedItem.id);
+      
+      await updateDoc(productRef, sanitizedItem);
 
       setData((prevProducts) =>
         prevProducts.map((prod) =>
-          prod.id === item.id ? { ...prod, ...item } : prod,
+          prod.id === sanitizedItem.id ? { ...prod, ...sanitizedItem } : prod,
         ),
       );
       return { success: true };
@@ -59,10 +75,13 @@ export const InventoryProvider = ({ children }) => {
 
   const addProduct = async (item) => {
     try {
-      const productRef = doc(db, "products", item.id);
-      await setDoc(productRef, item);
+      // 🚀 Sanitizamos el payload para asegurar alta limpia en la DB
+      const sanitizedItem = sanitizeProduct(item);
+      const productRef = doc(db, "products", sanitizedItem.id);
+      
+      await setDoc(productRef, sanitizedItem);
 
-      setData((prevProducts) => [...prevProducts, item]);
+      setData((prevProducts) => [...prevProducts, sanitizedItem]);
       return { success: true };
     } catch (err) {
       console.error("Error crítico al agregar en Firestore:", err);
@@ -88,7 +107,7 @@ export const InventoryProvider = ({ children }) => {
   };
 
   const getTotalStock = () => {
-    return data.reduce((acc, item) => acc + Number(item.stock), 0);
+    return data.reduce((acc, item) => acc + Number(item.stock || 0), 0);
   };
 
   return (

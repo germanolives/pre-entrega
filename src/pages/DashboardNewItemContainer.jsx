@@ -11,7 +11,8 @@ export const DashboardNewItemContainer = () => {
   const { addAlert } = useAlert();
   const [imagePreview, setImagePreview] = useState("");
 
-  const [dataForm, setDataForm] = useState({
+  // 🔒 Inicializamos el formulario con tipos consistentes desde el nacimiento
+  const createInitialState = () => ({
     id: crypto.randomUUID(),
     code: "",
     title: "",
@@ -22,12 +23,14 @@ export const DashboardNewItemContainer = () => {
     categorySlug: "",
     image: "",
     rating: {
-      rate: "0",
-      count: "0",
+      rate: 0,   // 🚀 Inicializado como Number puro
+      count: 0,  // 🚀 Inicializado como Number puro
     },
     offers: [],
     stock: "",
   });
+
+  const [dataForm, setDataForm] = useState(createInitialState);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -117,7 +120,6 @@ export const DashboardNewItemContainer = () => {
       if (imgbbData.success) {
         console.log("Imagen subida con éxito. URL:", imgbbData.data.url);
 
-        // Estructuramos el objeto completo con la URL real de internet
         const finalProduct = {
           ...dataForm,
           image: imgbbData.data.url,
@@ -125,6 +127,7 @@ export const DashboardNewItemContainer = () => {
 
         console.log("Guardando nuevo registro en Firestore:", finalProduct);
 
+        // 🛡️ El contexto intercepta acá y fuerza el casteo de price, stock y ratings
         const res = await addProduct(finalProduct);
 
         if (res?.success) {
@@ -132,20 +135,7 @@ export const DashboardNewItemContainer = () => {
 
           setImageFile(null);
           setImagePreview("");
-          setDataForm({
-            id: crypto.randomUUID(),
-            code: "",
-            title: "",
-            titleSlug: "",
-            price: "",
-            description: "",
-            category: "",
-            categorySlug: "",
-            image: "",
-            rating: { rate: "0", count: "0" },
-            offers: [],
-            stock: "",
-          });
+          setDataForm(createInitialState()); // 🚀 Reseteo limpio usando la función constructora
         }
       } else {
         throw new Error("La API de ImgBB rechazó la subida del archivo.");
@@ -158,7 +148,7 @@ export const DashboardNewItemContainer = () => {
 
   return (
     <section
-      className={`mx-4 md:mx-15 border-2 border-gray-300 rounded-xl p-8 flex justify-center items-center`}
+      className="mx-4 md:mx-15 border-2 border-gray-300 rounded-xl p-8 flex justify-center items-center"
     >
       <Helmet>
         <title>Add New Product | Inventory | Tienda S.A.U.</title>

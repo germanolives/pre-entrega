@@ -18,7 +18,6 @@ export const DashboardItemContainer = ({ data }) => {
   const { updateProduct } = useInventory();
   const { addAlert } = useAlert();
 
-  // 🚀 Sincronización reactiva: si cambian las propiedades base, actualizamos el formulario
   useEffect(() => {
     if (data) {
       setDataForm((prev) => ({
@@ -68,13 +67,10 @@ export const DashboardItemContainer = ({ data }) => {
   const handleOfferToggle = (selectedOffer) => {
     setDataForm((prev) => {
       const currentOffers = prev.offers;
-
-      // 🌟 Evaluamos si el producto ya tiene esta oferta comparando los IDs de los objetos
       const exists = currentOffers.some((item) => item.id === selectedOffer.id);
-
       const updatedOffers = exists
-        ? currentOffers.filter((item) => item.id !== selectedOffer.id) // Si está, la sacamos
-        : [...currentOffers, selectedOffer]; // Si no está, sumamos el objeto completo
+        ? currentOffers.filter((item) => item.id !== selectedOffer.id)
+        : [...currentOffers, selectedOffer];
 
       return {
         ...prev,
@@ -83,7 +79,6 @@ export const DashboardItemContainer = ({ data }) => {
     });
   };
 
-  // 2. El manejador captura el objeto binario completo
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -93,27 +88,42 @@ export const DashboardItemContainer = ({ data }) => {
     }
   };
 
+  // 🔒 Función interna para sanitizar y forzar tipos numéricos reales antes de persistir en la BD
+  const sanitizeProductData = (rawForm, imageUrl = null) => {
+    return {
+      ...rawForm,
+      price: Number(rawForm.price || 0),
+      stock: Number(rawForm.stock || 0),
+      rating: {
+        rate: Number(rawForm.rating?.rate || 0),
+        count: Number(rawForm.rating?.count || 0),
+      },
+      // Si pasamos una nueva URL de ImgBB la pisa, sino conserva la actual
+      image: imageUrl || rawForm.image, 
+    };
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // 🌟 ESCENARIO A: El usuario NO eligió ninguna foto nueva en el input
+      // 🌟 ESCENARIO A: Mantiene la foto actual
       if (!imageFile) {
         if (!dataForm.image) {
-          // Si no tiene imagen previa ni nueva, es un error
           addAlert("SELECT_PRODUCT_IMAGE");
           return;
         }
 
-        console.log(
-          "Sincronizando cambios de texto (mantiene la imagen actual)...",
-        );
-        const res = await updateProduct(dataForm);
+        console.log("Sincronizando cambios de texto...");
+        // 🚀 Aplicamos casteo estricto antes de enviar
+        const sanitizedProduct = sanitizeProductData(dataForm);
+        
+        const res = await updateProduct(sanitizedProduct);
         if (res?.success) addAlert("PRODUCT_UPDATED_SUCCESS");
-        return; // Frenamos la ejecución acá de forma segura
+        return; 
       }
 
-      // 🌟 ESCENARIO B: El usuario SÍ seleccionó una foto nueva (Para crear o reemplazar)
+      // 🌟 ESCENARIO B: Subida a ImgBB + Guardado Completo
       console.log("Detectado archivo nuevo. Iniciando subida a ImgBB...");
 
       const apiKey = import.meta.env.VITE_IMGBB_API_KEY;
@@ -133,21 +143,15 @@ export const DashboardItemContainer = ({ data }) => {
       if (imgbbData.success) {
         console.log("Imagen subida con éxito. URL:", imgbbData.data.url);
 
-        // Armamos el objeto final pisando la propiedad 'image'
-        const finalProduct = {
-          ...dataForm,
-          image: imgbbData.data.url,
-        };
+        // 🚀 Aplicamos casteo estricto inyectando la nueva URL
+        const sanitizedProductWithImg = sanitizeProductData(dataForm, imgbbData.data.url);
 
-        console.log(
-          "Guardando producto completo con nueva URL en Firestore:",
-          finalProduct,
-        );
-        const res = await updateProduct(finalProduct);
+        console.log("Guardando en Firestore:", sanitizedProductWithImg);
+        const res = await updateProduct(sanitizedProductWithImg);
 
         if (res?.success) {
           addAlert("PRODUCT_AND_IMAGE_UPDATED_SUCCESS");
-          setImageFile(null); // Limpiamos el binario para futuros envíos
+          setImageFile(null); 
         }
       } else {
         addAlert("ERROR_FILE_UPLOAD_IMGBB");
@@ -173,6 +177,7 @@ export const DashboardItemContainer = ({ data }) => {
         dataForm={dataForm}
         handleSubmit={handleSubmit}
         handleChange={handleChange}
+        hoverRatingChange={handleRatingChange}
         handleRatingChange={handleRatingChange}
         handlePriceChange={handlePriceChange}
         handleStockChange={handleStockChange}

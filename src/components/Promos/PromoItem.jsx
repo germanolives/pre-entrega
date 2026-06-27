@@ -11,16 +11,25 @@ export const PromoItem = ({ item, promo }) => {
   const categorySlug = formatSlug(item.category);
   const categoryPath = `/products/${categorySlug}`;
   const productPath = `/products/${categorySlug}/${titleSlug}/${item.id}`;
+  
   const countryPrice = new Intl.NumberFormat("en-GB", {
     style: "currency",
     currency: "EUR",
   });
 
   const { isFavorite, toggleFavorite } = useFavorite();
-  const returnDiscount = (promo.discount / (100 - promo.discount)) * 100;
-  const prevPrice = item.price + (item.price * returnDiscount) / 100;
-  const formattedPrice = countryPrice.format(item.price);
+
+  // 🔒 Sanitización de tipos numéricos al inicio
+  const numPrice = Number(item.price);
+  const numPromoDiscount = Number(promo.discount);
+
+  // 🚀 Aritmética matemática pura y aislada de strings
+  const returnDiscount = (numPromoDiscount / (100 - numPromoDiscount)) * 100;
+  const prevPrice = numPrice + (numPrice * returnDiscount) / 100;
+
+  const formattedPrice = countryPrice.format(numPrice);
   const formattedPrevPrice = countryPrice.format(prevPrice);
+
   const favUndofav = () => {
     toggleFavorite(item);
   };
@@ -45,6 +54,7 @@ export const PromoItem = ({ item, promo }) => {
           </div>
         </div>
       </div>
+      
       <Link to={categoryPath}>
         <div className="w-full aspect-square flex justify-center items-center overflow-hidden bg-white border border-gray-100 rounded-sm p-2">
           <ImgWithSkeleton
@@ -70,7 +80,7 @@ export const PromoItem = ({ item, promo }) => {
           </p>
         </div>
         <img
-          className="rounded-xl  w-15 h-auto"
+          className="rounded-xl w-15 h-auto"
           src={offerLogo.image}
           alt={offerLogo.title}
         />

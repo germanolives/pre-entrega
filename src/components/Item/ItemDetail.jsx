@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ImgWithSkeleton } from "../common/ImgWithSkeleton";
 import { Button } from "../common/Button";
 import { DiscountList } from "../Discount/DiscountList";
@@ -13,44 +13,59 @@ import { Helmet } from "react-helmet-async";
 
 export const ItemDetail = ({ data }) => {
   const { title, price, description, category, image, offers, stock } = data;
+  
+  // 🔒 Sanitización inmediata de tipos numéricos (Strings de Firestore ➔ Numbers)
+  const numPrice = Number(price);
+  const numStock = Number(stock);
+
   const { user } = useAuth();
   const currentUser = user ? user.uid : null;
   const navigate = useNavigate();
   const { getCartQuantity, addToCart } = useCart();
   const { isFavorite, toggleFavorite } = useFavorite();
   const [count, setCount] = useState(0);
-  const unitsInCart = getCartQuantity(data);
+  
+  const unitsInCart = Number(getCartQuantity(data));
   const showAsAdded = unitsInCart > 0 && count === 0;
-  const availableStock = Math.max(0, stock - unitsInCart - count);
-  const appliedoffers = offers.find((o) => unitsInCart + count >= o.qty);
-  const discount = appliedoffers ? appliedoffers.discount : 0;
+  
+  // 🚀 Operaciones matemáticas blindadas
+  const availableStock = Math.max(0, numStock - unitsInCart - count);
+  
+  // 🔒 Aseguramos que o.qty sea Number al evaluar la oferta por volumen
+  const appliedoffers = offers?.find((o) => (unitsInCart + count) >= Number(o.qty));
+  const discount = appliedoffers ? Number(appliedoffers.discount) : 0;
+  
   const countryPrice = new Intl.NumberFormat("en-GB", {
     style: "currency",
     currency: "EUR",
   });
-  const finalPrice = price - (discount / 100) * price;
+  
+  const finalPrice = numPrice - (discount / 100) * numPrice;
   const formattedPrice = countryPrice.format(finalPrice);
+  
   const addProduct = () => {
-    if (stock - unitsInCart - count > 0) setCount((prev) => prev + 1);
+    if (numStock - unitsInCart - count > 0) setCount((prev) => prev + 1);
   };
   const delProduct = () => {
     if (count > 0) setCount((prev) => prev - 1);
   };
   const resetProduct = () => setCount(0);
+  
   const handleAdd = () => {
     if (!currentUser) {
       navigate("/login", { state: { from: location.pathname } });
       return;
     }
-    if (count > 0 && count <= stock - unitsInCart) {
+    if (count > 0 && count <= numStock - unitsInCart) {
       addToCart(data, count);
       setCount(0);
     }
   };
+  
   const favUndofav = () => {
     toggleFavorite(data);
   };
-  const isOutOfStock = stock === unitsInCart;
+  const isOutOfStock = numStock === unitsInCart;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 w-full md:w-2/3 mx-auto">
@@ -60,13 +75,10 @@ export const ItemDetail = ({ data }) => {
             ? `${title} | Tienda S.A.U.`
             : "Loading product | Tienda S.A.U."}
         </title>
-
         <meta
           name="description"
           content={description || "Explore our products at Tienda S.A.U."}
         />
-
-        {/* Metaetiquetas Open Graph */}
         <meta property="og:title" content={title || "Tienda S.A.U."} />
         <meta
           property="og:description"
@@ -78,6 +90,7 @@ export const ItemDetail = ({ data }) => {
         />
         <meta property="og:type" content="product" />
       </Helmet>
+      
       <article className="grid grid-rows-[auto_1fr_auto_auto] bg-gray-200 p-4 shadow-2xl border border-gray-300 h-full rounded-sm">
         <div className="flex flex-row justify-between">
           <h1 className="text-xl font-bold text-blue-800 mt-auto capitalize line-clamp-3 leading-tight px-2 min-h-15 overflow-hidden">
@@ -108,10 +121,10 @@ export const ItemDetail = ({ data }) => {
         <DiscountList
           message={"Today's deals available"}
           offers={offers}
-          price={price}
+          price={numPrice} // 🚀 Pasamos el precio ya convertido
         />
         <div className="text-center my-2">
-          <p className={`text-xxs font medium text-blue-700`}>
+          <p className="text-xxs font-medium text-blue-700">
             Available Stock: {availableStock} units
           </p>
           <p
@@ -141,7 +154,7 @@ export const ItemDetail = ({ data }) => {
               onClick={resetProduct}
               variant={showAsAdded ? "tertiary" : "primary"}
               disabled={count === 0}
-              className={`px-4 py-2 rounded-xl min-w-14`}
+              className="px-4 py-2 rounded-xl min-w-14"
             >
               {count}
             </Button>

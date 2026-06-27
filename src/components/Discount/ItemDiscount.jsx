@@ -3,8 +3,10 @@ export const ItemDiscount = ({ title, qty, discount, price }) => {
     style: "currency",
     currency: "EUR",
   });
-  const formattedPrice = countryPrice.format(price);
-  const formattedPriceWithDiscount = countryPrice.format(price - (discount / 100) * price);
+  const numPrice = Number(price);
+  const numDiscount = Number(discount);
+  const formattedPrice = countryPrice.format(numPrice);
+  const formattedPriceWithDiscount = countryPrice.format(numPrice - (numDiscount / 100) * numPrice);
 
   return (
     <div className="flex flex-col p-2 rounded-sm border-0">
