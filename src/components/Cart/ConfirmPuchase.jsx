@@ -6,6 +6,7 @@ import { useAuth } from "../../context/AuthContext";
 import { idGenerator } from "../../utils/idGenerator";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../config/firebase";
+import { checkoutSecureInventory } from "../../services/inventorySecureService";
 
 export const ConfirmPurchase = ({ checkOutOn, isProcessing }) => {
   const { clearCart, getCartTotal, getCartQuantity, cart } = useCart();
@@ -14,7 +15,6 @@ export const ConfirmPurchase = ({ checkOutOn, isProcessing }) => {
     currency: "EUR",
   });
   
-  // 🔒 Aseguramos que el total para la vista sea numérico
   const totalAmount = Number(getCartTotal());
   const formattedTotalPrice = countryPrice.format(totalAmount);
   
@@ -22,13 +22,20 @@ export const ConfirmPurchase = ({ checkOutOn, isProcessing }) => {
   const { user } = useAuth();
 
   const generateOrderReview = async () => {
-    // 🔒 Forzamos tipo numérico en la captura previa
     const previewCartTotal = Number(getCartTotal());
     try {
       await checkOutOn();
 
-      // 🔒 Sincronizamos la comparación como números puros
       if (previewCartTotal === Number(getCartTotal())) {
+        // ⚡ PASO 1: Descontamos el stock en lote de manera segura
+        const stockRes = await checkoutSecureInventory(cart);
+
+        // Si el servicio seguro de transacciones falla, lanzamos el error con su mensaje dedicado
+        if (!stockRes.success) {
+          throw new Error(stockRes.error || "No se pudo reservar el stock de los productos.");
+        }
+
+        // ⚡ PASO 2: Emitimos la orden en Firestore
         const purchaseOrder = {
           id: idGenerator(),
           date: Date.now(),
@@ -36,10 +43,10 @@ export const ConfirmPurchase = ({ checkOutOn, isProcessing }) => {
           buyerSurname: user.surname,
           buyerEmail: user.email,
           products: cart,
-          total: previewCartTotal, // 🚀 Ya garantizado como Number puro para Firestore
+          total: previewCartTotal, 
           buyerUid: user.uid,
         };
-        
+
         await setDoc(doc(db, "orders", purchaseOrder.id), purchaseOrder);
         clearCart();
         navigate(`/order-confirmation/${purchaseOrder.id}`, {
@@ -52,7 +59,8 @@ export const ConfirmPurchase = ({ checkOutOn, isProcessing }) => {
       }
     } catch (error) {
       console.error("Fallo en la compra:", error);
-      alert("No pudimos procesar tu compra. Por favor, intenta de nuevo.");
+      // 🚀 Alerta dinámica: Muestra "Disculpas, nos quedamos sin stock de..." si viene del servicio seguro
+      alert(error.message || "No pudimos procesar tu compra. Por favor, intenta de nuevo.");
     }
   };
 
@@ -68,7 +76,7 @@ export const ConfirmPurchase = ({ checkOutOn, isProcessing }) => {
         <div className="flex flex-col">
           <p className="text-xs text-gray-500">Products (Quantity)</p>
           <span className="flex px-2 border-t border-b border-gray-300 text-xl justify-center items-center w-30 text-black">
-            {Number(getCartQuantity())} {/* 🚀 Asegurado visualmente */}
+            {Number(getCartQuantity())}
           </span>
         </div>
         <div>
