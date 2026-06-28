@@ -27,7 +27,7 @@ export const Pagination = ({ totalPages, hasMoreServer }) => {
       </Button>
 
       <span className="text-xs font-medium text-gray-600">
-        Page {currentPage} {hasMoreServer ? "" : "(Last page)"}
+        Page {currentPage} {hasMoreServer ? "" : "(Last)"}
       </span>
 
       <Button
