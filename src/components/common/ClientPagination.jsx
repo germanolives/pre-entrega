@@ -43,9 +43,9 @@ export const ClientPagination = ({ searchedProds, itemsPerPage = 3, children }) 
             variant="outline"
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="px-3 py-1 text-xs"
+            className="px-3 py-1 text-xs w-18"
           >
-            ◀ Previous
+            ◀ Prev
           </Button>
 
           <span className="text-xs font-medium text-gray-600">
@@ -56,7 +56,7 @@ export const ClientPagination = ({ searchedProds, itemsPerPage = 3, children }) 
             variant="outline"
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="px-3 py-1 text-xs"
+            className="px-3 py-1 text-xs w-18"
           >
             Next ▶
           </Button>
