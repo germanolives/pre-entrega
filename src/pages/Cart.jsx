@@ -21,27 +21,24 @@ export const Cart = () => {
     idListCart,
   );
 
-  // 🔄 MOMENTO 1: Check automático al montar (apenas llega la data inicial de useQuery)
   useEffect(() => {
     if (data && !loading && data.length > 0 && !hasSyncedInitial.current) {
       checkCart(data);
-      hasSyncedInitial.current = true; // 🔒 Cerramos la compuerta para el resto de la sesión
+      hasSyncedInitial.current = true; // cierra la compuerta para el resto de la sesión
     }
-  }, [data, loading]);
+  }, [data, loading, checkCart]);
 
-  // ⚡ MOMENTO 2: Check manual al presionar "Proceed to checkout" usando el nuevo refetch
+  // ⚡ MOMENTO 2: Check manual al presionar "Proceed to checkout"
   const checkOutOn = async () => {
     if (idListCart.length === 0) return;
 
     setIsCheckingOut(true);
     try {
-      // 🚀 Al resolver la promesa, capturamos los productos actualizados directo de la red
       const [freshProducts] = await Promise.all([
         refetch(),
         new Promise((resolve) => setTimeout(resolve, 1500)), // Espera visual "Procesando..."
       ]);
 
-      // Sincronizamos el contexto inmediatamente con la data fresca, esquivando delays de estado
       if (freshProducts && freshProducts.length > 0) {
         checkCart(freshProducts);
       }
@@ -52,8 +49,10 @@ export const Cart = () => {
     }
   };
 
+  const hasItems = Array.isArray(cart) && cart.length > 0;
+
   return (
-    <section className="flex flex-col gap-4 md:grid grid-cols-2 mx-4 border-2 border-gray-300 rounded-xl p-4">
+    <section className="mx-4 border-2 border-gray-300 rounded-xl p-8 min-h-125 flex flex-col justify-between">
       <Helmet>
         <title>Your Shopping Cart | Tienda S.A.U.</title>
         <meta
@@ -63,29 +62,35 @@ export const Cart = () => {
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
-      {Array.isArray(cart) && cart.length > 0 ? (
-        <>
+      {hasItems ? (
         <RenderContent
           data={data}
           loading={loading || isCheckingOut}
           error={error}
           time={isCheckingOut ? 1500 : 0}
         >
-          <CartList data={cart} />
-        </RenderContent>
-                <div className="flex justify-end">
-          <aside className="w-full md:w-80 sticky top-30 right-8 self-start">
-            <ConfirmPurchase
-              checkOutOn={checkOutOn}
-              isProcessing={isCheckingOut}
-            />
-          </aside>
-        </div>
-        </>
-      ) : (
-        <EmptyCart />
-      )}
 
+          <div className="flex flex-col gap-4 md:grid md:grid-cols-2 w-full h-full my-auto">
+            
+            <CartList data={cart} />
+            
+            <div className="flex justify-end w-full">
+              <aside className="w-full md:w-80 sticky top-30 right-8 self-start">
+                <ConfirmPurchase
+                  checkOutOn={checkOutOn}
+                  isProcessing={isCheckingOut}
+                />
+              </aside>
+            </div>
+
+          </div>
+        </RenderContent>
+      ) : (
+
+        <div className="flex flex-col items-center justify-center w-full h-full my-auto">
+          <EmptyCart />
+        </div>
+      )}
     </section>
   );
 };
