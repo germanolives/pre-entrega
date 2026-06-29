@@ -44,9 +44,9 @@ export const Cart = () => {
       }
     } catch (e) {
       console.error("Error en la validación del checkout:", e);
-    } finally {
       setIsCheckingOut(false);
     }
+    setIsCheckingOut(false);
   };
 
   const hasItems = Array.isArray(cart) && cart.length > 0;
@@ -63,30 +63,29 @@ export const Cart = () => {
       </Helmet>
 
       {hasItems ? (
-        <RenderContent
-          data={data}
-          loading={loading || isCheckingOut}
-          error={error}
-          time={isCheckingOut ? 1500 : 0}
-        >
-
-          <div className="flex flex-col gap-4 md:grid md:grid-cols-2 w-full h-full my-auto">
-            
+        /* 📦 La grilla de dos columnas se mantiene fija en el padre para estructurar la pantalla */
+        <div className="flex flex-col gap-4 md:grid md:grid-cols-2 w-full h-full my-auto">
+          {/* 🔄 Columna Izquierda: SOLO el listado de productos reacciona al Spinner */}
+          <RenderContent
+            data={data}
+            loading={loading || isCheckingOut}
+            error={error}
+            time={isCheckingOut ? 1500 : 0}
+          >
             <CartList data={cart} />
-            
-            <div className="flex justify-end w-full">
-              <aside className="w-full md:w-80 sticky top-30 right-8 self-start">
-                <ConfirmPurchase
-                  checkOutOn={checkOutOn}
-                  isProcessing={isCheckingOut}
-                />
-              </aside>
-            </div>
+          </RenderContent>
 
+          {/* 🎛️ Columna Derecha: El checkout se queda afuera, visible en todo momento */}
+          <div className="flex justify-end w-full">
+            <aside className="w-full md:w-80 sticky top-30 right-8 self-start">
+              <ConfirmPurchase
+                checkOutOn={checkOutOn}
+                isProcessing={isCheckingOut}
+              />
+            </aside>
           </div>
-        </RenderContent>
+        </div>
       ) : (
-
         <div className="flex flex-col items-center justify-center w-full h-full my-auto">
           <EmptyCart />
         </div>
