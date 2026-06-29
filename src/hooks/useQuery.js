@@ -36,7 +36,7 @@ export const useQuery = (
   // 🔒 1. Serialización limpia para dependencias de arrays (Evita loops y ejecuciones inline)
   const idListString = idList ? JSON.stringify(idList) : "";
 
-  // 🔒 2. Resetear estados de paginación y calcular totalPages REALES desde el servidor
+  // 🔒 2. Calcular totalPages REALES desde el servidor (Sin pisar cursores)
   useEffect(() => {
     if ((categorySlug && titleSlug && id) || idListString) return;
 
@@ -44,27 +44,31 @@ export const useQuery = (
       try {
         const referenceDocs = collection(db, "products");
         let q = query(referenceDocs);
-        
+
         if (categorySlug) {
           q = query(referenceDocs, where("categorySlug", "==", categorySlug));
         }
-        
+
         const snapshot = await getCountFromServer(q);
         const totalDocuments = snapshot.data().count;
         const calculatedTotalPages = Math.ceil(totalDocuments / currentLimit) || 1;
-        
+
         setTotalPages(calculatedTotalPages);
-        setPageCursors({});
-        setHasMoreServer(true);
       } catch (err) {
         console.error("Error al contar documentos de paginación:", err);
       }
     };
-    
+
     getTotalCount();
   }, [categorySlug, currentLimit, id, titleSlug, idListString]);
 
-  // 🔄 3. Efecto principal: Traer la tanda de documentos correspondiente a la página activa
+  // 🔒 3. EFECTO CORRECTOR: Limpiar cursores inmediatamente al mutar la categoría
+  useEffect(() => {
+    setPageCursors({});
+    setHasMoreServer(true);
+  }, [categorySlug, currentLimit]);
+
+  // 🔄 4. Efecto principal: Traer los documentos correspondientes a la página activa
   useEffect(() => {
     setLoading(true);
     setError(null);
@@ -96,8 +100,8 @@ export const useQuery = (
         } finally {
           setLoading(false);
         }
-      }
-
+      } 
+      
       // Caso A: Detalle de producto único por ID
       else if (categorySlug && titleSlug && id) {
         try {
@@ -114,10 +118,16 @@ export const useQuery = (
           setLoading(false);
         }
       }
-      
+
       // Caso B y C unificados: Catálogo paginado por Servidor (Home y Categorías)
       else {
         try {
+          // 🚨 CONTROL CRÍTICO: Si el usuario quiere ir a la página > 1 pero el cursor
+          // aún no se asentó en memoria, frenamos y esperamos al siguiente ciclo.
+          if (currentPage > 1 && !pageCursors[currentPage]) {
+            return;
+          }
+
           const referenceDocs = collection(db, "products");
           let constraints = [orderBy("code")];
 
@@ -166,9 +176,9 @@ export const useQuery = (
       }
     };
     getData();
-  }, [categorySlug, titleSlug, id, idListString, currentPage]); // 🚀 Cambiado a la referencia primitiva limpia
+  }, [categorySlug, titleSlug, id, idListString, currentPage, pageCursors]);
 
-  // ⚡ 4. Refetch memorizado de forma óptima
+  // ⚡ 5. Refetch memorizado de forma óptima
   const refetch = useCallback(async () => {
     if (idListString) {
       const parsedIds = JSON.parse(idListString);
@@ -204,20 +214,6 @@ export const useQuery = (
 
   return { data, loading, error, refetch, totalPages, hasMoreServer };
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -327,7 +323,7 @@ export const useQuery = (
 //           setLoading(false);
 //         }
 //       }
-      
+
 //       // Caso B y C unificados: Catálogo general y Categorías
 //       else {
 //         try {
@@ -396,7 +392,6 @@ export const useQuery = (
 //     setHasMoreServer(true);
 //   }, [categorySlug]);
 
-
 //   const refetch = async () => {
 //     if (idList) {
 //       if (idList.length === 0) {
@@ -432,6 +427,3 @@ export const useQuery = (
 
 //   return { data, loading, error, refetch, totalPages, hasMoreServer };
 // };
-
-
-
