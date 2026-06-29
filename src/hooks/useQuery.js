@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   collection,
   getDocs,
@@ -33,10 +33,12 @@ export const useQuery = (
 
   const currentLimit = categorySlug ? LIMIT_SIZE_CATEGORIES : LIMIT_SIZE_TOTAL;
 
-  // 🔒 1. Resetear estados de paginación y calcular totalPages REALES desde el servidor
+  // 🔒 1. Serialización limpia para dependencias de arrays (Evita loops y ejecuciones inline)
+  const idListString = idList ? JSON.stringify(idList) : "";
+
+  // 🔒 2. Resetear estados de paginación y calcular totalPages REALES desde el servidor
   useEffect(() => {
-    // Si es un detalle de producto o un listado estático por ID, no contamos páginas
-    if ((categorySlug && titleSlug && id) || idList) return;
+    if ((categorySlug && titleSlug && id) || idListString) return;
 
     const getTotalCount = async () => {
       try {
@@ -51,7 +53,6 @@ export const useQuery = (
         const totalDocuments = snapshot.data().count;
         const calculatedTotalPages = Math.ceil(totalDocuments / currentLimit) || 1;
         
-        // Seteamos el total de páginas real y limpiamos los cursores de la categoría anterior
         setTotalPages(calculatedTotalPages);
         setPageCursors({});
         setHasMoreServer(true);
@@ -61,17 +62,18 @@ export const useQuery = (
     };
     
     getTotalCount();
-  }, [categorySlug, currentLimit, id, titleSlug, idList]);
+  }, [categorySlug, currentLimit, id, titleSlug, idListString]);
 
-  // 🔄 2. Efecto principal: Traer la tanda de documentos correspondiente a la página activa
+  // 🔄 3. Efecto principal: Traer la tanda de documentos correspondiente a la página activa
   useEffect(() => {
     setLoading(true);
     setError(null);
 
     const getData = async () => {
       // Caso listado por ID (Carrito / Favoritos masivo)
-      if (idList) {
-        if (idList.length === 0) {
+      if (idListString) {
+        const parsedIds = JSON.parse(idListString);
+        if (parsedIds.length === 0) {
           setData([]);
           setLoading(false);
           return;
@@ -79,7 +81,7 @@ export const useQuery = (
 
         try {
           const referenceDocs = collection(db, "products");
-          const q = query(referenceDocs, where(documentId(), "in", idList));
+          const q = query(referenceDocs, where(documentId(), "in", parsedIds));
           const snapDocs = await getDocs(q);
 
           const products = snapDocs.docs.map((document) => ({
@@ -148,7 +150,6 @@ export const useQuery = (
             }));
             setData(products);
 
-            // Mapeamos el marcador para la siguiente página si existe
             if (hasNext && !pageCursors[currentPage + 1]) {
               const nextFirstDoc = allDocs[currentLimit];
               setPageCursors((prev) => ({
@@ -165,11 +166,13 @@ export const useQuery = (
       }
     };
     getData();
-  }, [categorySlug, titleSlug, id, JSON.stringify(idList), currentPage]);
+  }, [categorySlug, titleSlug, id, idListString, currentPage]); // 🚀 Cambiado a la referencia primitiva limpia
 
-  const refetch = async () => {
-    if (idList) {
-      if (idList.length === 0) {
+  // ⚡ 4. Refetch memorizado de forma óptima
+  const refetch = useCallback(async () => {
+    if (idListString) {
+      const parsedIds = JSON.parse(idListString);
+      if (parsedIds.length === 0) {
         setData([]);
         setLoading(false);
         return [];
@@ -178,7 +181,7 @@ export const useQuery = (
       setError(null);
       try {
         const referenceDocs = collection(db, "products");
-        const q = query(referenceDocs, where(documentId(), "in", idList));
+        const q = query(referenceDocs, where(documentId(), "in", parsedIds));
         const snapDocs = await getDocs(q);
 
         const products = snapDocs.docs.map((document) => ({
@@ -197,11 +200,10 @@ export const useQuery = (
       }
     }
     return [];
-  };
+  }, [idListString]);
 
   return { data, loading, error, refetch, totalPages, hasMoreServer };
 };
-
 
 
 
