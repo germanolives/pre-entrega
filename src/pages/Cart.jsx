@@ -52,7 +52,7 @@ export const Cart = () => {
 
   const hasItems = Array.isArray(cart) && cart.length > 0;
 
-  return (
+return (
     <section className="mx-4 border-2 border-gray-300 rounded-xl p-8 min-h-125 flex flex-col justify-between">
       <Helmet>
         <title>Your Shopping Cart | Tienda S.A.U.</title>
@@ -64,27 +64,26 @@ export const Cart = () => {
       </Helmet>
 
       {hasItems ? (
-        /* 📦 La grilla de dos columnas se mantiene fija en el padre para estructurar la pantalla */
         <div className="flex flex-col gap-4 md:grid md:grid-cols-2 w-full h-full my-auto">
-          {/* 🔄 Columna Izquierda: SOLO el listado de productos reacciona al Spinner */}
+          
           <RenderContent
             data={data}
-            loading={loading || isCheckingOut}
+            loading={loading} 
             error={error}
-            time={isCheckingOut ? 1500 : 0}
+            time={0}
           >
             <CartList data={cart} />
           </RenderContent>
 
-          {/* 🎛️ Columna Derecha: El checkout se queda afuera, visible en todo momento */}
           <div className="flex justify-end w-full">
             <aside className="w-full md:w-80 sticky top-30 right-8 self-start">
               <ConfirmPurchase
                 checkOutOn={checkOutOn}
-                isProcessing={isCheckingOut}
+                isProcessing={isCheckingOut} // 🔒 Este se queda en true gracias al return de arriba
               />
             </aside>
           </div>
+
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center w-full h-full my-auto">
