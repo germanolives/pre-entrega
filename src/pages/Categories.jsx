@@ -1,30 +1,24 @@
 import { ItemList } from "../components/Item/ItemList";
 import { RenderContent } from "../components/common/RenderContent";
-import { useQuery } from "../hooks/useQuery"; // 🚀 1. Conectamos directo al hook del servidor
-import { useParams, useSearchParams } from "react-router-dom"; // 📥 Traemos useSearchParams
+import { useQuery } from "../hooks/useQuery"; 
+import { useParams, useSearchParams } from "react-router-dom"; 
 import { Helmet } from "react-helmet-async";
 import { capitalize } from "../utils/capitalize";
 import { Pagination } from "../components/common/Pagination";
 
 export const Categories = () => {
   const { categorySlug } = useParams();
-  
-  // 🚀 2. Leemos la página actual desde la URL directamente en el componente
   const [searchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
 
-  // 🚀 3. Disparamos la query al servidor pasándole la categoría activa y la página
   const { data, loading, error, totalPages, hasMoreServer } = 
     useQuery(categorySlug, null, null, null, currentPage);
 
-  // Extraemos el nombre de la categoría de forma segura para las metaetiquetas
   const categoryName =
     data && data.length > 0 ? capitalize(data[0].category) : null;
 
   return (
-    <section
-      className={`mx-4 border-2 border-gray-300 rounded-xl p-8 ${loading ? "flex justify-center items-center" : ""}`}
-    >
+    <section className="mx-4 border-2 border-gray-300 rounded-xl p-8 min-h-125 flex flex-col justify-between">
       <Helmet>
         <title>
           {categoryName
@@ -41,85 +35,15 @@ export const Categories = () => {
         />
       </Helmet>
 
-      <RenderContent loading={loading} error={error} data={data}>
-        {/* 📦 Renderizado directo de la data segmentada por el servidor (Bloques de 3) */}
+      <RenderContent loading={loading} error={error} data={data} time={150}>
+        
         <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
           <ItemList data={data} />
         </div>
         
-        {/* 🎛️ Paginador dedicado para la categoría actual */}
         <Pagination totalPages={totalPages} hasMoreServer={hasMoreServer} />
+        
       </RenderContent>
     </section>
   );
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { ItemList } from "../components/Item/ItemList";
-// import { RenderContent } from "../components/common/RenderContent";
-// import { useProducts } from "../context/ProductsContext";
-// import { useParams } from "react-router-dom";
-// import { Helmet } from "react-helmet-async";
-// import { capitalize } from "../utils/capitalize";
-// import { Pagination } from "../components/common/Pagination";
-
-// export const Categories = () => {
-//   const { categorySlug } = useParams();
-//   const { data, loading, error } = useProducts(categorySlug);
-
-//   const categoryName =
-//     data && data.length > 0 ? capitalize(data[0].category) : null;
-
-//   return (
-//     <section
-//       className={`mx-4 border-2 border-gray-300 rounded-xl p-8 ${loading ? "flex justify-center items-center" : ""}`}
-//     >
-//       <Helmet>
-//         <title>
-//           {categoryName
-//             ? `${categoryName} | Catalog | Tienda S.A.U.`
-//             : "Catalog | Tienda S.A.U."}
-//         </title>
-
-//         <meta
-//           name="description"
-//           content={
-//             categoryName
-//               ? `Explore our premium selection of ${categoryName} at Tienda S.A.U.`
-//               : "Explore our premium selection of clothing and electronics at Tienda S.A.U."
-//           }
-//         />
-//       </Helmet>
-//       <RenderContent loading={loading} error={error} data={data}>
-//         <Pagination searchedProds={data} itemsPerPage={5}>
-//           {(paginatedProds) => (
-//             <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
-//               <ItemList data={paginatedProds} />
-//             </div>
-//           )}
-//         </Pagination>
-//       </RenderContent>
-//     </section>
-//   );
-// };

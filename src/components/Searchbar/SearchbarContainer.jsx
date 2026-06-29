@@ -15,7 +15,7 @@ export const SearchbarContainer = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const isAdmin = user ? user.rol === "admin" : false;
-  const { searchList, setSearchList } = useSearchMatches();
+  const { setSearchList } = useSearchMatches();
 
   const manageChange = (event) => {
     const { name, value } = event.target;

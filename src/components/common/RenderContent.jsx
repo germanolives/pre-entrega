@@ -3,27 +3,37 @@ import { Spinner } from "./Spinner";
 import { ErrorMessage } from "./ErrorMessage";
 
 export const RenderContent = ({ loading, error, data, children, time = 0 }) => {
-  const [showSpinner, setShowSpinner] = useState(false);
+  const [isDelayingActive, setIsDelayingActive] = useState(false);
 
+  // 🔄 Controlamos el delay de apagado de forma limpia
   useEffect(() => {
     let timer;
     if (loading) {
-      setShowSpinner(true);
+      setIsDelayingActive(true);
     } else {
-      // Si la carga finaliza, esperamos el valor de time (ms) antes de ocultar el spinner
-      // para evitar parpadeos visuales en cargas muy rápidas.
+      // Al terminar la carga, esperamos los milisegundos indicados antes de liberar la pantalla
       timer = setTimeout(() => {
-        setShowSpinner(false);
+        setIsDelayingActive(false);
       }, time);
     }
     return () => clearTimeout(timer);
-  }, [loading]);
+  }, [loading, time]);
 
+  // 🛡️ CONTROL DE ERRORES: Si hay un fallo de red, se muestra de inmediato
   if (error) return <ErrorMessage message={error} />;
 
-  // Si estamos cargando o en el periodo de espera del spinner, mostramos el Spinner
-  if (showSpinner) return <Spinner />;
+  // 🚨 DERIVACIÓN SÍNCRONA CRÍTICA:
+  // Si la prop 'loading' viene en true en el segundo cero, mostramos el spinner EN EL ACTO.
+  // No esperamos a que el useEffect cambie ningún estado local en el próximo frame.
+  if (loading || isDelayingActive) {
+    return (
+      <div className="flex justify-center items-center min-h-100 w-full">
+        <Spinner />
+      </div>
+    );
+  }
 
+  // 📦 Verificación final de datos consolidados
   const hasData = Array.isArray(data)
     ? data.length > 0
     : data !== null && data !== undefined;

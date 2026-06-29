@@ -11,6 +11,7 @@ export const Favorites = () => {
   const { idListFavorites } = useFavorite();
   const [searchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
+  
   const { data, loading, error } = useQuery(
     null,
     null,
@@ -20,9 +21,7 @@ export const Favorites = () => {
   );
 
   return (
-    <section
-      className={`mx-4 border-2 border-gray-300 rounded-xl p-4 ${idListFavorites.length <= 0 ? "md:flex" : ""}`}
-    >
+    <section className="mx-4 border-2 border-gray-300 rounded-xl p-8 min-h-125 flex flex-col justify-between">
       <Helmet>
         <title>My Favorites | Tienda S.A.U.</title>
         <meta
@@ -31,8 +30,9 @@ export const Favorites = () => {
         />
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
+
       {idListFavorites.length > 0 ? (
-        <RenderContent data={data} loading={loading} error={error}>
+        <RenderContent data={data} loading={loading} error={error} time={150}>
           <ClientPagination searchedProds={data} itemsPerPage={5}>
             {(paginatedProds) => (
               <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
@@ -42,7 +42,9 @@ export const Favorites = () => {
           </ClientPagination>
         </RenderContent>
       ) : (
-        <EmptyFavorites />
+        <div className="flex flex-col items-center justify-center w-full h-full my-auto">
+          <EmptyFavorites />
+        </div>
       )}
     </section>
   );

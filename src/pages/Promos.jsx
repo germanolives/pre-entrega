@@ -11,9 +11,11 @@ export const Promos = () => {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
+  
   const promoProds = blackFridayPromos
     ? blackFridayPromos.find((item) => String(item.id) === id)
     : null;
+    
   const idList = promoProds?.appliesTo
     ? promoProds.appliesTo.map((item) => String(item))
     : [];
@@ -26,11 +28,8 @@ export const Promos = () => {
     currentPage,
   );
 
-
   return (
-    <section
-      className={`mx-4 border-2 border-gray-300 rounded-xl p-8 ${loading ? "flex justify-center items-center" : ""}`}
-    >
+    <section className="mx-4 border-2 border-gray-300 rounded-xl p-8 min-h-125 flex flex-col justify-between">
       <Helmet>
         <title>Special Offers | Tienda S.A.U.</title>
         <meta
@@ -38,7 +37,8 @@ export const Promos = () => {
           content="Don't miss our exclusive deals! Shop the latest discounts on clothing and electronics at Tienda S.A.U. Limited time offers available."
         />
       </Helmet>
-      <RenderContent loading={loading} error={error} data={data}>
+
+      <RenderContent loading={loading} error={error} data={data} time={150}>
         <ClientPagination searchedProds={data} itemsPerPage={4}>
           {(paginatedProds) => (
             <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
