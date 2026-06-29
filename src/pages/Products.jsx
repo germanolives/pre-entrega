@@ -18,7 +18,7 @@ export const Products = () => {
   );
 
   return (
-    <section className="mx-4 border-2 border-gray-300 rounded-xl p-8 min-h-125 flex flex-col justify-between">
+    <section className="mx-4 border-2 border-gray-300 rounded-xl p-8 min-h-130 flex flex-col justify-between">
       <Helmet>
         <title>Catalog | Tienda S.A.U.</title>
         <meta
