@@ -31,6 +31,7 @@ export const Cart = () => {
   // ⚡ MOMENTO 2: Check manual al presionar "Proceed to checkout"
   const checkOutOn = async () => {
     if (idListCart.length === 0) return;
+    
 
     setIsCheckingOut(true);
     try {
