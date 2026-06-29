@@ -41,6 +41,7 @@ export const Cart = () => {
 
       if (freshProducts && freshProducts.length > 0) {
         checkCart(freshProducts);
+        return;
       }
     } catch (e) {
       console.error("Error en la validación del checkout:", e);
