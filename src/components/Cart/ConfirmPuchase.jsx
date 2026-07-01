@@ -28,14 +28,14 @@ export const ConfirmPurchase = ({ checkOutOn, isProcessing }) => {
 
       if (previewCartTotal === Number(getCartTotal())) {
         // ⚡ PASO 1: Descontamos el stock en lote de manera segura
-        const stockRes = await checkoutSecureInventory(cart);
+        // const stockRes = await checkoutSecureInventory(cart);
 
-        // Si el servicio seguro de transacciones falla, lanzamos el error con su mensaje dedicado
-        if (!stockRes.success) {
-          throw new Error(
-            stockRes.error || "No se pudo reservar el stock de los productos.",
-          );
-        }
+        // // Si el servicio seguro de transacciones falla, lanzamos el error con su mensaje dedicado
+        // if (!stockRes.success) {
+        //   throw new Error(
+        //     stockRes.error || "No se pudo reservar el stock de los productos.",
+        //   );
+        // }
 
         // ⚡ PASO 2: Emitimos la orden en Firestore
         const purchaseOrder = {
