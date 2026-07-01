@@ -32,19 +32,21 @@ export const ConfirmPurchase = ({ checkOutOn, isProcessing }) => {
 
         // Si el servicio seguro de transacciones falla, lanzamos el error con su mensaje dedicado
         if (!stockRes.success) {
-          throw new Error(stockRes.error || "No se pudo reservar el stock de los productos.");
+          throw new Error(
+            stockRes.error || "No se pudo reservar el stock de los productos.",
+          );
         }
 
         // ⚡ PASO 2: Emitimos la orden en Firestore
         const purchaseOrder = {
           id: idGenerator(),
           date: Date.now(),
-          buyerFirstName: user.firstName,
-          buyerSurname: user.surname,
-          buyerEmail: user.email,
+          buyerFirstName: user?.firstName || "User",
+          buyerSurname: user?.surname || "Registered",
+          buyerEmail: user?.email || "",
           products: cart,
-          total: previewCartTotal, 
-          buyerUid: user.uid,
+          total: previewCartTotal,
+          buyerUid: user?.uid || user.id, // 👈 Tu regla de Firebase exige estrictamente que este ID exista
         };
 
         await setDoc(doc(db, "orders", purchaseOrder.id), purchaseOrder);

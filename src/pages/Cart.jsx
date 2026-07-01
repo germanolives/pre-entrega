@@ -42,6 +42,7 @@ export const Cart = () => {
 
       if (freshProducts && freshProducts.length > 0) {
         checkCart(freshProducts);
+        setIsCheckingOut(false);
         return;
       }
     } catch (e) {
