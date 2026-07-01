@@ -9,8 +9,13 @@ service cloud.firestore {
 
     // Colección de productos: Público para leer, restringido para editar
     match /products/{productId} {
-      allow read: if true; 
-      allow write: if request.auth != null && esAdmin();
+      allow read: if true;
+      // Permitir escribir si es admin, O si solo está modificando el stock (reduciéndolo)
+      allow update: if request.auth != null && (
+        esAdmin() || 
+        request.resource.data.stock < resource.data.stock // Solo permite si el stock nuevo es menor al viejo
+      );
+      allow create, delete: if request.auth != null && esAdmin();
     }
 
     // Colección de mensajes: Cualquiera puede enviar, pero solo el Admin puede leer o gestionar
