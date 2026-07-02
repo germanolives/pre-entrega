@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { ItemList } from "../components/Item/ItemList";
 import { RenderContent } from "../components/common/RenderContent";
 import { useQuery } from "../hooks/useQuery";
@@ -6,16 +7,25 @@ import { Pagination } from "../components/common/Pagination";
 import { useSearchParams } from "react-router-dom";
 
 export const Products = () => {
-  const [searchParams] = useSearchParams();
+  // 🚀 Traemos 'setSearchParams' para poder corregir la URL tipeada a mano
+  const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
 
-  const { data, loading, error, totalPages, hasMoreServer } = useQuery(
+  const { data, loading, error, totalPages, hasMoreServer, isInvalidPage } = useQuery(
     null,
     null,
     null,
     null,
     currentPage,
   );
+
+  // 🔒 CONTROLADOR DE FLUJO SÍNCRONO: Si el usuario escribe una página huérfana de cursor,
+  // limpiamos la barra y la forzamos a volver a 1, evitando que se desincronice el paginador.
+  useEffect(() => {
+    if (isInvalidPage) {
+      setSearchParams({ page: 1 });
+    }
+  }, [isInvalidPage, setSearchParams]);
 
   return (
     <section className="mx-4 border-2 border-gray-300 rounded-xl p-8 min-h-130 flex flex-col justify-between">
@@ -27,7 +37,8 @@ export const Products = () => {
         />
       </Helmet>
 
-      <RenderContent loading={loading} error={error} data={data} time={150}>
+      {/* Sumamos 'isInvalidPage' al loading para congelar la vista mientras el useEffect reencamina la URL */}
+      <RenderContent loading={loading || isInvalidPage} error={error} data={data} time={150}>
         
         <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
           <ItemList data={data} />
@@ -39,4 +50,5 @@ export const Products = () => {
     </section>
   );
 };
+
 

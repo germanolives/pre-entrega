@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { ItemList } from "../components/Item/ItemList";
 import { RenderContent } from "../components/common/RenderContent";
 import { useQuery } from "../hooks/useQuery"; 
@@ -8,14 +9,20 @@ import { Pagination } from "../components/common/Pagination";
 
 export const Categories = () => {
   const { categorySlug } = useParams();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
 
-  const { data, loading, error, totalPages, hasMoreServer } = 
+  const { data, loading, error, totalPages, hasMoreServer, isInvalidPage } = 
     useQuery(categorySlug, null, null, null, currentPage);
 
   const categoryName =
     data && data.length > 0 ? capitalize(data[0].category) : null;
+
+    useEffect(() => {
+    if (isInvalidPage) {
+      setSearchParams({ page: 1 });
+    }
+  }, [isInvalidPage, setSearchParams]);
 
   return (
     <section className="mx-4 border-2 border-gray-300 rounded-xl p-8 min-h-130 flex flex-col justify-between">
